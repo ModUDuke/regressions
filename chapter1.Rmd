@@ -7,13 +7,15 @@ description : "This chapter will introduce you to regression analysis"
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5c9d6dd3fc
 ## Introduction to Regression Analysis
 *** =video_link
-//player.vimeo.com/video/216023860
- 
- 
- 
+//player.vimeo.com/video/217553687
+
+
+
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:1a2137dd19
 ## Interpreting Regressions
-The popular online auctioneer, eGulf, wants to provide its sellers recommended sales prices for their used WePhones, based on how old the WePhones are. They examine a small sample of 25 WePhones sold in the past week, and run an OLS regression to determine the relationship between WePhone age and sales price to factor into their algorithm. They then plot their results (illustrated in the R workspace). Each point on the plot indicates the age and price that a particular phone sold at, whereas the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales prices?
+The popular online auctioneer, eGulf, wants to create an algorithm that will automatically provide recommended sales prices to eGulf sellers who plan to auction their used WePhones. eGulf's plans to base its algorithm on the age and sales price of previously sold WePhones. For the sake of convenience, eGulf bases their algorithm on a small stratified sample of 25 WePhones sold in the past week. 
+
+eGulf runs an OLS regression to determine the relationship between WePhone age and sales price to factor into their algorithm, and plot their results (illustrated in the R workspace). Each point on the plot indicates the age and price that a particular WePhone sold at, and the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales prices?
 
 *** =instructions
 - There is a negative relationship
@@ -67,7 +69,7 @@ ggplot(data=WePhone,aes(`Price Sold`,Age))+geom_point()+geom_abline(intercept = 
 ```{r}
 msg1 = "This is not a causal interpretation of the relationship, but rather a description of the association between WePhone age and sales price"
 msg2 = "This is the most intuitive explanation for the relationship between WePhone sale price and age, but not what a regression model where age is the dependent variable implies. Try again"
-msg3 = "Correct! This is an example of reverse causality. The age of any object can only be influenced by time (excluding time dilation), so we know that price sold cannot cause a phone's age."
+msg3 = "Correct! This is an example of reverse causality. The age of any object can only be influenced by time (excluding time dilation), so we know that this interpretation of their causal relationship is false: price sold cannot cause a phone's age."
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
@@ -76,18 +78,25 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:8bb34ee718
 ## Basic Elements of a Regression Table
 *** =video_link
-//player.vimeo.com/video/216023860
+//player.vimeo.com/video/217554002
 
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:470a340b81
 ## Reading a Bivariate Regression Table
-The following table shows the regression results from our previous question that tested the effect age on the price sold of used WePhones. The coefficient for age matches the slope in the previous line graph. It suggests that for each additional year (or unit of age), the expected sales price of WePhones decreases by $61.99. The coefficient for intercept matches the Y-axis intercept in the previous line graph. It indicates the price for a WePhone that was 0 years old (more generally, it shows the value of the outcome when all other independent variables are at their reference point). To determine the predicted sales price of a WePhone with a given age, one can simply add the coefficient for the intercept with the coefficient for age times the number of year old the WePhone is. What is the predicted price for a WePhone that is exactly two years old ?
+The following table shows the regression results from the previous questions about the effect age on the price sold of used WePhones on the auctioning website, eGulf. The coefficient for age matches the slope in the previous line graph. It suggests that for each additional year (or unit of age), the expected sales price of WePhones decreases by $61.99. The coefficient for intercept matches the Y-axis intercept in the previous line graph. It indicates the predicted price sold for a WePhone that is 0 years old (or more generally, it shows the value of an outcome when all other independent variables are at their reference point). 
 
 | Variable   | Coefficient (SE) |
 |------------|-----------------:|
 |    Age     |   -61.99 (7.28)  |
 | Intercept  |   592.56 (24.42) |
+
+To determine the predicted sales price of a WePhone with a given age, one can simply add the coefficient for the intercept with the coefficient for age times the number of year old the WePhone is. In other words, based on this regression model the formula for predicting the price of a WePhone sold on eGulf is:
+
+  `Sales Price = Age * -61.99 + 592.56`
+
+Based on this formula, what is the predicted price for a WePhone that is exactly two years old?
+
 
 
 *** =instructions
@@ -108,17 +117,18 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9917eaebf2
 ## Reading a Multivariate (Multiple) Regression Table
-In our previous eGulf example, we assumed that age is the only determinant of sales price. Sellers on eGulf also have "feedback scores," ranging from 0-100, that indicate the quality of sellers based on their interactions with previous customers. What if a seller's feedback score had a big impact on a WePhone's sales price, and was negatively correlated with the age of WePhones (i.e. highly rates sellers tend to sell newer WePhones)? This would confound the relationship between sales price and age. 
+In our previous eGulf example, we assumed that age is the only determinant of a WePhone's sales price. However, sellers on eGulf also have "feedback scores," ranging from 0-100, that indicate the quality of their previous transactions with customers. It seems likely that a seller's feedback score could positively impact a WePhone's sales price; that is, customers might be willing to pay more for WePhones sold by reputable sellers. However, if reputable sellers tended to sell newer WePhones, this would confound the relationship between sales price and age. 
 
-In a t.test, we would probably want to balance our WePhone samples by seller feedback score, possibly by throwing out respondents who are not matched between samples. However, with OLS regression, we can simply add seller feedback scores as another determinant of our independent variable, thereby controlling for its confounding effect on our outcome variable. This is what is shown in the table below.
-
-When controlling for seller score, age still has a large negative effect on sales. Using this table, calculate the difference in expected sales price for phone that is 1 year old with a feedback score of 90, versus a phone that is 4 years old with a feedback score of 90.
+With a t.test, finding the relationship between a WePhone's sales price and age, while controlling for the confounding effect of seller feedback score, would require us to have a balanced sample. We might have considered  throwing out respondents with high feedback scores that sold new WePhones, so that WePhone age and WePhone feedback score were no longer correlated. However, with OLS regression, we can simply add seller feedback scores as another determinant of our independent variable, thereby controlling for its confounding effect on our outcome variable. This is what is shown in the table below.
 
 | Variable   | Coefficient (SE) |
 |------------|-----------------:|
 |    Age     |  -55.61 (4.94)   |
 |  Feedback  |   14.15 (2.55)   |
 | Intercept  | -707.23 (234.38) |
+
+
+When controlling for seller score, age still has a large negative effect on sales. Using this table, calculate the difference in expected sales price for phone that is 1 year old with a feedback score of 90, versus a phone that is 4 years old with a feedback score of 90.
 
 
 *** =instructions
@@ -129,7 +139,7 @@ When controlling for seller score, age still has a large negative effect on sale
 *** =sct
 ```{r}
 msg1 = "Try again"
-msg2 = "Well done! The same method can applied with as many variables as we choose. However, notice that the intercept is -707.23. That would indicate that a used WePhone with an age of 0 and a feedback score of 0 would have a predicted sales price of -$707.23. Obviously that is incorrect. This hints at a modeling issue that we'll explore later in the chapter."
+msg2 = "Well done! The same method can applied with as many variables as we choose. However, notice that the intercept is -707.23. That would indicate that a used WePhone with an age of 0 and a feedback score of 0 would have a predicted sales price of -$707.23. Obviously that is unrealistic; no sales on eGulf result in sellers having to pay their customers. This hints at a modeling issue that we'll explore later in the chapter."
 msg3 = "Try again"
 msg4 = "Try again"
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
@@ -137,18 +147,17 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
-
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:ffa5133d86
 ## The Relationship between Economic Development and Property Rights
 *** =video_link
-//player.vimeo.com/video/216023860
+//player.vimeo.com/video/217554163
 
 
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:408e61980c
 ## Multiple Regression Models
-Papers often report several regression models next to each other. This table shows a few truncated models from the example in the video, about the relationship between a country's property rights protections and its GDP. Model 1 shows the coefficient and standard error for the effect of property rights protection on GDP with no controls. Model 2 shows the same effect controlling for the country's latitude, and Model 3 shows the effect controlling for whether the country is in Asia. Why might the effect of property rights protections on GDP decrease as we add more variables to our model?   
+Papers often report several regression models next to each other. This table shows a few truncated models from the example in the video, about the relationship between a country's property rights protections and its GDP. Model 1 shows the coefficient and standard error for the effect of property rights protection on GDP without any control variables. Model 2 shows the effect of property rights protection on GDP while controlling for the country's latitude, and Model 3 shows the same, while also controlling for whether the country is in Asia. Why might the effect of property rights protections on GDP decrease as we add more variables to our model?   
 
 | Variable   | Model 1 | Model 2 | Model 3 |
 |------------|--------:|--------:|---------|
@@ -175,7 +184,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:631cb11d99
 ## Practice Running a Regression Model
-Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), and plans to use this information to measure the effect of income on happyiness. Although Funn predicts that income increases happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Funn believes that people who work more hours make more money, but that working more hours tends to make people less happy. 
+Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Dr. Funn believes that people who work more hours make more money (which indirectly increases a person's happiness), but that people who work more hours at the same income tend to be less happy (i.e. work hours has a direct negative effect on happiness). 
 
 Using the dataset, `GSS`, help Dr. Max Funn measure the effect of income on happiness, **controlling** for work hours. Specifically:
 
@@ -222,31 +231,40 @@ set.seed(1)
 *** =sample_code
 ```{r}
 # Before running a regression model, let's examine the data
-  str(GSS)
-# There are three variables: income (measured in thousands of dollars), work hours, and happiness (measured 1=very unhappy, 2=unhappy, 3=niether happy or unhappy, 4=happy, 5=very happy)
-  summary(GSS$Income)
-  summary(GSS$WorkHours)
-  summary(GSS$Happiness)
-# Using the correlation function, we can tell that income and happiness are positively correlated
-  cor(GSS$Income,GSS$Happiness)
-# But by how much? What is the effect of increasing one's income by $1000 on their happiness?
+    str(GSS)
+
+# The dataset contains three variables: income (measured in thousands of dollars), work hours, and happiness (measured 1=very unhappy, 2=unhappy, 3=niether happy or unhappy, 4=happy, 5=very happy)
+    summary(GSS$Income)
+    summary(GSS$WorkHours)
+    summary(GSS$Happiness)
+
+# Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness?
+    cor(GSS$Income,GSS$Happiness)
   
-# Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, and df is the dataframe.
+# Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, and df is the name of the dataframe.
+
 #---- Question 1-------------------------------------#
       Solution1<-glm()
 #----------------------------------------------------#
 
-# The glm function usually gives less data than desired, and usually in a less than ideal format. Let's use the summary function on our model to see its effects.
-  summary(Solution1)
-  Solution1$coefficients
-# The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each paramater, "Pr(>|t|)" refers to the p.value of the estames, and the stars following p.value refer to the result's statistical significance. If you entered Solution1 correctly, the effect of Income should be about .015, meaning that a unit ($1000) increase in income is associated with a .015 increase in happiness. The low p.value and stars next to it suggest that this effect is statistically significant. This relationship can also be viewed graphically via the syntax below:
-  plot(GSS$Happiness ~ GSS$Income)
-  abline(Solution1)
-# The points on the plot represent each observation, and the diagonal line shows the regression results. Note that the slope of the line is equal to the coefficient for income.
+# The glm function usually provides less information about the model than desired, and usually in a less than ideal format. Let's use the summary function on our model to see its effects more clearly.
+    summary(Solution1)
+
+# The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each paramater, "Pr(>|t|)" refers to the p.value of the estimates, and the stars following p.value refer to the result's statistical significance. 
+    
+# If you entered Solution1 correctly, the effect of Income should be about .015, meaning that a unit ($1000) increase in income is associated with a .015 increase in a person's reported happiness. The low p.value and stars to the right of the coefficients suggest that this effect is statistically significant. 
+
+# This relationship can also be viewed graphically via the syntax below. The points on the plot represent each observation, and the diagonal line represents the regression results. Note that the slope of the line is equal to the coefficient for income.
+    plot(GSS$Happiness ~ GSS$Income)
+    abline(Solution1)
+
 # Now let's move on to Question 2. The following correlations show that work hours is negatively correlated with happiness and positively correlated with income. This suggests that work hours might confound the relationship between income and happiness.
-  cor(GSS$WorkHours,GSS$Happiness)
-  cor(GSS$WorkHours,GSS$Income)
-#We therefore want to control for the effect of work hours on happiness. Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
+    cor(GSS$WorkHours,GSS$Happiness)
+    cor(GSS$WorkHours,GSS$Income)
+
+    
+# We therefore want to control for the effect of work hours on happiness. Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
+
 #---- Question 2-------------------------------------#
       Solution2<-glm()
 #----------------------------------------------------#
@@ -261,7 +279,7 @@ set.seed(1)
 ```{r}
 test_object("Solution1")
 test_object("Solution2")
-success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with the independent variable and positively correlated with the dependent variable. It is also possible to use this syntax to control for as many variables as desired in a regression model.")
+success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with both the independent and dependent variables. This syntax can be used to control for as many variables as desired in a regression model.")
 ```
 
 
@@ -269,20 +287,151 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d75a4ac636
 ## Using Regression to Get Causal Effects: Unconfoundedness
 *** =video_link
-//player.vimeo.com/video/216023860
+//player.vimeo.com/video/217554416
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:33842f5f9c
-## Practice Running a Regression Model With Interaction Effects
-An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
-
-A CATE is basically an example of statistical moderation (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technologies. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes an interaction between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## The Uncounfoundedness Assumption
+Although regression models are great for summarizing the association between variables, any causal interpretation of a regression models rests on the uncounfoundedness assumption (also known as the selection-on-observables assumption; and sometimes referred to as the conditional independence assumption). Which of the following summarizes this assumption?
 
 *** =instructions
-- Construct a regression model that measures the effect of `treatment` on `LeaveJob`
-- Construct a regression model that measures the effect of `treatment` on `LeaveJob`, with an interaction with `Female`
-- Construct a regression model that measures the effect of `treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+- All variables that affect treatment assignment and the outcome of interest are observable and conditioned upon.
+- If something happens more frequently than expected during a given period, we can expect that it will happen less frequently in the future
+- There is little or no multicollinearity in the data
+- The residuals of a regression model are normally distributed.
+*** =hint
+- Here is a useful hint: Answer 3 is the right answer
+*** =sct
+```{r}
+msg1 = "Correct. Put even more simply, any causal interpretation of a regression model assumes that the relationships observed in the data are unconfounded. In most cases, this is impossible to verify empirically. However, it is a pretty large assumption. Most variations of regression models that we will describe in later chapters try to reduce the strength of this assumption."
+msg2 = "This is actually a summary of the gambler's fallacy. Try again"
+msg3 = "This is an assumption that regression models make, but it is not a description of the unconfoundedness assumption"
+msg3 = "This is an assumption that regression models make, but it is not a description of the unconfoundedness assumption"
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## How to Compute Regressions: Ordinary Least Squares (OLS)
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+--- type:NormalExercise lang:r xp:50 skills:1
+## Interpreting Regressions
+Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to determine the sum of squared residuals (SSR) of the regression model.
+
+*** =instructions
+- Estimate the sum of squared residuals from the provided regression model.
+*** =pre_exercise_code
+```{r}
+set.seed(1)
+library(ggplot2)
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),5))
+WePhone$Feedback<-round(rnorm(n=25,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=25,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=25,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+model<-lm(`Price Sold`~Age,data=WePhone)
+ggplot(data=WePhone,aes(Age, `Price Sold`))+geom_point()+geom_abline(intercept = model$coefficients[1],slope=model$coefficients[2])+ ggtitle("Scatter Plot and OLS Regression of WePhone Age on Price Sold")
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+```
+
+*** =sample_code
+```{r}
+# As a quick refresher, let's glimpse at the first few lines of data. Age refers to the number of years old the WePhone was, and Price Sold refers to the dollars it sold for.
+    head(WePhone)
+
+# A regression model between a WePhone's Age and Price Sold produces the following table.
+    model<-glm(PriceSold~Age,data=WePhone)
+    summary(model)
+    
+# Below visualizes the regression model as a line, and the data points as dots. Notice that the line appears to be placed in between the dots? This is not a coincidence. OLS regression models try to estimate coefficients that create the best fitting line within the data. That is, the line that a regression model produces minimizes the vertical distance (squared) between each data point and the regression line.  
+    plot(WePhone$PriceSold ~ WePhone$Age)
+    abline(model)
+    
+# We can actually calculate these distances manually. Let's create a variable that shows the predicted value of each observation based on the regression model. If you remember, the predicted value of any dependent variable can be determined by multiplying each value in the data with the corresponding regression coefficient, and adding them together.
+    InterceptCoefficient<-model$coefficients[1]
+    AgeCoefficient<-model$coefficients[2]
+    WePhone$PredictedPriceSold<-InterceptCoefficient+WePhone$Age*AgeCoefficient
+
+# If we look at the data, we can see that the values for PredictedPriceSold look pretty similar to the value of PriceSold.
+    head(WePhone)
+    
+# Now for your first task: Create a variable named "residuals" in the WePhone dataset that estimates the PriceSold minus PredictedPriceSold
+
+#---- Question 1-------------------------------------#
+      WePhone$residuals<-
+#----------------------------------------------------#
+
+# Now create a variable in the WePhone dataset called residuals2, which is the WePhone residuals squared.
+
+#---- Question 2-------------------------------------#
+      WePhone$residuals2<-
+#----------------------------------------------------#
+
+# If we sum residuals 2, we get the sum of squared residuals (SSR). Try it now
+
+#---- Question 2-------------------------------------#
+      Solution1<-
+#----------------------------------------------------#
+
+# This number might seem arbitrary, but it represents the lowest number one can get with this data, given coefficients for Intercept and Age. If we alter the regression coefficients to any number other number, the sume of squared residuals will be larger. For example, if we were to reduce the intercept from the regression model by 5 and increase age by 1 like below, the number we produce with the above algorithm is larger than the number in Solution1. This will be the case no matter how you change the coefficients. This is exactly what ordinary least squares (OLS) regression models optimize: They estimate coefficients for a model that minimizes the squares of differences (or residuals) between the observed responses and those predicted by the model. 
+    InterceptCoefficient<-model$coefficients[1]-5
+    AgeCoefficient<-model$coefficients[2]+1
+    WePhone$PredictedPriceSold<-InterceptCoefficient+WePhone$Age*AgeCoefficient
+    sum((WePhone$PriceSold-WePhone$PredictedPriceSold)^2)                
+                
+```
+*** =solution
+```{r}
+WePhone$residuals<-WePhone$PriceSold-WePhone$PredictedPriceSold
+WePhone$residuals2<-WePhone$residuals^2
+Solution1<-sum(WePhone$residuals2)
+
+```
+*** =sct
+```{r}
+test_object("WePhone$residuals")
+test_object("WePhone$residuals2")
+test_object("WePhone$Solution1")
+
+success_msg("Good work! Although you will never need to calculate an OLS regression model by hand, you now know precisely what the model is attempting to estimate.")
+```
+
+
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Types of Variables in Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Common Statistical Terms and Transformations in Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Practice Creating a Regression Model With Interaction Effects
+An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
+
+A CATE is basically an example of statistical moderation (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. Or in other words, the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes an interaction between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+
+*** =instructions
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a mediation effect for `Female`
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -308,17 +457,57 @@ n=682
 ```
 *** =sample_code
 ```{r}
-#TBD
+# Before running a regression model, let's examine the data
+    str(UnterHR)
+
+# The dataset contains four variables: Treatment, Female, LeaveJob, and race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables.
+    summary(UnterHR$Treatment)
+    summary(UnterHR$Female)
+    summary(UnterHR$LeaveJob)
+    summary(UnterHR$Race)
+
+# Question 1 asks us construct a regression model that measures the effect of Treatment on LeaveJob, with a "mediation effect"" for Female. This is the same as "controlling" for Female, as we did for other independent variables in our previous examples. For reference, the syntax for glm is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe.
+
+#---- Question 1-------------------------------------#
+      Solution1<-glm()
+#----------------------------------------------------#
+    
+# If you entered Solution1 correctly and summarize the results via summary(Solution1), the effect for Treatment should be about .047 (but non significant), and the effect for Female should be about .16. The direct interpretation of this model is that Treatment increases the odds that a person will leave their job by .046 (4.6%), and being Female increases the odds that a person will leave their job by .16, regardless of Treatment. 
+      
+# The model in Solution1 does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment effects women differently, we need to add an interaction between Female and Treatment. For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe. The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. Construct a regression model that measures the effect of`Treatment on LeaveJob, with a moderation effect for Female.
+
+#---- Question 2-------------------------------------#
+      Solution2<-glm()
+#----------------------------------------------------#
+
+# By default, R includes independent variables for Treatment and Female when we add a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. The large coefficient for this interaction effect suggests that Treatment has a large effect on women's odds of leaving their job.
+      
+# Let's now answer the final question for this exercise. We need to include an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. For reference, the syntax for glm with two interaction effects is "glm(Y~X*Z1+X*Z2,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z1 is the name of the first mediation variable, Z2 is the name of the first mediation variable and df is the name of the dataframe.
+      
+#---- Question 3-------------------------------------#
+      Solution3<-glm()
+#----------------------------------------------------#
+      
+      
+      
 ```
 *** =solution
 ```{r}
-      summary(glm(LeaveJob ~ Treatment,data=UnterHR))
-      summary(glm(LeaveJob ~ Treatment * Female,data=UnterHR))
-      summary(glm(LeaveJob ~ Treatment * Female + Treatment *Race,data=UnterHR))
+      Solution1<-glm(LeaveJob ~ Treatment + Female,data=UnterHR)
+      Solution2<-glm(LeaveJob ~ Treatment * Female,data=UnterHR)
+      Solution3<-glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
 ```
 *** =sct
 ```{r}
 #test_object("Solution1")
 #test_object("Solution2")
-success_msg("Good work!")
+#test_object("Solution3")
+success_msg("Good work! It appears that the Treatment only effected individuals who were Female, Black, or Latino.")
 ```
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Logistic Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
