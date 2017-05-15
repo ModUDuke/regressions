@@ -291,7 +291,7 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ff6e381314
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## The Uncounfoundedness Assumption
 Although regression models are great for summarizing the association between variables, any causal interpretation of a regression models rests on the uncounfoundedness assumption (also known as the selection-on-observables assumption; and sometimes referred to as the conditional independence assumption). Which of the following summarizes this assumption?
 
@@ -311,13 +311,13 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:9b0c9370cf
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## How to Compute Regressions: Ordinary Least Squares (OLS)
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
---- type:NormalExercise lang:r xp:50 skills:1 key:1ff9f6d33f
+--- type:NormalExercise lang:r xp:50 skills:1
 ## Toying with the Math Behind Ordinary Least Squares (OLS)
 Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to determine the sum of squared residuals (SSR) of the regression model.
 
@@ -399,8 +399,8 @@ names(WePhone)[2]<-"PriceSold"
 ```
 *** =sct
 ```{r}
-test_object("WePhone$residuals")
-test_object("WePhone$residuals2")
+test_object("residuals")
+test_object("residuals2")
 test_object("Solution1")
 
 success_msg("Good work! Although you will never need to calculate an OLS regression model by hand, you now know precisely what the model is attempting to estimate.")
@@ -410,21 +410,21 @@ success_msg("Good work! Although you will never need to calculate an OLS regress
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:59868ce633
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Types of Variables in Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Common Statistical Terms and Transformations in Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:43c6c78dff
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Practice Creating a Regression Model With Interaction Effects
 An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
 
@@ -509,7 +509,7 @@ success_msg("Good work! It appears that the Treatment only effected individuals 
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:7fb39b7cb6
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Logistic Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
