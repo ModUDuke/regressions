@@ -75,6 +75,20 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 
 
 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Regression Models and Policy Implementation
+Suppose you see a regression plot of the Number of Walmarts per Capita on Income per Capita, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
+*** =instructions
+- Yes, the regression shows that Walmarts come to richer places
+- No, you can't learn the cause of Walmart locations from the regression
+*** =sct
+```{r}
+msg1 = "Whoops. Try again."
+msg2 = "No, you can't learn the direct causal effect from this regression, just the amount of correlation between the variables."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
+```
+
+
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:8bb34ee718
 ## Basic Elements of a Regression Table
 *** =video_link
@@ -153,6 +167,39 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 //player.vimeo.com/video/217554163
 
 
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Regressions with small coefficients and small confidence intervals
+Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
+*** =instructions
+- Yes, it shows the variables cancel each other out.
+- No, it just shows there's no relationship between these variables in the data.
+- It shows "misspecification" and we can't learn anything
+*** =sct
+```{r}
+msg1 = "Actually, OLS regression models can't show simultaneous causality. More advanced methods are needed for this. Try again."
+msg2 = "Regressions by themselves are about describing relationships. So a zero regression coefficient shows that there is no relationship in the data between these variables. It does *not* say anything about the causal effect of one variable on the other, unless we make additional assumption, like unconfoundedness. Without extra assumptions, it is possible to have simultaneous causality and yet find a regression coefficient of zero."
+msg3 = "Although misspecification might cause a regression model to have no coefficients for variables that should be associated with the outcome of interest, this is not necessarily the case. Moreover, every regression model can teach you something; at the very least, a misspecified regression models can teach us how *not* to specify a regression model for our outcomes of interest."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
+```
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Recalling terminology
+Why do we use the words "left hand side" variable and "right hand side" variable in casual inference?
+
+*** =instructions
+- It refers to how you graph them on X and Y axis.
+- It comes from historical, more qualitative writings.
+- It refers to the left and right hand side of an equation.
+*** =sct
+```{r}
+msg1 = "Good try, but remember that on a graph, the Y axis is usually marked on the left side of the page, and the X axis is usually marked on the *bottom* of the page. Try again."
+msg2 = "Statistics is a relatively young and quantitative (almost by definition) field. Try again."
+msg3 = "When we write down a regression mathematically as an equation, we typically write it as Y=beta*X + U where Y is our outcome variable and X is our treatment or policy variable. Beta here is the regression coefficient and U represents unobserved variables besides X that also affect Y. So "left hand side" just refers to the left hand side of the equal sign in this equation, while "right hand side" refers to the right hand side of the equal sign in this equation."
+test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
+```
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:408e61980c
@@ -262,7 +309,6 @@ set.seed(1)
     cor(GSS$WorkHours,GSS$Happiness)
     cor(GSS$WorkHours,GSS$Income)
 
-    
 # We therefore want to control for the effect of work hours on happiness. Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
 
 #---- Question 2-------------------------------------#
@@ -291,7 +337,43 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ff6e381314
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Regressing Soda pop and K-pop
+You are studying the effect of pop songs on teenage product consumption using a dataset from South Korea. Via a regression model, you find that for every four songs downloaded, soft drink sales tend to increase by about one can. Does this imply that South Korean Soda Companies should start sponsoring pop stars?
+*** =instructions
+- No
+- Yes
+*** =sct
+```{r}
+msg1 = "Correct. The regression model does not necessarily recover a true causal effect of song downloads on soft drink sales."
+msg2 = "Whoops. Try again."
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
+```
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Knowing it all
+If you could observe every single variable that mattered for determining outcomes, would you be able to learn all the causal effects you want?
+*** =instructions
+- No, regressions only give you correlation, not causation.
+- Yes, you'd have every combination of variables possibly needed for determining causality.
+- Yes, but just for that dataset.
+- No, it would give you conflicting information.
+*** =sct
+```{r}
+msg1 = "Although it may seem like that is what this course is implying, there are times when regressions can demonstrate a causal relationship. Try again."
+msg2 = "According to our definition of causality, if you truly observed every relevant variable, you would indeed be able to learn all the causal effects you want. There are a few caveats though. First, you would still need to ensure that there was at least some variation in each variable you cared about. Even if you observed every variable that mattered, if you never see those variables change across units, you will not be able to learn their causal effects. Second, no real world dataset in social science will truly have all variables you want, which is why the unconfoundedness assumption is often made-to assume that the variables we do not observe are not related to the treatment."
+msg3 = "This answer is tricky. Remember, the dataset contains every relevent variable in the universe for determining outcomes. That should make findings from it generalizable beyond the dataset. Try again."
+msg4 = "It's true that you might have a hard time finding statistically significant results if your sample was small, as there theoretically could be an infinite number of relevant variables for any outcome in the universe, many of which are correlated. However, many events do have a variety of causes, and many regression models do incorporate a lot of 'conflicting' variables. Try again."
+```
+
+
+
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## The Uncounfoundedness Assumption
 Although regression models are great for summarizing the association between variables, any causal interpretation of a regression models rests on the uncounfoundedness assumption (also known as the selection-on-observables assumption; and sometimes referred to as the conditional independence assumption). Which of the following summarizes this assumption?
 
@@ -311,13 +393,13 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:9b0c9370cf
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## How to Compute Regressions: Ordinary Least Squares (OLS)
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
---- type:NormalExercise lang:r xp:50 skills:1 key:1ff9f6d33f
+--- type:NormalExercise lang:r xp:50 skills:1
 ## Toying with the Math Behind Ordinary Least Squares (OLS)
 Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to determine the sum of squared residuals (SSR) of the regression model.
 
@@ -410,21 +492,21 @@ success_msg("Good work! Although you will never need to calculate an OLS regress
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:59868ce633
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Types of Variables in Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Common Statistical Terms and Transformations in Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:43c6c78dff
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Practice Creating a Regression Model With Interaction Effects
 An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
 
@@ -509,7 +591,7 @@ success_msg("Good work! It appears that the Treatment only effected individuals 
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:7fb39b7cb6
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Logistic Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
