@@ -1,6 +1,6 @@
 --- 
-title       : "Regressions 1: Introduction to Regression Analysis"
-description : "This chapter will introduce you to regression analysis"
+title       : "Regressions 1: Introduction to Regression As Causality"
+description : "This chapter will introduce you to using regression analysis to find causal effects"
  
  
   
@@ -13,9 +13,10 @@ description : "This chapter will introduce you to regression analysis"
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:1a2137dd19
 ## Interpreting Regressions
-The popular online auctioneer, eGulf, wants to create an algorithm that will automatically provide recommended sales prices to eGulf sellers who plan to auction their used WePhones. eGulf's plans to base its algorithm on the age and sales price of previously sold WePhones. For the sake of convenience, eGulf bases their algorithm on a small stratified sample of 25 WePhones sold in the past week. 
+The popular online auctioneer, eGulf, wants to create an algorithm that will automatically provide recommended sales prices to eGulf sellers. In the case of wePhones, eGulf plans to base its algorithm on the age and sales price of previously sold WePhones. For the sake of convenience, eGulf bases their algorithm on a small stratified sample of 25 WePhones sold in the past week. 
 
-eGulf runs an OLS regression to determine the relationship between WePhone age and sales price to factor into their algorithm, and plot their results (illustrated in the R workspace). Each point on the plot indicates the age and price that a particular WePhone sold at, and the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales prices?
+eGulf runs an OLS regression to determine the relationship between WePhone age and sales price, and plots their results (illustrated in the R workspace). Each point on the plot indicates the age and selling price for a particular WePhone, and the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales price?
+
 
 *** =instructions
 - There is a negative relationship
@@ -37,7 +38,7 @@ ggplot(data=WePhone,aes(Age, `Price Sold`))+geom_point()+geom_abline(intercept =
 *** =sct
 ```{r}
 msg1 = "Correct! As the age of WePhones increased, the price at which they were sold decreased."
-msg2 = "Although the plot does not indicate if they results were statistically significant, they do indicate a relationship. Try again"
+msg2 = "Although the plot does not indicate if their results were statistically significant, they do indicate a relationship. Try again"
 msg3 = "Think this through carefully. Does an increase in age increase or decrease the price sold of a WePhone? Try again"
 test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 ```
@@ -46,7 +47,7 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4b9a40fa01
 ## Reversing Causal Direction
-Causal interpretation of regression models can be tricky. Using the same data in the last example, eGulf decided to run a regression model where age is a function of price sold (i.e. age is the dependent variable in this model). The results of this model are visualized in the R workspace. If this model shows a causal relationship between age and price sold, with age as the dependent variable, what **exactly** would that mean?
+Causal interpretation of regression models can be tricky. Using the same data in the last example, an eGulf analyst decided to toy with a regression model where age is a function of price sold (i.e. price is the independent variable, and age is the dependent variable). The results of this model are visualized in the R workspace. If this model shows a causal relationship between age and price sold, with age as the dependent variable, what **exactly** should the analyst say to describe the results to his boss? 
 
 *** =instructions
 - Older phones tend to sell for less
@@ -67,24 +68,25 @@ ggplot(data=WePhone,aes(`Price Sold`,Age))+geom_point()+geom_abline(intercept = 
 ```
 *** =sct
 ```{r}
-msg1 = "This is not a causal interpretation of the relationship, but rather a description of the association between WePhone age and sales price"
-msg2 = "This is the most intuitive explanation for the relationship between WePhone sale price and age, but not what a regression model where age is the dependent variable implies. Try again"
-msg3 = "Correct! This is an example of reverse causality. The age of any object can only be influenced by time (excluding time dilation), so we know that this interpretation of their causal relationship is false: price sold cannot cause a phone's age."
+msg1 = "This phrasing does not address a causal interpretation of the relationship, but rather is a description of an association between WePhone age and sales price"
+msg2 = "This is the most intuitive explanation for the relationship between WePhone sale price and age, but not for this particular regression model, which was designed to use age as the dependent variable. Try again"
+msg3 = "Correct! Well, at least according to this model. This is an example of reverse causality. Obviously, we know that in reality the age of any object can only be influenced by time, so we know that this interpretation of their causal relationship is false: price sold cannot cause a phone's age. The analyst should try a different model next time."
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
 
+
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:d50636b4ac
 ## Regression Models and Policy Implementation
-Suppose you see a regression plot of the Number of Walmarts per Capita on Income per Capita, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
+Suppose you see a Facebook post with a regression plot of the Number of Walmarts per Capita on Income per Capita, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
 *** =instructions
 - Yes, the regression shows that Walmarts come to richer places
 - No, you can't learn the cause of Walmart locations from the regression
 *** =sct
 ```{r}
 msg1 = "Whoops. Try again."
-msg2 = "No, you can't learn the direct causal effect from this regression, just the amount of correlation between the variables."
+msg2 = "No, you can't learn the direct causal effect from this regression as described, because there are so many other social and economic factors to consider in this relationship that Unconfoundness Assumption is unlikely to be true. In this case, we can just learn the amount of correlation between the variables."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
@@ -98,26 +100,26 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:470a340b81
 ## Reading a Bivariate Regression Table
-The following table shows the regression results from the previous questions about the effect age on the price sold of used WePhones on the auctioning website, eGulf. The coefficient for age matches the slope in the previous line graph. It suggests that for each additional year (or unit of age), the expected sales price of WePhones decreases by $61.99. The coefficient for intercept matches the Y-axis intercept in the previous line graph. It indicates the predicted price sold for a WePhone that is 0 years old (or more generally, it shows the value of an outcome when all other independent variables are at their reference point). 
+The following table shows the regression results from the previous questions about eGulf's pricing algorithm for used wePhones. The coefficient for age reflects the slope in the previous line graph, and it suggests that for each additional year (or unit of age), the expected sales price of WePhones decreases by $61.99. The coefficient for the intercept matches the Y-axis intercept in the previous line graph. It indicates the predicted price sold for a WePhone at 0 years old (or more generally, it shows the value of an outcome when all other independent variables are at their reference point). 
 
 | Variable   | Coefficient (SE) |
 |------------|-----------------:|
 |    Age     |   -61.99 (7.28)  |
 | Intercept  |   592.56 (24.42) |
 
-To determine the predicted sales price of a WePhone with a given age, one can simply add the coefficient for the intercept with the coefficient for age times the number of year old the WePhone is. In other words, based on this regression model the formula for predicting the price of a WePhone sold on eGulf is:
+To determine the predicted sales price of a WePhone with a given age, we can start with the initial intercept value and add to it the total change in price for the age of the phone. In other words, based on this regression model the formula for predicting the price of a WePhone sold on eGulf is:
 
-  `Sales Price = Age * -61.99 + 592.56`
+`Sales Price = 592.56 + Age * -61.99`
 
-Based on this formula, what is the predicted price for a WePhone that is exactly two years old?
+Based on this formula, what is a valid predicted price for a WePhone that is exactly two years old?
 
 
 
 *** =instructions
-- 406.49
+- 460.49
 - 468.58
-- 530.57 
-- 592.56
+- 472.57 
+- 475.56
 *** =sct
 ```{r}
 msg1 = "Try again"
@@ -133,7 +135,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ## Reading a Multivariate (Multiple) Regression Table
 In our previous eGulf example, we assumed that age is the only determinant of a WePhone's sales price. However, sellers on eGulf also have "feedback scores," ranging from 0-100, that indicate the quality of their previous transactions with customers. It seems likely that a seller's feedback score could positively impact a WePhone's sales price; that is, customers might be willing to pay more for WePhones sold by reputable sellers. However, if reputable sellers tended to sell newer WePhones, this would confound the relationship between sales price and age. 
 
-With a t.test, finding the relationship between a WePhone's sales price and age, while controlling for the confounding effect of seller feedback score, would require us to have a balanced sample. We might have considered  throwing out respondents with high feedback scores that sold new WePhones, so that WePhone age and WePhone feedback score were no longer correlated. However, with OLS regression, we can simply add seller feedback scores as another determinant of our independent variable, thereby controlling for its confounding effect on our outcome variable. This is what is shown in the table below.
+We could consider overcoming this by throwing out respondents with high feedback scores that sold new WePhones, so that WePhone age and WePhone feedback score were no longer correlated. That might let us look at the effect of the feedback score in a natural experiment analysis, but throwing out those high scores might imbalance our sample and make that analysis invalid. However, with OLS regression, we can simply add seller feedback scores as another determinant of our independent variable, thereby controlling for its confounding effect on our outcome variable. This is what is shown in the table below.
 
 | Variable   | Coefficient (SE) |
 |------------|-----------------:|
@@ -142,21 +144,21 @@ With a t.test, finding the relationship between a WePhone's sales price and age,
 | Intercept  | -707.23 (234.38) |
 
 
-When controlling for seller score, age still has a large negative effect on sales. Using this table, calculate the difference in expected sales price for phone that is 1 year old with a feedback score of 90, versus a phone that is 4 years old with a feedback score of 90.
+As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using this table, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90.
 
 
 *** =instructions
-- 162.85
-- 166.83 
-- 177.00
-- 191.15
+- 22.85
+- 26.83 
+- 27.00
+- 30.28
 *** =sct
 ```{r}
 msg1 = "Try again"
-msg2 = "Well done! The same method can applied with as many variables as we choose. However, notice that the intercept is -707.23. That would indicate that a used WePhone with an age of 0 and a feedback score of 0 would have a predicted sales price of -$707.23. Obviously that is unrealistic; no sales on eGulf result in sellers having to pay their customers. This hints at a modeling issue that we'll explore later in the chapter."
+msg2 = "Try again"
 msg3 = "Try again"
-msg4 = "Try again"
-test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
+msg4 = "Well done! The same method can applied with as many variables as we choose. This provides a great way of examining the trade offs between different factors that effect on outcome. However, notice that the intercept is -707.23. That would indicate that a used WePhone with an age of 0 and a feedback score of 0 would have a predicted sales price of -$707.23. Obviously that is unrealistic; no sales on eGulf result in sellers having to pay their customers. This hints at a modeling issue that we'll explore later in the chapter."
+test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
@@ -215,12 +217,12 @@ Papers often report several regression models next to each other. This table sho
 
 *** =instructions
 - Because the inclusion of more variables weakens the statistical power of an independent variable
-- Because ommitting these variables caused the effect of property rights protection on GDP to be downwardly biased. 
+- Because omitting these variables caused the effect of property rights protection on GDP to be downwardly biased. 
 - Because the inclusion of more variables strengthens the statistical power of an independent variable
-- Because ommitting these variables caused the effect of property rights protection on GDP to be upwardly biased. 
+- Because omitting these variables caused the effect of property rights protection on GDP to be upwardly biased. 
 *** =sct
 ```{r}
-msg1 = "Although this is often true, this is not indicated in this figure. The statistical significance of property rights protections on GDP is relatively consistent across models. Try again."
+msg1 = "Although this is often true, this is not indicated in this figure. If you look at the standard errors, the statistical significance of property rights protections on GDP is relatively small and consistent across models. Try again."
 msg2 = "This would mean that the omitted variables confound the relationship between property rights protections and GDP by decreasing the it. Try again"
 msg3 = "This is usually not true, nor shown in this figure. Try again."
 msg4 = "Correct! Without controlling for these variables, the relationship between property rights protections and GDP seemed larger than it truly was."
@@ -280,7 +282,7 @@ set.seed(1)
 # Before running a regression model, let's examine the data
     str(GSS)
 
-# The dataset contains three variables: income (measured in thousands of dollars), work hours, and happiness (measured 1=very unhappy, 2=unhappy, 3=niether happy or unhappy, 4=happy, 5=very happy)
+# The dataset contains three variables: income (measured in thousands of dollars), work hours, and happiness (measured 1=very unhappy, 2=unhappy, 3=neither happy or unhappy, 4=happy, 5=very happy)
     summary(GSS$Income)
     summary(GSS$WorkHours)
     summary(GSS$Happiness)
@@ -288,28 +290,28 @@ set.seed(1)
 # Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness?
     cor(GSS$Income,GSS$Happiness)
   
-# Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, and df is the name of the dataframe.
+# Let's use the glm function to do a linear regress of the effect of income on happiness. For reference, the syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, and df is the name of the dataframe.
 
 #---- Question 1-------------------------------------#
       Solution1<-glm()
 #----------------------------------------------------#
 
-# The glm function usually provides less information about the model than desired, and usually in a less than ideal format. Let's use the summary function on our model to see its effects more clearly.
+# The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. Let's use the summary function on our model to see its effects more clearly.
     summary(Solution1)
 
-# The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each paramater, "Pr(>|t|)" refers to the p.value of the estimates, and the stars following p.value refer to the result's statistical significance. 
+# The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each parameter, "Pr(>|t|)" refers to the p.value of the estimates, and the stars following p.value refer to the result's statistical significance. 
     
-# If you entered Solution1 correctly, the effect of Income should be about .015, meaning that a unit ($1000) increase in income is associated with a .015 increase in a person's reported happiness. The low p.value and stars to the right of the coefficients suggest that this effect is statistically significant. 
+# If you entered Solution1 correctly, the effect of Income should be about .015, meaning that a single unit increase in income ($1000) is associated with a .015 increase in a person's reported happiness. The low p.value and stars to the right of the coefficients suggest that this effect is statistically significant. 
 
 # This relationship can also be viewed graphically via the syntax below. The points on the plot represent each observation, and the diagonal line represents the regression results. Note that the slope of the line is equal to the coefficient for income.
     plot(GSS$Happiness ~ GSS$Income)
     abline(Solution1)
 
-# Now let's move on to Question 2. The following correlations show that work hours is negatively correlated with happiness and positively correlated with income. This suggests that work hours might confound the relationship between income and happiness.
+# Now let's move on to Question 2.Let's look at the correlations of work hours on happiness and income. They show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might confound the relationship between income and happiness.
     cor(GSS$WorkHours,GSS$Happiness)
     cor(GSS$WorkHours,GSS$Income)
 
-# We therefore want to control for the effect of work hours on happiness. Use the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
+# The next best step is to control for the effect of work hours on happiness. You can do this for yourself easily in R by adding the control variable directly to the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
 
 #---- Question 2-------------------------------------#
       Solution2<-glm()
