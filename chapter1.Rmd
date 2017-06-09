@@ -331,6 +331,24 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 ```
 
 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Steps prior to analysis with regression models 
+Which of the following is the most important step you should take before running a regression model on your data?
+*** =instructions
+- Identify how many variables you can include in your model while still attaining statistical significance
+- Identify your outcome of interest (i.e. depend variable)
+- Identify which type of regression model to perform
+- Identify whether any of your variables will need to be transformed
+*** =sct
+```{r}
+msg1 = "This is actually one of the later steps to take when building a regression model. It is usually best to build simple models before adding numerous control variables. Try again."
+msg2 = "Correct! This answer may seem obvious, but its importance cannot be understated.  Identifying one's outcome of interest is often the most frequently skipped step among newcomers to statistical analysis. All statistical analysis should be guided by theory about the causal relationship between an outcome of interest and its antecedents. Having a clear plan about what relationship you plan to test is extremely helpful in determining how to specific your statistical model. Conversely, mining through data without any clear theory guiding your research rarely leads to fruitful or interesting findings. "
+msg3 = "This is an important step, but it is not the most important of your options. Try again."
+msg4 = "Depending on the variables in you plan to use in your model, this is not always an important, much less necessary, step when building your model. Try again."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
+
+
 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d75a4ac636
 ## Using Regression to Get Causal Effects: Unconfoundedness
@@ -372,9 +390,6 @@ msg4 = "It's true that you might have a hard time finding statistically signific
 
 
 
-
-
-
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ff6e381314
 ## The Uncounfoundedness Assumption
 Although regression models are great for summarizing the association between variables, any causal interpretation of a regression models rests on the uncounfoundedness assumption (also known as the selection-on-observables assumption; and sometimes referred to as the conditional independence assumption). Which of the following summarizes this assumption?
@@ -402,11 +417,12 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 --- type:NormalExercise lang:r xp:50 skills:1 key:1ff9f6d33f
-## Toying with the Math Behind Ordinary Least Squares (OLS)
-Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to determine the sum of squared residuals (SSR) of the regression model.
+## Toying with OLS I: Outliers
+Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Understanding how regression models work can yield important insight into understanding how they can be biased. In this question, we will examine how outliers can effect regression slopes. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to answer the following question about outliers:
 
 *** =instructions
-- Estimate the sum of squared residuals from the provided regression model.
+- When does an outlier in a regression model's dependent variable, "Y", tend to cause the least bias in its relationship to an independent variable, "X" (i.e. its the regression line's slope)? 
+- Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X.
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -427,69 +443,130 @@ names(WePhone)[2]<-"PriceSold"
 # As a quick refresher, let's glimpse at the first few lines of data. Age refers to the number of years old the WePhone was, and Price Sold refers to the dollars it sold for.
     head(WePhone)
 
-# A regression model between a WePhone's Age and Price Sold produces the following table.
+# A regression model between a WePhone's Age and Price Sold produces the following results.
     model<-glm(PriceSold~Age,data=WePhone)
     summary(model)
     
-# Below visualizes the regression model as a line, and the data points as dots. Notice that the line appears to be placed in between the dots? This is not a coincidence. OLS regression models try to estimate coefficients that create the best fitting line within the data. That is, the line that a regression model produces minimizes the vertical distance (squared) between each data point and the regression line.  
+# Below visualizes the regression model as a line, and the data points as dots. The line that it (and any regression model) produces minimizes the vertical distance (squared) between each data point and the regression line.  
     plot(WePhone$PriceSold ~ WePhone$Age)
     abline(model)
     
-# We can actually calculate these distances manually. Let's create a variable that shows the predicted value of each observation based on the regression model. If you remember, the predicted value of any dependent variable can be determined by multiplying each value in the data with the corresponding regression coefficient, and adding them together.
-    InterceptCoefficient<-model$coefficients[1]
-    AgeCoefficient<-model$coefficients[2]
-    WePhone$PredictedPriceSold<-InterceptCoefficient+WePhone$Age*AgeCoefficient
+# What happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusally high price sold ($1000) given its age at three points of the grap, when Age = 1, 3, and 5.
+  # No outlier
+    plot(WePhone$PriceSold[1:25] ~ WePhone$Age[1:25], ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone[1:25,]))
+  # Outlier at Age = 1
+    WePhone[26,]<-c(1,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
+  # Outlier at Age = 3
+    WePhone[26,]<-c(3,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
+  # Outlier at Age = 5
+    WePhone[26,]<-c(5,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
 
-# If we look at the data, we can see that the values for PredictedPriceSold look pretty similar to the value of PriceSold.
-    head(WePhone)
-
-# Now for your first task: Create a variable named "residuals" dataset that estimates the PriceSold minus PredictedPriceSold
+# These graphs reveal the answer to the question about when an outlier in a regression model's dependent variable, "Y", causes the least amount of bias (or change in slope) in its relationship to an independent variable, "X". Answer the solution with "A", "B", or "C". Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X."
 
 #---- Question 1-------------------------------------#
-      residuals<-
+      Solution1<-""
 #----------------------------------------------------#
 
-# Now create a variable in the WePhone dataset called residuals2, which is the residuals squared.
-
-#---- Question 2-------------------------------------#
-      residuals2<-
-#----------------------------------------------------#
-
-# If we sum residuals 2, we get the sum of squared residuals (SSR). Try it now
-
-#---- Question 2-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
-
-# This number might seem arbitrary, but it represents the lowest number one can get with this data, given coefficients for Intercept and Age. If we alter the regression coefficients to any number other number, the sume of squared residuals will be larger. For example, if we were to reduce the intercept from the regression model by 5 and increase age by 1 like below, the number we produce with the above algorithm is larger than the number in Solution1. This will be the case no matter how you change the coefficients. This is exactly what ordinary least squares (OLS) regression models optimize: They estimate coefficients for a model that minimizes the squares of differences (or residuals) between the observed responses and those predicted by the model. 
-    InterceptCoefficient<-model$coefficients[1]-5
-    AgeCoefficient<-model$coefficients[2]+1
-    WePhone$PredictedPriceSold<-InterceptCoefficient+WePhone$Age*AgeCoefficient
-    sum((WePhone$PriceSold-WePhone$PredictedPriceSold)^2)                
-                
 ```
 *** =solution
 ```{r}
-# Prep
-    model<-glm(PriceSold~Age,data=WePhone)
-    InterceptCoefficient<-model$coefficients[1]
-    AgeCoefficient<-model$coefficients[2]
-    WePhone$PredictedPriceSold<-InterceptCoefficient+WePhone$Age*AgeCoefficient
-#Answer
-    residuals<-WePhone$PriceSold-WePhone$PredictedPriceSold
-    residuals2<-residuals^2
-    Solution1<-sum(residuals2)
+    Solution1<-"B"
 
 ```
 *** =sct
 ```{r}
-test_object("residuals")
-test_object("residuals2")
 test_object("Solution1")
 
-success_msg("Good work! Although you will never need to calculate an OLS regression model by hand, you now know precisely what the model is attempting to estimate.")
+success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusally high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
 ```
 
+
+
+--- type:NormalExercise lang:r xp:50 skills:1
+## Toying with OLS II: Statistical Power
+Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
+
+*** =instructions
+- Which regression model most accurately represents the true relationship between WePhone `Age` and `SalesPrice`?
+*** =pre_exercise_code
+```{r}
+#Original dataset
+set.seed(1)
+library(ggplot2)
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),5))
+WePhone$Feedback<-round(rnorm(n=25,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=25,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=25,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+WePhone1<-WePhone
+
+#Second dataset
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),20))
+WePhone$Feedback<-round(rnorm(n=100,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=100,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=100,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+WePhone2<-WePhone
+
+#Random noise
+noise<-data.frame(Age=c(1,2,3,4,5)+rnorm(n=25,mean=0,sd=.3))
+noise$PriceSold<-round(rnorm(n=25,mean=400,sd=100))
+
+#Append random noise
+WePhone1<-rbind(WePhone1,noise)
+WePhone2<-rbind(WePhone2,noise)
+rm(list = c("noise","WePhone"))
+```
+
+*** =sample_code
+```{r}
+# We have two datasets, WePhone1 and WePhone2. The first contains 25 real observations and 25 random observations; the second contains 100 real observations and 25 random observations. As a reminder, each dataset contains two variables, "Age"" and "PriceSold." 
+    summary(WePhone1)
+    summary(WePhone2)
+
+# Build regression models using the glm function, that shows the effect of Age on PriceSold for WePhones in each dataset.
+
+#---- Question 1 - glm in dataset WePhone1-----------#
+      Solution1<-glm()
+#----------------------------------------------------#
+
+
+#---- Question 2 - glm in dataset WePhone2-----------#
+      Solution2<-glm()
+#----------------------------------------------------#
+
+# Which of these models better represents the relationship between Age and PriceSold? Solution1 or Solution2?
+      
+#---- Question 3 - glm in dataset WePhone2-----------#
+      Solution3<-""
+#----------------------------------------------------#
+
+```
+*** =solution
+```{r}
+    Solution3<-"Solution2"
+```
+*** =sct
+```{r}
+test_object("Solution3")
+
+success_msg("Good work! Larger datasets tend to be more robust to 'statistical noise' - unexplained variation in the sample. In this example, statistical noise decreased the relationship between Age and PriceSold (i.e. the coefficient of Age in the model). However, it is possible for statistical noise to induce spurious relationships as well.")
+```
 
 
 
@@ -512,7 +589,9 @@ success_msg("Good work! Although you will never need to calculate an OLS regress
 ## Practice Creating a Regression Model With Interaction Effects
 An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
 
-A CATE is basically an example of statistical moderation (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. Or in other words, the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes an interaction between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a  causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
+
+In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
 
 *** =instructions
 - Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a mediation effect for `Female`
