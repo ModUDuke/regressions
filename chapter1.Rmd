@@ -331,7 +331,7 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
 ## Steps prior to analysis with regression models 
 Which of the following is the most important step you should take before running a regression model on your data?
 *** =instructions
@@ -489,7 +489,7 @@ success_msg("Good work! Outliers typically effect the slope of a bivariate regre
 
 
 
---- type:NormalExercise lang:r xp:50 skills:1
+--- type:NormalExercise lang:r xp:50 skills:1 key:d09f695669
 ## Toying with OLS II: Statistical Power
 Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
 
