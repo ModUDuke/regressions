@@ -1,94 +1,139 @@
 --- 
-title       : "Experiments 2: Controlled Experiments"
-description : "These videos and exercises introduce controlled experiments."
-
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:4745db858e
-## Controlled Experiments
+title       : "Regressions 2: Introduction to Matching Methods"
+description : "This chapter will introduce you to using matching methods to find causal effects"
+ 
+ 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## Matching Methods
 *** =video_link
-//player.vimeo.com/video/198212077
+//player.vimeo.com/video/217555077
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ebe90c9c16
-## Multiple Choice: Controlled experiments
-Laurel is in the market for a new phone after cracking the screen on her old one. Her next phone choice will be based on which is more durable: the WePhone 10S or the Universe S10. She looks at a YouTube channel video where the host buys one of each phone and tests how much force is needed to crush each phone with a hydraulic press. If every WePhone or Universe from the factory is truly identical and if the phones are tested under exactly the same condition, then is just one crushing test enough to determine durability?
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Reasons to Use Matching Methods. 
+Megan the exercise freak (health coach) believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She asks thousands of people whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. She finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
 
+*** =instructions
+- Because you didn't ask whether people why they chose to exercise on Sunday.
+- Because most fitness clubs meet on Sundays.
+- Because Sunday is most people's favorite day to exercise.
+- Because people who eat out might have a higher propensity to exercise as well.
+
+*** =sct
+```{r}
+msg1 = "Try again"
+msg2 = "Try again"
+msg3 = "Well done"
+msg4 = "Try again"
+test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
+
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## The Lifetime Earnings of Veterans and Nonveterans
+*** =video_link
+//player.vimeo.com/video/217555250
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Why we Need Matching Methods
+Why couldn't Angrist just compare the lifetime earnings of veterans and nonveterans with standard regression methods?
+*** =instructions
+- Because the people who applied to the military and got rejected are probably poor people in the first place.
+- Because the military only rejects disabled people.
+- Because the veterans who selected into the military may have had very different earnings trajectories than individuals who had not selected into the military.
+- Because people who got rejected are likely to be disproportionately female.
+*** =sct
+```{r}
+msg1 = "Correct!"
+msg2 = "Try again"
+msg3 = "Well done"
+msg4 = "Try again"
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## The Unconfoundedness Assumption in Angrist's Study on the Effect of Veteran Status on Lifetime Earnings
+*** =video_link
+//player.vimeo.com/video/217555486
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Replication and Validity
+Suppose you replicate the Angrist analysis using more recent data from 1992-2015, and find approximately zero causal effects for both whites and nonwhites, for all stages of life. On its own, would this finding invalidate Angrist's analysis?
 *** =instructions
 - Yes
 - No
 *** =sct
 ```{r}
-msg1 = "Correct, only two observations are needed to determine whether there is a causal effect between the treatment (phone type) and outcome (durability) if all experimental conditions between the phones are identical (i.e. If all other factors that could influence the outcome are controlled for). That's assuming you think a crush test is a valid one for determining real-world durability, of course!"
-msg2 = "You might think not, but consider this as the most theoretically ideal case, and try again."
-test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
+msg1 = "Try again"
+msg2 = "Correct! This is a relatively difficult question. It is possible that unit level causal effects change over time, so using a different data set with more recent data may simply tell us that the causal effect has been decreasing over time. If this is the case, your replication does not necessarily invalidate his analysis. On the other hand, if you have a strong reason to believe that the causal effects do not change over time, then this would perhaps call into question the validity of the earlier findings."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:e157142b3a
-## Comparing Ratios
-Laurel's video showed that the WePhone 10S was stronger than the Universe S10. Laurel is now interested in what factors caused the WePhone 10S to be more durable than the Universe S10. Laurel examines the model specifications of each phone, and assumes that whichever specification is most different between the phones is the cause of their different durabilities.
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Causal Inference with Matching Methods 
+Suppose you want to know the effect of enrollment in a Massive Open Online Course (MOOC) on income. You are worried that people with more traditional education-e.g., someone with a bachelor's degree-will be more likely to enroll in a MOOC and also more likely to make more income, compared to someone with less traditional education-e.g., someone with only a high school diploma. So you make the unconfoundedness assumption that, holding traditional education fixed, people randomly enroll in MOOCs. You then use matching to estimate the ATE of MOOC enrollment, and find that it is positive. What policy might you recommend from this, if any?
 
 *** =instructions
-- Examine the provided phone specifications in dataframe`PhoneSpecifications` and identify the specification that has the `largest ratio` between the WePhone 10S and the Universe S10
-- Write out the `name` of that specification
-- write out the `size` of this ratio (expressed as a quotient)
+- No recommendation-correlation does not equal causation and so we cannot conclude what the effect of MOOC enrollment is.
+- MOOC enrollment should be promoted as a means of improving people's wages.
+- The costs of enrolling in MOOCs should qualify for federal student loans, just as traditional educational approaches do.
+- MOOCs should be banned so as to promote traditional educational methods.
 
-*** =hint
-- For Solution1, make sure to identify the name of the specification precisely. A trick to doing this without writing it out is to use the `names` function, for example `names(PhoneSpecifications)[X]` where X equals the column of the specification
-- For Solution2. The ratio of a specification between the WePhone 10S and Universe S10 can be calculated by dividing the specification value of the WePhone 10S by the specification value of the Universe S10. Make sure that your answer is not rounded. Use R's syntax to compute (for example, enter `Specification$X[1]/Specification$X[2]` where X is the specification.
+*** =sct
+```{r}
+msg1 = "Assuming you believe the unconfoundedness assumption, the matching method does actually get a true causal effect. As usual, there is always room for debate on whether this assumption is credible, but this answer overstates that case."
+msg2 = "Correct! Since the effect of MOOCs on income is positive, policies which promote MOOCs will tend to increase income on average."
+msg3 = "Our evidence suggests that MOOCs may help individuals achieve better incomes, but we do not have enough informtion to justify whether MOOCs should qualify for student loans. For example, given that MOOCs are relatively inexpensive to enroll in, it may be unnecessary or unreasonably costly to create a system that provides federal student loans for MOOCs."
+msg4 = "Since the study finds a positive treatment effect of MOOCs on income, this is an unintuitive conclusion to arrive at."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
 
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## The Effect of Volunteer Military Service on Lifetime Earnings
+*** =video_link
+//player.vimeo.com/video/217555588
+
+
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Propensity Score Matching in R
+Some sort of matching question
+
+*** =instructions
+- Do something
 
 *** =pre_exercise_code
 ```{r}
-PhoneSpecifications<-data.frame(Phone=c("WePhone 10S","UniverseS10"),Weight=c(190,180),Battery_Capacity=c(4000,3500),Diagonal_Length=c(5.5,5.2),Storage=c(64,64),Luminance=c(800,550))
+library(MatchIt)
+
+x<-rnorm(10,10)
+
 ```
 *** =sample_code
 ```{r}
-# To begin, let's print the dataframe to the console
-  print(PhoneSpecifications)
-
-# Now let's answer Question 1: Write the column name of the specification with the largest ratio between the WePhone 10S and the Universe S10 (Must be a character).
-#---- Question 1-------------------------------------#
-    Solution1<-    
-#----------------------------------------------------#
-
-# Now let's answer Question 2: Return the quotient of the phone specification selected in Solution1, between the WePhone10S and UniverseS10 (do not round!)   
-#---- Question 2-------------------------------------#
-    Solution2<- 
-#----------------------------------------------------#
+# Useful guide
 ```
 *** =solution
 ```{r}
-#loop through specification ratios to find max ratio
-Ratios<-vector(length=5)
-for(i in 2:length(PhoneSpecifications[1,])){
-  Ratios[i-1]<-PhoneSpecifications[1,i]/PhoneSpecifications[2,i]
-}
-Solution1<-names(PhoneSpecifications)[match(max(Ratios),Ratios)+1]
-
-Solution2<-max(Ratios)
-
+# Solution and ideal way to solve problem. For example, imagine we want the user to add 2+2 and store result in "x"
+Solution1<-sum(x)
 ```
 *** =sct
 ```{r}
-
 test_object("Solution1")
-
-test_object("Solution2")
-
-
-success_msg("Good work! Keep in mind, even though there is a correlation between the treatment (luminance) and outcome (durability), this correlation is spurious; in reality, a phone's luminance (brightness) does not have a causal effect on its durability.
-")
+success_msg("Good work!")
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:a880db44ea
-## Multiple Choice: Is it a Controlled Experiment?
-As a staunch fiscal conservative, Peter is looking for ways to lower his daily expenses. Peter believes he might be able to lower his costs on car gasoline if he stops using his air conditioner and just opens his window. As an experiment, Peter tracks his gas usage during his commute to work over two days. During the first day, Peter uses his air conditioner. The second day, Peter opens his window. Is this a controlled experiment?
 
-*** =instructions
-- Yes
-- No
-*** =sct
-```{r}
-msg1 = "Can we be sure that that independent variable is the only factor being adjusted in Peter's experiement? Try again."
-msg2 = "Correct! An experiment is considered a 'controlled' experiment when the independent variable is the only factor that is adjusted between the treatment and control. However, Peter's gas usage could be influenced by many factors that are outside of his control, like the traffic or the weather."
-test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
-```
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## The Credibility of the Unconfoundedness Assumption
+*** =video_link
+//player.vimeo.com/video/217555887
