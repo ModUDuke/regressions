@@ -161,7 +161,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3b325c1914
 ## Coefficients of Zero
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
 *** =instructions
@@ -347,7 +347,7 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
 ## Steps prior to analysis with regression models 
 Which of the following is the most important step you should take before running a regression model on your data?
 *** =instructions
@@ -505,7 +505,7 @@ success_msg("Good work! Outliers typically effect the slope of a bivariate regre
 
 
 
---- type:NormalExercise lang:r xp:50 skills:1
+--- type:NormalExercise lang:r xp:50 skills:1 key:d09f695669
 ## Toying with OLS II: Statistical Power
 Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
 
@@ -687,13 +687,13 @@ success_msg("Good work! It appears that the treatment only affected individuals 
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:c640d011e7
 ## Defining The Average Effect of Treatment on the Treated
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:e0cd9983a6
 ## Average Effect of Treatment on the Treated
 A scientist develops a new drug to help reduce addiction to pain killers. He administers this drug to many recent abusers of painkillers, and finds that these patients had substantially lower rates of painkiller abuse than would be expected, given that painkiller addicts often relapse following rehab. However, across the **entire human population**, the scientist expects the average treatment effect of his drug to be negligible on rates of painkiller abuse. Why might the scientist expect the average treatment effect on the treated to be larger than the average treatment effect? 
 
@@ -711,13 +711,13 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 
  
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:c1f754c942
 ## How to Compute ATE Under Unconfoundedness, and What Not to Do
 *** =video_link
 //player.vimeo.com/video/217554781
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:f8da010630
 ## Practice with Survey Weights
 Given the diversity of people in the United States, many surveys have difficulty gathering perfectly representative samples of the population. This can be problematic when your research results are meant to be generalizable to the population at large. However, surveyors typically know the true proportion of demographic traits among the U.S. population, and provide survey weights that compensates for their sampling bias, by increasing the importance of underrepresented groups in individual's statistical analyses. In this problem, we will practice using survey weights.
 
@@ -781,7 +781,7 @@ success_msg("Good work! Although survey weights do not often change one's result
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:503bddda77
 ## When Survey Weights Are Unnecessary 
 One week after Cambrian Park was released, Delimited Pictures gathered a survey of people who watched it and asked them whether or not they liked the film. Delimited Pictures put significant effort into catering to a younger female audience - individuals who had the least positive reaction to Cambrian Park's prequel, Neoproterozoic Park. If Delimited Pictures is just interested in whether female college students in Los Angeles seemed to enjoy Cambrian Park, do they need to use survey weights to poststratify their sample?  
 
