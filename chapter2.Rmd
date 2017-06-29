@@ -3,12 +3,12 @@ title       : "Regressions 2: Introduction to Matching Methods"
 description : "This chapter will introduce you to using matching methods to find causal effects"
  
  
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:149c81ed6d
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## Matching Methods
 *** =video_link
 //player.vimeo.com/video/217555077
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ffc8655145
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## Reasons to Use Matching Methods. 
 Megan the exercise freak (health coach) believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She asks thousands of people whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. She finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
 
@@ -30,13 +30,13 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d757f83840
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## The Lifetime Earnings of Veterans and Nonveterans
 *** =video_link
 //player.vimeo.com/video/217555250
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:59172334ed
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## Why we Need Matching Methods
 Why couldn't Angrist just compare the lifetime earnings of veterans and nonveterans with standard regression methods?
 *** =instructions
@@ -55,14 +55,14 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:1e1cf83d18
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## The Unconfoundedness Assumption in Angrist's Study on the Effect of Veteran Status on Lifetime Earnings
 *** =video_link
 //player.vimeo.com/video/217555486
 
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:0cb4870c69
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## Replication and Validity
 Suppose you replicate the Angrist analysis using more recent data from 1992-2015, and find approximately zero causal effects for both whites and nonwhites, for all stages of life. On its own, would this finding invalidate Angrist's analysis?
 *** =instructions
@@ -75,7 +75,7 @@ msg2 = "Correct! This is a relatively difficult question. It is possible that un
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:1cc5a9ee77
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## Causal Inference with Matching Methods 
 Suppose you want to know the effect of enrollment in a Massive Open Online Course (MOOC) on income. You are worried that people with more traditional education-e.g., someone with a bachelor's degree-will be more likely to enroll in a MOOC and also more likely to make more income, compared to someone with less traditional education-e.g., someone with only a high school diploma. So you make the unconfoundedness assumption that, holding traditional education fixed, people randomly enroll in MOOCs. You then use matching to estimate the ATE of MOOC enrollment, and find that it is positive. What policy might you recommend from this, if any?
 
@@ -96,13 +96,13 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:a731479ef2
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## The Effect of Volunteer Military Service on Lifetime Earnings
 *** =video_link
 //player.vimeo.com/video/217555588
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:ef8cd14ae9
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Propensity Score Matching in R
 Some sort of matching question
 
@@ -111,7 +111,7 @@ Some sort of matching question
 
 *** =pre_exercise_code
 ```{r}
-library(Matching)
+library(lme4)
 
 x<-rnorm(10,10)
 
@@ -133,7 +133,7 @@ success_msg("Good work!")
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:c6f282fde8
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## The Credibility of the Unconfoundedness Assumption
 *** =video_link
 //player.vimeo.com/video/217555887
