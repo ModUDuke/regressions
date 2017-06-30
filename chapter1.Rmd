@@ -161,7 +161,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3b325c1914
 ## Coefficients of Zero
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
 *** =instructions
@@ -347,7 +347,7 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
 ## Steps prior to analysis with regression models 
 Which of the following is the most important step you should take before running a regression model on your data?
 *** =instructions
