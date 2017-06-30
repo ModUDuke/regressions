@@ -1,139 +1,441 @@
 --- 
-title       : "Regressions 2: Introduction to Matching Methods"
-description : "This chapter will introduce you to using matching methods to find causal effects"
+title       : "Regressions 1: Introduction to Regression As Causality"
+description : "This chapter will introduce you to using regression analysis to find causal effects"
  
  
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:50b5d3e2c4
-## Matching Methods
+--- 
+title       : "Regressions 2: Using Regression to Estimate Causal Effects"
+description : "This chapter will introduce you to using regression analysis to find causal effects"
+
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:d75a4ac636
+## Using Regression to Get Causal Effects: Unconfoundedness
 *** =video_link
-//player.vimeo.com/video/217555077
+//player.vimeo.com/video/217554416
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:c0f7365caa
-## Reasons to Use Matching Methods. 
-Megan the exercise freak (health coach) believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She asks thousands of people whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. She finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
 
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:36681d6cec
+## Regressing Soda pop and K-pop
+You are studying the effect of pop songs on teenage product consumption using a dataset from South Korea. Via a regression model, you find that for every four songs downloaded, soft drink sales tend to increase by about one can. Does this imply that South Korean Soda Companies should start sponsoring pop stars?
 *** =instructions
-- Because you didn't ask whether people why they chose to exercise on Sunday.
-- Because most fitness clubs meet on Sundays.
-- Because Sunday is most people's favorite day to exercise.
-- Because people who eat out might have a higher propensity to exercise as well.
-
+- No
+- Yes
 *** =sct
 ```{r}
-msg1 = "Try again"
-msg2 = "Try again"
-msg3 = "Well done"
-msg4 = "Try again"
-test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
+msg1 = "Correct. The regression model does not necessarily recover a true causal effect of song downloads on soft drink sales."
+msg2 = "Whoops. Try again."
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
 ```
 
 
 
-
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:c16595fe79
-## The Lifetime Earnings of Veterans and Nonveterans
-*** =video_link
-//player.vimeo.com/video/217555250
-
-
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:5683b86064
-## Why we Need Matching Methods
-Why couldn't Angrist just compare the lifetime earnings of veterans and nonveterans with standard regression methods?
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:5c60df0d16
+## Knowing it all
+If you could observe every single variable that mattered for determining outcomes, would you be able to learn all the causal effects you want?
 *** =instructions
-- Because the people who applied to the military and got rejected are probably poor people in the first place.
-- Because the military only rejects disabled people.
-- Because the veterans who selected into the military may have had very different earnings trajectories than individuals who had not selected into the military.
-- Because people who got rejected are likely to be disproportionately female.
+- No, regressions only give you correlation, not causation.
+- Yes, you'd have every combination of variables possibly needed for determining causality.
+- Yes, but just for that dataset.
+- No, it would give you conflicting information.
 *** =sct
 ```{r}
-msg1 = "Correct!"
-msg2 = "Try again"
-msg3 = "Well done"
-msg4 = "Try again"
+msg1 = "Although it may seem like that is what this course is implying, there are times when regressions can demonstrate a causal relationship. Try again."
+msg2 = "According to our definition of causality, if you truly observed every relevant variable, you would indeed be able to learn all the causal effects you want. There are a few caveats though. First, you would still need to ensure that there was at least some variation in each variable you cared about. Even if you observed every variable that mattered, if you never see those variables change across units, you will not be able to learn their causal effects. Second, no real world dataset in social science will truly have all variables you want, which is why the unconfoundedness assumption is often made-to assume that the variables we do not observe are not related to the treatment."
+msg3 = "This answer is tricky. Remember, the dataset contains every relevent variable in the universe for determining outcomes. That should make findings from it generalizable beyond the dataset. Try again."
+msg4 = "It's true that you might have a hard time finding statistically significant results if your sample was small, as there theoretically could be an infinite number of relevant variables for any outcome in the universe, many of which are correlated. However, many events do have a variety of causes, and many regression models do incorporate a lot of 'conflicting' variables. Try again."
+```
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:ff6e381314
+## The Uncounfoundedness Assumption
+Although regression models are great for summarizing the association between variables, any causal interpretation of a regression models rests on the uncounfoundedness assumption (also known as the selection-on-observables assumption; and sometimes referred to as the conditional independence assumption). Which of the following summarizes this assumption?
+
+*** =instructions
+- All variables that affect treatment assignment and the outcome of interest are observable and conditioned upon.
+- If something happens more frequently than expected during a given period, we can expect that it will happen less frequently in the future
+- There is little or no multicollinearity in the data
+- The residuals of a regression model are normally distributed.
+*** =sct
+```{r}
+msg1 = "Correct. Put even more simply, any causal interpretation of a regression model assumes that the relationships observed in the data are unconfounded. In most cases, this is impossible to verify empirically. However, it is a pretty large assumption. Most variations of regression models that we will describe in later chapters try to reduce the strength of this assumption."
+msg2 = "This is actually a summary of the gambler's fallacy. Try again"
+msg3 = "This is an assumption that regression models make, but it is not a description of the unconfoundedness assumption"
+msg4 = "This is an assumption that regression models make, but it is not a description of the unconfoundedness assumption"
 test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:0a76777293
-## The Unconfoundedness Assumption in Angrist's Study on the Effect of Veteran Status on Lifetime Earnings
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:9b0c9370cf
+## How to Compute Regressions: Ordinary Least Squares (OLS)
 *** =video_link
-//player.vimeo.com/video/217555486
+//player.vimeo.com/video/217554577
+
+
+--- type:NormalExercise lang:r xp:50 skills:1 key:1ff9f6d33f
+## Toying with OLS I: Outliers
+Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Understanding how regression models work can yield important insight into understanding how they can be biased. In this question, we will examine how outliers can effect regression slopes. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to answer the following question about outliers:
+
+*** =instructions
+- When does an outlier in a regression model's dependent variable, "Y", tend to cause the least bias in its relationship to an independent variable, "X" (i.e. its the regression line's slope)? 
+- Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X.
+*** =pre_exercise_code
+```{r}
+set.seed(1)
+library(ggplot2)
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),5))
+WePhone$Feedback<-round(rnorm(n=25,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=25,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=25,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+```
+
+*** =sample_code
+```{r}
+# As a quick refresher, let's glimpse at the first few lines of data. Age refers to the number of years old the WePhone was, and Price Sold refers to the dollars it sold for.
+    head(WePhone)
+
+# A regression model between a WePhone's Age and Price Sold produces the following results.
+    model<-glm(PriceSold~Age,data=WePhone)
+    summary(model)
+    
+# Below visualizes the regression model as a line, and the data points as dots. The line that it (and any regression model) produces minimizes the vertical distance (squared) between each data point and the regression line.  
+    plot(WePhone$PriceSold ~ WePhone$Age)
+    abline(model)
+    
+# What happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusally high price sold ($1000) given its age at three points of the grap, when Age = 1, 3, and 5.
+  # No outlier
+    plot(WePhone$PriceSold[1:25] ~ WePhone$Age[1:25], ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone[1:25,]))
+  # Outlier at Age = 1
+    WePhone[26,]<-c(1,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
+  # Outlier at Age = 3
+    WePhone[26,]<-c(3,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
+  # Outlier at Age = 5
+    WePhone[26,]<-c(5,1000)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    abline(glm(PriceSold~Age,data=WePhone))
+
+# These graphs reveal the answer to the question about when an outlier in a regression model's dependent variable, "Y", causes the least amount of bias (or change in slope) in its relationship to an independent variable, "X". Answer the solution with "A", "B", or "C". Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X."
+
+#---- Question 1-------------------------------------#
+      Solution1<-""
+#----------------------------------------------------#
+
+```
+*** =solution
+```{r}
+    Solution1<-"B"
+
+```
+*** =sct
+```{r}
+test_object("Solution1")
+
+success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusally high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
+```
 
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:c77a6c3b82
-## Replication and Validity
-Suppose you replicate the Angrist analysis using more recent data from 1992-2015, and find approximately zero causal effects for both whites and nonwhites, for all stages of life. On its own, would this finding invalidate Angrist's analysis?
+--- type:NormalExercise lang:r xp:50 skills:1
+## Toying with OLS II: Statistical Power
+Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
+
+*** =instructions
+- Which regression model most accurately represents the true relationship between WePhone `Age` and `SalesPrice`?
+*** =pre_exercise_code
+```{r}
+#Original dataset
+set.seed(1)
+library(ggplot2)
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),5))
+WePhone$Feedback<-round(rnorm(n=25,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=25,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=25,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+WePhone1<-WePhone
+
+#Second dataset
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),20))
+WePhone$Feedback<-round(rnorm(n=100,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=100,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=100,mean=0,sd=30))
+names(WePhone)[4]<-"Price Sold"
+WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
+WePhone$age<-NULL
+WePhone$Feedback<-NULL
+names(WePhone)[2]<-"PriceSold"
+WePhone2<-WePhone
+
+#Random noise
+noise<-data.frame(Age=c(1,2,3,4,5)+rnorm(n=25,mean=0,sd=.3))
+noise$PriceSold<-round(rnorm(n=25,mean=400,sd=100))
+
+#Append random noise
+WePhone1<-rbind(WePhone1,noise)
+WePhone2<-rbind(WePhone2,noise)
+rm(list = c("noise","WePhone"))
+```
+
+*** =sample_code
+```{r}
+# We have two datasets, WePhone1 and WePhone2. The first contains 25 real observations and 25 random observations; the second contains 100 real observations and 25 random observations. As a reminder, each dataset contains two variables, "Age"" and "PriceSold." 
+    summary(WePhone1)
+    summary(WePhone2)
+
+# Build regression models using the glm function, that shows the effect of Age on PriceSold for WePhones in each dataset.
+
+#---- Question 1 - glm in dataset WePhone1-----------#
+      Solution1<-glm()
+#----------------------------------------------------#
+
+
+#---- Question 2 - glm in dataset WePhone2-----------#
+      Solution2<-glm()
+#----------------------------------------------------#
+
+# Which of these models better represents the relationship between Age and PriceSold? Solution1 or Solution2?
+      
+#---- Question 3 - glm in dataset WePhone2-----------#
+      Solution3<-""
+#----------------------------------------------------#
+
+```
+*** =solution
+```{r}
+    Solution3<-"Solution2"
+```
+*** =sct
+```{r}
+test_object("Solution3")
+
+success_msg("Good work! Larger datasets tend to be more robust to 'statistical noise' - unexplained variation in the sample. In this example, statistical noise decreased the relationship between Age and PriceSold (i.e. the coefficient of Age in the model). However, it is possible for statistical noise to induce spurious relationships as well.")
+```
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
+## Common Statistical Terms and Transformations in Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:43c6c78dff
+## Practice Creating a Regression Model With Interaction Effects
+An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. However, slicing data this way can substantially reduce one's statistical power, and becomes unwieldy when a data scientist wants to determine more than a couple of CATEs with a given sample. For example, if race is also and important factor in whether employees plan to leave Unter if Unter reduces their HR department, we would need to slice the data several more times, and run several distinct t.tests on the data.
+
+A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a  causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
+
+In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+
+*** =instructions
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a mediation effect for `Female`
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
+- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+*** =pre_exercise_code
+```{r}
+set.seed(1)
+n=682
+#Create Dataframe
+  UnterHR<-data.frame(Treatment=rbinom(n,1,.4),Female=rbinom(n,1,.1),LeaveJob=0,Race=sample(4,n,prob=c(.6,.1,.1,.2),replace=T))
+#Rename race
+  UnterHR$Race<-as.factor(ifelse(UnterHR$Race==1,"White",ifelse(UnterHR$Race==2,"Black",ifelse(UnterHR$Race==3,"Latino","Asian"))))
+#LeaveJob
+  #treatment makes men less likely to leave
+    UnterHR$LeaveJob[UnterHR$Treatment==0 & UnterHR$Female==0]<-rbinom(length(UnterHR$LeaveJob[UnterHR$Treatment==0 & UnterHR$Female==0]),1,.3)
+    UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$Female==0]<-rbinom(length(UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$Female==0]),1,.2)
+  #treatment makes wommen more likely to leave
+    UnterHR$LeaveJob[UnterHR$Treatment==0 & UnterHR$Female==1]<-rbinom(length(UnterHR$LeaveJob[UnterHR$Treatment==0 & UnterHR$Female==1]),1,.3)
+    UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$Female==1]<-rbinom(length(UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$Female==1]),1,.6)
+  #treatment makes blacks and latinos more likely to leave (redraw if leave job = 0 and and black or latino = 1)
+    #count people in either category
+      n2<-length(UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$LeaveJob==0 & (UnterHR$Race=="Black" | UnterHR$Race=="Latino" )])
+    #redraw for those
+      UnterHR$LeaveJob[UnterHR$Treatment==1 & UnterHR$LeaveJob==0 & (UnterHR$Race=="Black" | UnterHR$Race=="Latino" )]<-rbinom(n2,1,.5)
+      
+      
+```
+*** =sample_code
+```{r}
+# Before running a regression model, let's examine the data
+    str(UnterHR)
+
+# The dataset contains four variables: Treatment, Female, LeaveJob, and race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables.
+    summary(UnterHR$Treatment)
+    summary(UnterHR$Female)
+    summary(UnterHR$LeaveJob)
+    summary(UnterHR$Race)
+
+# Question 1 asks us construct a regression model that measures the effect of Treatment on LeaveJob, with a "mediation effect"" for Female. This is the same as "controlling" for Female, as we did for other independent variables in our previous examples. For reference, the syntax for glm is "glm(Y~X+Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe.
+
+#---- Question 1-------------------------------------#
+      Solution1<-glm()
+#----------------------------------------------------#
+    
+# If you entered Solution1 correctly and summarize the results via summary(Solution1), the effect for Treatment should be about .047 (but non significant), and the effect for Female should be about .16. The direct interpretation of this model is that Treatment increases the odds that a person will leave their job by .046 (4.6%), and being Female increases the odds that a person will leave their job by .16, regardless of Treatment. 
+      
+# The model in Solution1 does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment effects women differently, we need to add an interaction between Female and Treatment. For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe. The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. Construct a regression model that measures the effect of`Treatment on LeaveJob, with a moderation effect for Female.
+
+#---- Question 2-------------------------------------#
+      Solution2<-glm()
+#----------------------------------------------------#
+
+# By default, R includes independent variables for Treatment and Female when we add a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. The large coefficient for this interaction effect suggests that Treatment has a large effect on women's odds of leaving their job.
+      
+# Let's now answer the final question for this exercise. We need to include an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. For reference, the syntax for glm with two interaction effects is "glm(Y~X*Z1+X*Z2,data=df)" where Y is the name of the independant variable, X is the name of the dependent variable, Z1 is the name of the first mediation variable, Z2 is the name of the first mediation variable and df is the name of the dataframe.
+      
+#---- Question 3-------------------------------------#
+      Solution3<-glm()
+#----------------------------------------------------#
+      
+      
+      
+```
+*** =solution
+```{r}
+      Solution1<-glm(LeaveJob ~ Treatment + Female,data=UnterHR)
+      Solution2<-glm(LeaveJob ~ Treatment * Female,data=UnterHR)
+      Solution3<-glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
+```
+*** =sct
+```{r}
+#test_object("Solution1")
+#test_object("Solution2")
+#test_object("Solution3")
+success_msg("Good work! It appears that the treatment only affected individuals who were Female, Black, or Latino.")
+```
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:7fb39b7cb6
+## Logistic Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## Defining The Average Effect of Treatment on the Treated
+*** =video_link
+//player.vimeo.com/video/217554577
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## Average Effect of Treatment on the Treated
+A scientist develops a new drug to help reduce addiction to pain killers. He administers this drug to many recent abusers of painkillers, and finds that these patients had substantially lower rates of painkiller abuse than would be expected, given that painkiller addicts often relapse following rehab. However, across the **entire human population**, the scientist expects the average treatment effect of his drug to be negligible on rates of painkiller abuse. Why might the scientist expect the average treatment effect on the treated to be larger than the average treatment effect? 
+
+*** =instructions
+- Because those who were treated with the drug were more likely to gain benefit from using it.
+- Because painkiller abusers are an unreliable sample. 
+- Because the sample who tried the scientist's drug was small.
+*** =sct
+```{r}
+msg1 = "Correct! The only people who were administered the drug were painkiller addicts, but this is a relatively small portion of the population. The drug was designed to reduce addiction to painkillers, so cannot help the majority of individuals in the population who are not addicted to pain killers"
+msg2 = "Not quite. Think through why we care about ATT and try again"
+msg3 = "Actually, unless we know that a study's sample was biased, we have no reason to expect the observed treatment effect to increase or decrease. Try again."
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
+```
+
+ 
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
+## How to Compute ATE Under Unconfoundedness, and What Not to Do
+*** =video_link
+//player.vimeo.com/video/217554781
+
+
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
+## Practice with Survey Weights
+Given the diversity of people in the United States, many surveys have difficulty gathering perfectly representative samples of the population. This can be problematic when your research results are meant to be generalizable to the population at large. However, surveyors typically know the true proportion of demographic traits among the U.S. population, and provide survey weights that compensates for their sampling bias, by increasing the importance of underrepresented groups in individual's statistical analyses. In this problem, we will practice using survey weights.
+
+The American film studio, Delimited Pictures, is interested in how many tickets they should expect to sell to adults for their upcoming film, Cambrian Park, and what age group are most likely to watch it. They interview people across the country, asking them whether they plan to see the movie when it comes out. Although their resulting sample was not perfectly representative of the country's adult population, a statistician was able to provide them with survey weights that compensate for this sampling error. Use these survey weights and the dataset `Survey` to help Delimited Pictures estimate what proportion of the U.S. adult population will see their upcoming movie, and to determine what age group is most likely to watch it.
+
+
+*** =instructions
+- Estimate the proportion of the US adult population that plans to watch Cambrian Park (variable `WillWatch`) while using the provided survey weights.
+- Construct a survey-weighted OLS regression model to estimate the effect of `Age` on `WillWatch` controlling for `Female`.
+
+*** =hint
+- This is a useful hint
+*** =pre_exercise_code
+```{r}
+set.seed(1)
+n=1775
+#Create Dataframe
+  Survey<-data.frame(Black=rbinom(n,1,.1))
+  Survey$Latino<-ifelse(Survey$Black==1,0,rbinom(n-sum(Survey$Black),1,.07))
+  Survey$White<-ifelse(Survey$Black==1 | Survey$Latino==1,0,rbinom(n-sum(Survey$Black)-sum(Survey$Latino),1,.95))
+  Survey$Other<-ifelse(Survey$Black==1 | Survey$Latino==1 | Survey$White==1,0,1)
+  Survey$Female<-rbinom(n,1,.6)
+  Survey$Age<-round(c(rnorm(.7*n+1,mean=33,sd=4),rnorm(.1*n,mean=45,sd=5),rnorm(.2*n,mean=55,sd=5)))
+  Survey$Weight<-1.35*Survey$Black+1*Survey$White+1.3*Survey$Latino+1.07*Survey$Other+Survey$Age*.005+.3*(1-Survey$Female)-.3699
+  Survey$WillWatch<-rbinom(n,1,.01+.03*(1-Survey$Female)+.01*Survey$Black+.00003*Survey$Age^2)
+```
+*** =sample_code
+```{r}
+# To get used to what survey weights like look like, let's summarize the Weight variable in our dataset. The mean weight ranges from around 0.5 to 2.0 in this dataset, but other survey datasets may include weights with much larger numbers. In general, individuals with higher weights were undersampled. Having a large weights gives an observation more influence in your statistical models. 
+    summary(Survey$Weight)
+    
+# As a teaser to what we are doing when we "weight" the data, let's look at the variable for gender, 'Female`. The first line below shows the proportion of females in this survey. This number is much too uneven to be representative of the actual US population. The second line indicates the proportion of females in these survey when they are weighted. These numbers appear much more realistic.   
+    prop.table(table(Survey$Female))
+    prop.table(xtabs(Weight~Female, data=Survey))
+
+# What proportion of the U.S. population is planning to watch Cambrian Park? Without survey weights, we get the following results:
+    mean(Survey$WillWatch)
+    
+# This is no good. Limited Pictures expected that at least 7% of the population would watch their film. What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the waited mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
+
+#---- Question 1-------------------------------------#
+    Solution1<-weighted.mean()
+#----------------------------------------------------#
+    
+# It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. The syntax is `glm(Y ~ X + Z, weight = [Weight], data = [dataframe])`, where Y = the name of the dependent variable, X = the name of the independent variable, Z = the name of the control variable Weight = the weight variable, and dataframe = the dataframe that contains these variables.
+
+#---- Question 2-------------------------------------#
+    Solution2<-glm()
+#----------------------------------------------------#
+```
+*** =solution
+```{r}
+Solution1<-weighted.mean(Survey$WillWatch,Survey$Weight)
+Solution2<-glm(WillWatch ~ Female+Age, weight=Weight, data=Survey)
+```
+*** =sct
+```{r}
+test_object("Solution1")
+test_object("Solution2")
+success_msg("Good work! Although survey weights do not often change one's results substantially, it is still good practice to use them if they are provided to you, especially if you are trying to study trends about an entire population. If you are doing extensive analyis with weighted data, you may want to consider using the 'survey' package instead of the weight options in R's built in functions.")
+```
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## When Survey Weights Are Unnecessary 
+One week after Cambrian Park was released, Delimited Pictures gathered a survey of people who watched it and asked them whether or not they liked the film. Delimited Pictures put significant effort into catering to a younger female audience - individuals who had the least positive reaction to Cambrian Park's prequel, Neoproterozoic Park. If Delimited Pictures is just interested in whether female college students in Los Angeles seemed to enjoy Cambrian Park, do they need to use survey weights to poststratify their sample?  
+
 *** =instructions
 - Yes
 - No
 *** =sct
 ```{r}
 msg1 = "Try again"
-msg2 = "Correct! This is a relatively difficult question. It is possible that unit level causal effects change over time, so using a different data set with more recent data may simply tell us that the causal effect has been decreasing over time. If this is the case, your replication does not necessarily invalidate his analysis. On the other hand, if you have a strong reason to believe that the causal effects do not change over time, then this would perhaps call into question the validity of the earlier findings."
+msg2 = "Correct! Survey weights are only useful when you are trying to generalize a finding to the general population. They are typically only used for analysis of national trends. Since Delimited Pictures is only interested in how a narrow demographic perceived their new film, it is unlikely that they would need to weight their data."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4ef381374f
-## Causal Inference with Matching Methods 
-Suppose you want to know the effect of enrollment in a Massive Open Online Course (MOOC) on income. You are worried that people with more traditional education-e.g., someone with a bachelor's degree-will be more likely to enroll in a MOOC and also more likely to make more income, compared to someone with less traditional education-e.g., someone with only a high school diploma. So you make the unconfoundedness assumption that, holding traditional education fixed, people randomly enroll in MOOCs. You then use matching to estimate the ATE of MOOC enrollment, and find that it is positive. What policy might you recommend from this, if any?
-
-*** =instructions
-- No recommendation-correlation does not equal causation and so we cannot conclude what the effect of MOOC enrollment is.
-- MOOC enrollment should be promoted as a means of improving people's wages.
-- The costs of enrolling in MOOCs should qualify for federal student loans, just as traditional educational approaches do.
-- MOOCs should be banned so as to promote traditional educational methods.
-
-*** =sct
-```{r}
-msg1 = "Assuming you believe the unconfoundedness assumption, the matching method does actually get a true causal effect. As usual, there is always room for debate on whether this assumption is credible, but this answer overstates that case."
-msg2 = "Correct! Since the effect of MOOCs on income is positive, policies which promote MOOCs will tend to increase income on average."
-msg3 = "Our evidence suggests that MOOCs may help individuals achieve better incomes, but we do not have enough informtion to justify whether MOOCs should qualify for student loans. For example, given that MOOCs are relatively inexpensive to enroll in, it may be unnecessary or unreasonably costly to create a system that provides federal student loans for MOOCs."
-msg4 = "Since the study finds a positive treatment effect of MOOCs on income, this is an unintuitive conclusion to arrive at."
-test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
-```
-
-
-
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:e6b02f9c2c
-## The Effect of Volunteer Military Service on Lifetime Earnings
-*** =video_link
-//player.vimeo.com/video/217555588
-
-
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:79ddd83ae2
-## Propensity Score Matching in R
-Some sort of matching question
-
-*** =instructions
-- Do something
-
-*** =pre_exercise_code
-```{r}
-library(lme4)
-
-x<-rnorm(10,10)
-
-```
-*** =sample_code
-```{r}
-# Useful guide
-```
-*** =solution
-```{r}
-# Solution and ideal way to solve problem. For example, imagine we want the user to add 2+2 and store result in "x"
-Solution1<-sum(x)
-```
-*** =sct
-```{r}
-test_object("Solution1")
-success_msg("Good work!")
-```
-
-
-
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:3693fd2757
-## The Credibility of the Unconfoundedness Assumption
-*** =video_link
-//player.vimeo.com/video/217555887
