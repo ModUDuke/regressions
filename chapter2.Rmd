@@ -149,7 +149,7 @@ success_msg("Good work! Outliers typically effect the slope of a bivariate regre
 
 
 
---- type:NormalExercise lang:r xp:50 skills:1 key:4bb956183e
+--- type:NormalExercise lang:r xp:50 skills:1
 ## Toying with OLS II: Statistical Power
 Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
 
@@ -230,11 +230,96 @@ success_msg("Good work! Larger datasets tend to be more robust to 'statistical n
 
 
 
+--- type:NormalExercise lang:r xp:50 skills:1
+## Toying with OLS II: Statistical Power
+NixSplash, a water conservationist group in Utah, wants to make a targeted ad campaign to encourage high water consumers to reduce their water usage. To determine who to target with their ad campaign, NixSplash conducts a survey across a random sample of the population. However, the intern who put together NixSplash's survey asked a bunch of odd questions. Use NixSplash's survey dataset, `Survey`, to generate the best model for predicting a household's water usage.
+
+  *** =instructions
+- Build a regression model that includes all statistically significant predictors of a household's water usage (`Water`).
+- Build a regression model that includes all intuitive predictors of a household's water usage (`Water`).
+
+*** =pre_exercise_code
+```{r}
+# As usual, let's first examine the dataset. Water refers to the number of gallons (in hundreds) that the respondent has used in the past year, YardSize refers to the number of acres that the respondent owns, Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year, NSprinkler refers to whether the respondent's neighbor runs a sprinkler system on a daily basis, Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts, Massage refers to whether the respondent has ever gotten a massage, and Coffee refers to whether the respondent drinks coffee on a daily basis.
+    summary(Survey)
+
+# Some of the survey questions may seem irrelevant to how much a water a household uses but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. In the model below, we find a statistically significant effect from all variables except Dunkin and Massage.
+    summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Dunkin+Massage+Coffee,data=Survey))
+  
+# Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model.
+
+#-------------------- Question 1 --------------------#
+      Solution1<-glm()
+#----------------------------------------------------#
+
+# So which model is better? A model that predicts water usage with all of our available variables, or a model that predicts water usage without Dunking or Coffee? It turns out that statisticians have developed a variety of tools to measure how well a model specification fits the data (i.e. a model's "goodness of fit"). The GLM function includes one such paramater, its "AIC" (Akaike information criterion). The math behind AICs is complicated, but in practice, a model's AIC can be used to compare the goodness of fit between two models. A model with a lower AIC than another is considered to fit the data better. In the above example, the AIC of Solution 1 is higher than in our first example. This suggests that Solution1 fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 2 with "Yes" or "No".
+
+#-------------------- Question 3 --------------------#
+      Solution2<-""
+#----------------------------------------------------#
+```
+      
+*** =solution
+```{r}
+  Solution1<-glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Coffee,data=Survey)
+  Solution2<-"No"
+```
+
+*** =sct
+```{r}
+test_object("Solution2")
+
+success_msg("Good work! Even though our model in Solution 1 appeared to have worse fit than our model with all of the variables included, that does not mean that we should include all of these variables into our final model, or use them to inform NixSplash's ad-campaign. Statistical models should always be guided by theory. If there is no clear reason why a variable should effect an outcome of interest, we should not include it in our model, even if it improves model fit. As a reminder, statistical models do not provide definitive proof of causality; they are simply a tool that we can use to test our assumptions about the world.")
+```
+
+
+
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
 ## Common Statistical Terms and Transformations in Regression Models
 *** =video_link
 //player.vimeo.com/video/217554577
 
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4b9a40fa01
+## Idenfifying Non-Linear Relationships
+In which of the following plots is the relationship betweeen X and Y non-linear?
+
+*** =instructions
+- A and B
+- C and D
+- B and C
+- B
+*** =pre_exercise_code
+```{r}
+seed=1
+
+n=500
+df<-data.frame(x=rnorm(n=n,mean=50,sd=25))
+df$y1=df$x+(rnorm(n,100,10))
+df$y2=120-df$x+(rnorm(n,100,10))
+df$y3=log10(df$x)+rnorm(n=n,mean=.5,sd=.2)
+df$y4=(df$x^3)/10000+rnorm(n,50,10)
+
+plot(df$x,df$y1)+title(main="Plot A")
+plot(df$x,df$y3)+title(main="Plot B")
+plot(df$x,df$y4)+title(main="Plot C")
+plot(df$x,df$y2)+title(main="Plot D")
+
+```
+*** =sct
+```{r}
+msg1 = "Plot A is linear. Try again."
+msg2 = "Plot D is linear. Try again"
+msg3 = "Correct! The relationship between X and Y in Plot C is logarithmic, and the relationship between X and Y in Plot D is exponential. If you modeled these relationships with OLS regression, you would want to include a squared or logarithmic term."
+msg4 = "Close, but Plot B is not the only plot that illustrates a non-linear relationship."
+test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
+```
+
+
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
+## Statistical Interactions in Regression Models
+*** =video_link
+//player.vimeo.com/video/217554577
 
 
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:43c6c78dff
@@ -329,15 +414,31 @@ success_msg("Good work! It appears that the treatment only affected individuals 
 *** =video_link
 //player.vimeo.com/video/217554577
 
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
+## When to Use a Logistic Regression Model
+For which of the following causal relationships might we prefer to model with logistic regression rather than OLS regression? 
+*** =instructions
+- The effect of eating ice cream on a person's likelihood of being attacked by a seagull.
+- The effect of divorce on people's margarine consumption.
+- The effect of snowfall on ski resort profits
+- The effect of global temperatures on the number of pirate attacks across the world
+*** =sct
+```{r}
+msg1 = "Correct! The dependent variable in this question is binary; a person either has or hasn't ever been attacked by a seagull. This is when logistic regression models are most useful."
+msg2 = "Almost. In this example, the independent variable is binary, but the dependent variable is continuous. Try again."
+msg3 = "The dependent variable in this causal relationship is continuous, therefore it would be impossible to model this relationship with logistic regression. Try again"
+msg4 = "The dependent variable in this causal relationship is continuous, therefore it would be impossible to model this relationship with logistic regression. Try again"
+test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
+```
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:a9f7023dbf
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## Defining The Average Effect of Treatment on the Treated
 *** =video_link
 //player.vimeo.com/video/217554577
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:05b8c0ab9e
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## Average Effect of Treatment on the Treated
 A scientist develops a new drug to help reduce addiction to pain killers. He administers this drug to many recent abusers of painkillers, and finds that these patients had substantially lower rates of painkiller abuse than would be expected, given that painkiller addicts often relapse following rehab. However, across the **entire human population**, the scientist expects the average treatment effect of his drug to be negligible on rates of painkiller abuse. Why might the scientist expect the average treatment effect on the treated to be larger than the average treatment effect? 
 
@@ -355,13 +456,13 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 
  
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:0435151142
+--- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 
 ## How to Compute ATE Under Unconfoundedness, and What Not to Do
 *** =video_link
 //player.vimeo.com/video/217554781
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:1b09bbbfdb
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1
 ## Practice with Survey Weights
 Given the diversity of people in the United States, many surveys have difficulty gathering perfectly representative samples of the population. This can be problematic when your research results are meant to be generalizable to the population at large. However, surveyors typically know the true proportion of demographic traits among the U.S. population, and provide survey weights that compensates for their sampling bias, by increasing the importance of underrepresented groups in individual's statistical analyses. In this problem, we will practice using survey weights.
 
@@ -425,7 +526,7 @@ success_msg("Good work! Although survey weights do not often change one's result
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:48a5526aa9
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 
 ## When Survey Weights Are Unnecessary 
 One week after Cambrian Park was released, Delimited Pictures gathered a survey of people who watched it and asked them whether or not they liked the film. Delimited Pictures put significant effort into catering to a younger female audience - individuals who had the least positive reaction to Cambrian Park's prequel, Neoproterozoic Park. If Delimited Pictures is just interested in whether female college students in Los Angeles seemed to enjoy Cambrian Park, do they need to use survey weights to poststratify their sample?  
 
