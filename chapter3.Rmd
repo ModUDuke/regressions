@@ -104,7 +104,7 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:85dcc72fd0
 ## Propensity Score Matching in R
-A recent study examined how playing the multiplayer online battle arena video game, Neo Elite Raging Denizens (NERD), affects people's communication skills. Despite the player's coarse language in the game, a detailed psychological survey indicated that NERD players have better language skills than average. This finding held even when the researchers used OLS regression and controlled for various factors that are related to language skills. However, the sample was highly unbalanced, so the researchers thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD.
+A recent study examined how playing the multiplayer online battle arena video game, Neo Elite Raging Denizens (NERD), affects people's communication skills. Despite the player's coarse language in the game, a detailed psychological survey indicated that NERD players have better language skills than average. This finding held even when the researchers used OLS regression and controlled for various factors that are related to language skills. This made the researchers wonder: does NERD cause people how to communicate better? The researchers knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills.
 
 *** =instructions
 - Estimate a standard OLS regression model for communication skills (`Communication`) based on all other variables in the `NERD` dataset.
@@ -197,7 +197,7 @@ n=8008
 ```{r}
 test_object("Solution2")
 test_object("Solution4")
-success_msg("Good work! There orignally appeared to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but when we balanced the data, this effect disappeared. This suggests that playing NERD does not improve people's communication skills; rather, NERD players probably have good communication skills for a variety of other reasons.")
+success_msg("Good work! There originally appeared to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but when we balanced the data, this effect disappeared. This suggests that playing NERD does not improve people's communication skills; rather, NERD players probably have good communication skills for a variety of other reasons.")
 ```
 
 
