@@ -1,9 +1,5 @@
 title            : Causal Inference with R - Regression
-description: Welcome to the 3rd course in our series on causal inference
-  concepts and methods created by Duke University with support from eBay, Inc. Designed to teach you causal inference concepts, methods,
-  and how to code in R with realistic data, this course focuses on how to use regression to find causal effects, why they can be controversial, and what they look like in practice. We’ll stay away from dense statistical math and focus instead on higher level concepts
-  that data scientists need to always consider when examining and making inferences
-  about data.
+description: Welcome to the 3rd course in our series on causal inference concepts and methods created by Duke University with support from eBay, Inc. Designed to teach you causal inference concepts, methods, and how to code in R with realistic data, this course focuses on how to use regression to find causal effects, why they can be controversial, and what they look like in practice. We’ll stay away from dense statistical math and focus instead on higher level concepts that data scientists need to always consider when examining and making inferences about data.
 programming_language: r
 instructors      :
 - matt.masten@duke.edu
