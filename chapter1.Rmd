@@ -247,19 +247,24 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:631cb11d99
-## Practice Running a Regression Model
-Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Dr. Funn believes that people who work more hours make more money (which indirectly increases a person's happiness), but that people who work more hours at the same income tend to be less happy (i.e. work hours has a direct negative effect on happiness). 
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+## Running a Regression Model: A Simple Beginning
+Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with the number of hours worked. But before we get into confounders, let's start with a simpler model that helps Dr. Funn look for signs of any relationship between income and happiness.
 
-Using the dataset, `GSS`, help Dr. Max Funn measure the effect of income on happiness, **controlling** for work hours. Specifically:
-
-
+Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness by examining the data and running a simplified generalized linear regression model. 
 *** =instructions
-- Construct a regression model that measures the effect of income on happiness.
-- Construct a second regression model that measures the effect of income on happiness, controlling for work hours.
+- 1) Examine the dataframe `GSS`.
+- 2) Look at summary statistics of three key variables.
+- 3) Look at a simple correlation statistic between income and happiness.
+- 4) Construct a regression model that measures the effect of income on happiness.
 
 *** =pre_exercise_code
 ```{r}
+
+library (dplyr)
+library (data.table)
+library (purr)
+
 n=1000
 set.seed(1)
 #Create rnorm function that allows for min and max
@@ -295,39 +300,139 @@ set.seed(1)
 ```
 *** =sample_code
 ```{r}
-# Before running a regression model, let's examine the data
-    str(GSS)
+# 1) Before running a regression model, let's examine the data in the dataframe `GSS` with the str() function:
+#---- Question 1-------------------------------------#
+      Solution1<-
+#----------------------------------------------------#    
 
-# The dataset contains three variables: income (measured in thousands of dollars), work hours, and happiness (measured 1=very unhappy, 2=unhappy, 3=neither happy or unhappy, 4=happy, 5=very happy)
-    summary(GSS$Income)
-    summary(GSS$WorkHours)
-    summary(GSS$Happiness)
-
-# Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness?
-    cor(GSS$Income,GSS$Happiness)
+# 2) As you can see, the dataset contains three variables: income (measured in thousands of dollars), number of hours worked, and happiness (measured on five point scale where 1=very unhappy, 2=unhappy, 3=neither happy or unhappy, 4=happy, 5=very happy). In 2 separate statements, run the summary function on both of the variables Income and Happiness to see what the data look like. 
   
-# Let's use the glm function to do a linear regress of the effect of income on happiness. For reference, the syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, and df is the name of the dataframe.
+# Note: The syntax to run summary() on a single variable is: summary(dataframe$variable), where `dataframe` is the name of the dataframe and `variable` is the name of the variable.
+
+#---- Question 2-------------------------------------#
+      Solution2<-
+#----------------------------------------------------#    
+
+# 3) Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness? Let's use the cor() function to see a quantitative measurement of the correlation between the variables Income and Happiness.
+  
+# Note: The syntax to use the cor() function between two variables is: cor(dataframe$variable1, dataframe$variable2), where `dataframe` is the name of the dataframe and `variable1` and `variable2` are the names of the variables.
+      
+#---- Question 3-------------------------------------#
+      Solution3<-
+#----------------------------------------------------#
+  
+# 4) Finally, let's run our first generalized linear regression model of the effect of income on happiness with the glm() function. 
+  
+# Note: the syntax for glm is "glm(Y~X,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, and dataframe is the name of the dataframe.
 
 #---- Question 1-------------------------------------#
-      Solution1<-glm()
+      Solution4<-
 #----------------------------------------------------#
+```
+*** =solution
+```{r}
+    Solution1<-str(GSS)
+    Solution2<-summary(GSS$Income)
+    summary(GSS$Happiness)
+    Solution3<-cor(GSS$Income,GSS$Happiness)
+    Solution4<-glm(Happiness~Income,data=GSS)
+```
+*** =sct
+```{r}
+test_object("Solution1")
+test_object("Solution2")
+test_object("Solution3")
+test_object("Solution4")
+success_msg("Good work!")
+```
 
-# The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. Let's use the summary function on our model to see its effects more clearly.
-    summary(Solution1)
 
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+## Running a Regression Model: Improving Our Model
+As we mentioned in the previous question, Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Dr. Funn believes that people who work more hours make more money (which indirectly increases a person's happiness), but that people who work more hours at the same income tend to be less happy (i.e. work hours has a direct negative effect on happiness). This would mean that we can't trust our first model to give us accurate results.
+
+So now using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness, **controlling** for work hours. 
+
+*** =instructions
+- 1) Examine the results of our simple first model from the previous question.
+- 2) Plot the relationship between happiness and income, including a regression line.
+- 3) Look at correlation statistics for confounders between work hours, income, and happiness.
+- 4) Construct a second regression model that measures the effect of income on happiness that controls for work hours.
+
+*** =pre_exercise_code
+```{r}
+
+library (dplyr)
+library (data.table)
+library (purr)
+
+n=1000
+set.seed(1)
+#Create rnorm function that allows for min and max
+  rtnorm <- function(n, mean, sd, min = -Inf, max = Inf){
+      qnorm(runif(n, pnorm(min, mean, sd), pnorm(max, mean, sd)), mean, sd)
+  }
+#Create rounding function that allows to round to numbers above 1
+  mround <- function(x,base){ 
+          base*round(x/base) 
+  } 
+#Create scaling function that puts number between 0 and 1
+  scale <- function(x){
+    (x - min(x))/(max(x)-min(x))
+    }
+
+#Dataframe
+  GSS<-data.frame(WorkHours=1:n,Income=1:n,Happiness=1:n)
+#Work hours 
+  GSS$WorkHours<-round(rtnorm(n=n,mean=40,sd=6,min=0,max=55))
+#Income (in thousands)
+  GSS$Income<-GSS$WorkHours*.5+mround(rtnorm(n=n,mean=30,sd=5,min=0,max=100),.1)
+#Scaled variables
+  scaledincome<-scale(GSS$Income)
+  scaledWorkHours<-scale(GSS$WorkHours)
+#Happiness (set as 1:5; rounded to 1; make income 2* as effective as work hours)
+  GSS$Happiness<-round(scaledincome-(.5*scaledWorkHours) + rtnorm(n=n,mean=3,sd=.5,min=0,max=5),0)
+  
+  summary(GSS$WorkHours)
+  summary(GSS$Income)
+  summary(GSS$Happiness)
+  cor(GSS$WorkHours,GSS$Income)
+    
+#Importing Answer from Previous Question
+    FirstModel<-glm(Happiness~Income,data=GSS)
+```
+*** =sample_code
+```{r}
+# 1) The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. So let's use the summary function on our first model to see its effects more clearly. The dataframe containing our first model's results is called `FirstModel`. 
+#---- Question 1-------------------------------------#
+      Solution1<-
+#----------------------------------------------------#
+    
 # The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each parameter, "Pr(>|t|)" refers to the p.value of the estimates, and the stars following p.value refer to the result's statistical significance. 
     
 # If you entered Solution1 correctly, the effect of Income should be about .015, meaning that a single unit increase in income ($1000) is associated with a .015 increase in a person's reported happiness. The low p.value and stars to the right of the coefficients suggest that this effect is statistically significant. 
 
-# This relationship can also be viewed graphically via the syntax below. The points on the plot represent each observation, and the diagonal line represents the regression results. Note that the slope of the line is equal to the coefficient for income.
-    plot(GSS$Happiness ~ GSS$Income)
-    abline(Solution1)
+# 2) This relationship can also be viewed graphically. Let's use the plot() and abline() functions together to generate a graph of the relationship between the variables Happiness and Income while also showing a regression line from Solution1. First run the plot function, then run abline with the following syntax: abline(Solution1).
+  
+# Note: the syntax for the plot() command will be plot(dataframe$Y ~ dataframe$X), where Y is the name of the independent variable, X is the name of the dependent variable, and dataframe is the name of the dataframe. 
 
-# Now let's move on to Question 2.Let's look at the correlations of work hours on happiness and income. They show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might confound the relationship between income and happiness.
-    cor(GSS$WorkHours,GSS$Happiness)
-    cor(GSS$WorkHours,GSS$Income)
+#---- Question 2-------------------------------------#
+      Solution2<-
+#----------------------------------------------------#    
+    
+# The points on the plot represent each observation, and the diagonal line represents the regression results. Note that the slope of the line is equal to the coefficient for income.
+    
+# 3) Now let's look more closely at the correlations of work hours on happiness and income. In 2 separate statements, use the cor() command to find the correlation between the variables WorkHours and Happiness, and between the variables WorkHours and Income.
+    
+#---- Question 3-------------------------------------#
+      Solution3<-
+#----------------------------------------------------#
 
-# The next best step is to control for the effect of work hours on happiness. You can do this for yourself easily in R by adding the control variable directly to the glm function to regress the effect of income on happiness. For reference, the syntax for glm with controls is "glm(Y~X+Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and df is the dataframe.
+# These results show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might be confounding the relationship between income and happiness.    
+    
+# 4) So let's solve that by controlling for the effect of work hours on happiness. You can do this for yourself easily in R by adding the control variable directly to the glm function to regress the effect of income on happiness. 
+    
+# Note: the syntax for glm with controls is "glm(Y~X+Z,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and dataframe is the name of the dataframe.
 
 #---- Question 2-------------------------------------#
       Solution2<-glm()
@@ -336,15 +441,23 @@ set.seed(1)
 ```
 *** =solution
 ```{r}
-    Solution1<-glm(Happiness~Income,data=GSS)
-    Solution2<-glm(Happiness~Income+WorkHours,data=GSS)
+    Solution1<-summary(FirstModel)
+    Solution2<-plot(GSS$Happiness ~ GSS$Income)
+    abline(Solution1)
+    Solution3<- cor(GSS$WorkHours,GSS$Happiness)
+    cor(GSS$WorkHours,GSS$Income)
+    Solution4<-glm(Happiness~Income+WorkHours,data=GSS)
 ```
 *** =sct
 ```{r}
 test_object("Solution1")
 test_object("Solution2")
+test_object("Solution3")
+test_object("Solution4")
 success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with both the independent and dependent variables. This syntax can be used to control for as many variables as desired in a regression model.")
 ```
+
+
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
