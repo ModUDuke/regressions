@@ -101,20 +101,128 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 *** =video_link
 //player.vimeo.com/video/217555588
 
-
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:85dcc72fd0
-## Propensity Score Matching in R
-A recent study examined how playing the multiplayer online battle arena video game, Neo Elite Raging Denizens (NERD), affects people's communication skills. Despite the player's coarse language in the game, a detailed psychological survey indicated that NERD players have better language skills than average. This finding held even when the researchers used OLS regression and controlled for various factors that are related to language skills. This made the researchers wonder: does NERD cause people how to communicate better? The researchers knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills.
+## Communication Skills in Video Games: Do We Need to Use Matching Methods?
+A recent study examined how playing the multiplayer online battle arena video game, Neo Elite Raging Denizens (NERD), affects people's communication skills. Despite the player's coarse language in the game, a detailed psychological survey indicated that NERD players have better language skills than average. This finding held even when the researchers used OLS regression and controlled for various factors that are related to language skills. This made the researchers wonder: does NERD cause people how to communicate better? The researchers knew their sample was highly unbalanced, so they thought that matching techniques may be required. 
 
 *** =instructions
-- Estimate a standard OLS regression model for communication skills (`Communication`) based on all other variables in the `NERD` dataset.
-- Use matching techniques to balance the dataset, and estimate standard OLS regression model for communication skills (`Communication`) based on all other variables in the matched dataset (`match.NERD`).
-
+- 1) Examine the dataset `NERD`.
+- 2) Estimate a standard OLS regression model for communication skills (`Communication`) based on all other variables in the `NERD` dataset.
+- 3) Check the statistical significance of that regression model.
+- 4) Check for balance between treatment and control groups.
 
 *** =pre_exercise_code
 ```{r}
 #Original dataset
+
+## I'M NOT SURE THAT MATCHIT ACTUALLY LOADS--DOESN'T WORK FOR ME IN REGULAR R
+
+library (dplyr)
+library (data.table)
+library (purr)
 library(MatchIt)
+
+set.seed(7)
+n=8008
+#Create rnorm function that allows for min and max
+    rtnorm <- function(n, mean, sd, min = -Inf, max = Inf){
+      qnorm(runif(n, pnorm(min, mean, sd), pnorm(max, mean, sd)), mean, sd)
+    }
+#Create rounding function that allows to round to numbers above 1
+    mround <- function(x,base){ 
+      base*round(x/base) 
+    } 
+#Create dataset
+    NERD<-data.frame(ParentEducation=round(rtnorm(n,15,sd=3,min=10,max=20),1),
+                     BooksOwned=round(rtnorm(n,60,sd=15,min=35,max=100),1),
+                     ReadsBlogs=rbinom(n,1,.25),
+                     Siblings=rbinom(n,1,.7),
+                     Bilingual=rbinom(n,1,.1),
+                     LikesBooks=rbinom(n,1,.3)
+    )
+    NERD$Treatment<-NERD$ParentEducation+NERD$BooksOwned/4+NERD$ReadsBlogs*10-NERD$Siblings*5+NERD$LikesBooks*10 +rnorm(n,10,3)
+    NERD$Treatment<-NERD$Treatment/max(NERD$Treatment)
+    NERD$Treatment<-ifelse(NERD$ParentEducation<17 | NERD$BooksOwned<70,0,NERD$Treatment)
+    NERD$Treatment<-NERD$Treatment
+    NERD$Treatment<-rbinom(n,1,NERD$Treatment)
+    NERD$Communication<-2.5*NERD$Treatment+NERD$ParentEducation^1.4+-.01*NERD$Treatment*NERD$ParentEducation+-.01*NERD$Treatment*NERD$BooksOwned^1.2+NERD$BooksOwned*.6+1.5*NERD$ReadsBlogs+NERD$LikesBooks*.7 + NERD$Siblings + .25*NERD$Bilingual +rnorm(n,5,1) 
+    NERD$Communication<-round(NERD$Communication/max(NERD$Communication)*10)
+
+```
+*** =sample_code
+```{r}
+# 1) As usual, let's first look at the variables in the dataset, which was collected by the researchers on a sample that included NERD gamers along with other people. 
+
+# The dependent variable in our model, Communication, was measured via a series of questions and put on a 1:10 scale, with 1=very poor communication skills and 10=very good communication skills. 
+
+# Whether the respondent plays NERD is measured via the Treatment variable. 
+
+# The other variables in the dataset are factors that could possibly affect a person's communication ability. Most are measured as binary or "dummy" variables; for example, the Siblings variable gets a value of 1 if respondents have any brothers or sisters, but it does not count the number of siblings they have. 
+
+# Use the summary command on the dataframe `NERD`, and take a few minutes to understand what's in the data.
+
+#-------------------- Question 1 --------------------#
+      Solution1<-
+#----------------------------------------------------#
+
+# 2) Let's first estimate a model for Communication skills based on every other variable in the dataset. Use R's glm() formula. 
+
+#-------------------- Question 2 --------------------#
+      Solution2<-glm()
+#----------------------------------------------------#
+
+# 3) Is the effect of "Treatment" in Solution1 positive and statistically significant? Use the summary command on Solution2 to check, and then enter "Yes" or "No" for Solution3.
+    
+#-------------------- Question 3 --------------------#
+      Solution3<-""
+#----------------------------------------------------#
+    
+# 4) Matching methods are most useful when the treatment group is likely to be different from the general population. Do we need to use them in this case? 
+      
+# To determine if the treatment group differs from the population on any variable, let's run a t-test between the treatment and control groups on the first variable in the dataframe, ParentEducation.
+
+#-------------------- Question 4 --------------------#
+      Solution4<-""
+#----------------------------------------------------#
+
+# If you are curious, feel free to run t-tests on the other variables in the dataframe to see which are balanced and which are imbalanced.
+      
+```
+*** =solution
+```{r}
+  Solution1<-summary(NERD)
+  Solution2<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=NERD)
+  Solution3<-"Yes"
+  Solution4<-t.test(NERD$ParentEducation[NERD$Treatment==1],NERD$ParentEducation[NERD$Treatment==0])
+
+```
+*** =sct
+```{r}
+test_object("Solution1")
+test_object("Solution2")
+test_object("Solution3")
+test_object("Solution4")
+success_msg("Good work! There appears to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but the t-test suggests that our Treatment group has much more educated parents than in our Control group, so our treatment and control groups are imbalanced. In the next question, we'll try to use matching methods to overcome this problem.")
+```
+
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:85dcc72fd0
+## Communication Skills in Video Games: Propensity Score Matching in R
+The researchers studying how playing NERD affects communication skills knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills. Regression models alone aren't always convincing for measuring causal effects in unbalanced data (even under unconfoundeness). A more robust way to test the effect of our treatment on communication skills is through matching methods. Matching methods balance the treatment group with the control group so that they are more identical.
+
+*** =instructions
+- 1) Use matching techniques to balance the dataset
+- 2) Estimate standard OLS regression model for communication skills (`Communication`) based on all other variables in the matched dataset (`match.NERD`).
+- 3) Check the statistical significance of the regression on the matched data.
+
+*** =pre_exercise_code
+```{r}
+#Original dataset
+
+library (dplyr)
+library (data.table)
+library (purr)
+library(MatchIt)
+
 set.seed(7)
 n=8008
 #Create rnorm function that allows for min and max
@@ -141,64 +249,55 @@ n=8008
     NERD$Communication<-2.5*NERD$Treatment+NERD$ParentEducation^1.4+-.01*NERD$Treatment*NERD$ParentEducation+-.01*NERD$Treatment*NERD$BooksOwned^1.2+NERD$BooksOwned*.6+1.5*NERD$ReadsBlogs+NERD$LikesBooks*.7 + NERD$Siblings + .25*NERD$Bilingual +rnorm(n,5,1) 
     NERD$Communication<-round(NERD$Communication/max(NERD$Communication)*10)
 
+# Import model from previous question
+       FirstModel<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=NERD)
 ```
 *** =sample_code
 ```{r}
-# As usual, let's first look at the variables in the dataset, which was collected by the researchers on a sample that included NERD gamers along with other people. The dependent variable in our model, Communication, was measured via a series of questions and put on a 1:10 scale, with 1=very poor communication skills and 10=very good communication skills. Whether the respondent plays NERD is measured via the Treatment variable. Only a small proportion of our sample actually played NERD. The other variables in the dataset are  factors that could possibly affect a person's communication ability. Most are measured as binary or "dummy" variables. For example, respondents who had any siblings were marked with a "1" in the siblings variable. 
-    summary(NERD)
+# In R, the best tool for doing matching is the "MatchIt" package. Let's use the MatchIt package to subset our NERD dataset so that our control group contains observations that are most similar to those in our treatment group. There are many methods for matching data, but in this question, we use MatchIt's default methods.
 
-# Let's first estimate a model for Communication skills based on every other variable in the dataset. Use R's glm() formula. 
+# The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD`: matchit(Treatment ~ control1+control2+control3+control4+control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
+    match.it <-
 
+# Now let's subset the NERD dataset to observations that have a high predicted probability for being in the treatment group. We have generated that code for you,so select the following code and hit the "Run Code" button:
+    matched.NERD <- match.data(match.it)[1:ncol(NERD)]
+    
+# To compare the matched dataset to the original dataset, let's use summary commands on the object that was produced by the "matchit" formula. 
 #-------------------- Question 1 --------------------#
       Solution1<-glm()
 #----------------------------------------------------#
-
-# Is the effect of "Treatment" in Solution1 positive and statistically significant? Use the summary command on Solution1 to check. Answer with "Yes" or "No"
+    
+# The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values between the treatment and control groups are much more similar in the matched dataset than in the original dataset. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
+    
+# Let's now estimate a generalized linear regression model for communication skills using our matched dataset (matched.NERD). 
     
 #-------------------- Question 2 --------------------#
-      Solution2<-""
+      Solution2<-glm()
 #----------------------------------------------------#
-    
-# Matching methods are most useful when the treatment group is likely to be different from the general population. To determine if the treatment group differs from the population on any variable, we could run a t.test. The following is an example of how we would test if the treatment group tends to have more or less educated parents than the rest of the sample. This t.test suggests that our Treatment group has much more educated parents than in our control group.
-    t.test(NERD$ParentEducation[NERD$Treatment==1],NERD$ParentEducation[NERD$Treatment==0])
 
-# Regression models alone aren't always convincing for measuring causal effects in unbalanced data (even under unconfoundeness). A more robust way to test the effect of our treatment on communication skills is through matching methods. Matching methods balance the treatment group with the control group so that they are more identical. In R, the best tool for doing matching is the "MatchIt" package. Below, we use the MatchIt package to subset our NERD dataset so that our control group contains observations that are most similar to those in our treatment group. The below syntax builds a model for estimating "Treatment" by all other control variables in our dataset, and subsets the NERD dataset to observations that have a high predicted probability for being in the treatment group. There are many methods for matching data, but in this question, we use MatchIt's default methods. 
-    match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks, data = NERD)
-    matched.NERD <- match.data(match.it)[1:ncol(NERD)]
-    
-# To compare the matched dataset to the original dataset, we use summary commands on the object produced by the "matchit" formula. The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values between the treatment and control groups are much more similar in the matched dataset than in the original dataset. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
-    summary(match.it)    
-    
-# Let's now estimate a regression model for communication skills using our matched dataset (matched.NERD). The syntax should be identical to Solution1, except that we are using the matched.NERD dataset.
+# Is the effect of "Treatment" in Solution2 positive and statistically significant? Use the summary command on Solution2 to check. Answer with "Yes" or "No"
     
 #-------------------- Question 3 --------------------#
-      Solution3<-glm()
-#----------------------------------------------------#
-
-# Is the effect of "Treatment" in Solution3 positive and statistically significant? Use the summary command on Solution3 to check. Answer with "Yes" or "No"
-    
-#-------------------- Question 4 --------------------#
-      Solution4<-""
+      Solution2<-""
 #----------------------------------------------------#
 
 ```
 *** =solution
 ```{r}
-   Solution1<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=NERD)
-   Solution2<-"Yes"
-
-   match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks, data = NERD)
-    matched.NERD <- match.data(match.it)[1:ncol(NERD)]
-
-   Solution3<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=matched.NERD)
-   Solution4<-"No"
+  match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks, data = NERD)
+  matched.NERD <- match.data(match.it)[1:ncol(NERD)]
+  Solution1<-summary(match.it)
+  Solution2<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=matched.NERD)
+  Solution3<-"No"
 ```
 *** =sct
 ```{r}
+test_object("Solution1")
 test_object("Solution2")
-test_object("Solution4")
+test_object("Solution3")
 success_msg("Good work! There originally appeared to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but when we balanced the data, this effect disappeared. This suggests that playing NERD does not improve people's communication skills; rather, NERD players probably have good communication skills for a variety of other reasons.")
 ```
+
 
 
 
