@@ -205,7 +205,7 @@ test_object("Solution4")
 success_msg("Good work! There appears to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but the t-test suggests that our Treatment group has much more educated parents than in our Control group, so our treatment and control groups are imbalanced. In the next question, we'll try to use matching methods to overcome this problem.")
 ```
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:85dcc72fd0
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:409e58ed54
 ## Communication Skills in Video Games: Propensity Score Matching in R
 The researchers studying how playing NERD affects communication skills knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills. Regression models alone aren't always convincing for measuring causal effects in unbalanced data (even under unconfoundeness). A more robust way to test the effect of our treatment on communication skills is through matching methods. Matching methods balance the treatment group with the control group so that they are more identical.
 
