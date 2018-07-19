@@ -247,7 +247,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5f52195dc6
 ## Running a Regression Model: A Simple Beginning
 Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with the number of hours worked. But before we get into confounders, let's start with a simpler model that helps Dr. Funn look for signs of any relationship between income and happiness.
 
@@ -347,7 +347,7 @@ success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:6650875c79
 ## Running a Regression Model: Improving Our Model
 As we mentioned in the previous question, Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Dr. Funn believes that people who work more hours make more money (which indirectly increases a person's happiness), but that people who work more hours at the same income tend to be less happy (i.e. work hours has a direct negative effect on happiness). This would mean that we can't trust our first model to give us accurate results.
 
