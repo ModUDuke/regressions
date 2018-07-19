@@ -1,4 +1,3 @@
-
 --- 
 title       : "Regressions 2: Using Regression to Estimate Causal Effects"
 description : "This chapter will introduce you to using regression analysis to find causal effects"
