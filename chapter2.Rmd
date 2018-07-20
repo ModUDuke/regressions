@@ -379,7 +379,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 //player.vimeo.com/video/217554577
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:99c76a856a
 ## Creating a Regression Model With Interaction Effects: Part 1
 An experiment conducted by the transportation network company, Unter Technologies, tried to determine whether downsizing their Human Resources (HR) department would lead to higher employee turnover. Using t.tests, they found that the effect of downsizing their HR department would have different conditional average treatment effects (CATE) on men and women. This was determined by separately studying the average treatment effect (ATE) of downsizing on a sample of men and on a sample of just women. 
 
@@ -458,7 +458,7 @@ success_msg("Good work! It appears that the treatment only affected individuals 
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:3f490a5c1c
 ## Creating a Regression Model With Interaction Effects: Part 2, Mediating and Moderating Effects
 
 A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a  causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
@@ -581,7 +581,7 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 //player.vimeo.com/video/217554781
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:671450a209
 ## Practice with Survey Weights: Part 1
 Given the diversity of people in the United States, many surveys have difficulty gathering perfectly representative samples of the population. This can be problematic when your research results are meant to be generalizable to the population at large. However, surveyors typically know the true proportion of demographic traits among the U.S. population, and provide survey weights that compensates for their sampling bias, by increasing the importance of underrepresented groups in individual's statistical analyses. In this problem, we will practice using survey weights.
 
@@ -649,7 +649,7 @@ success_msg("Good work, but our sample was a bit skewed, so we can't trust this 
 
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:9ac73c8105
 ## Practice with Survey Weights: Part 2
 Given the diversity of people in the United States, many surveys have difficulty gathering perfectly representative samples of the population. This can be problematic when your research results are meant to be generalizable to the population at large. However, surveyors typically know the true proportion of demographic traits among the U.S. population, and provide survey weights that compensates for their sampling bias, by increasing the importance of underrepresented groups in individual's statistical analyses. In this problem, we will practice using survey weights.
 
