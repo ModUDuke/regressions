@@ -79,6 +79,85 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
+--- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:
+Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given real data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses "a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
+
+***=instructions
+- 1) Calculate the correlation coefficient between hospital performance and mortality in the Medicare data.
+- 2) Plot the coefficient with a best-fit line.
+- 3) Decide on the best casual interpretation to explain your findings.
+
+
+*** =pre_exercise_code
+```{r}
+library(ggplot2)
+# Setting up the data
+
+# Safety domain: assessment of "a broad set of healthcare activities that affect patients’ well-being."
+# https://www.medicare.gov/HospitalCompare/Data/safety-domain.html
+# Mortality: Death rate for pneumonia patients in 30 days after entering the hospital
+# https://www.medicare.gov/hospitalcompare/Data/Death-rates.html
+
+# I HAVE DOWNLOADED THESE DATASETS, HAVEN'T ADDED THEM TO DATACAMP SERVERS THOUGH. ONE NEEDS TRIMMING DOWN TO 10MB
+
+root <- # SET ROOT DIR HERE
+path <- paste0(root,"Complications and Deaths - Hospital.csv")
+df.tmp1 <- read.csv(path)
+df.mortality <- df.tmp1[df.tmp1$Measure.ID=="MORT_30_HF",]
+df.ranking <- read.csv("hvbp_tps_11_07_2017.csv")
+df.tmp2 <- merge(df.mortality, df.ranking, by.x = "Provider.ID", by.y = "Provider.Number")
+hospitals <- data.frame(id = df.tmp2$Provider.ID, name = df.tmp2$Hospital.Name.x,
+                        city = df.tmp2$City.x, State = df.tmp2$State.x,
+                        mortality = as.numeric(levels(df.tmp2$Score))[df.tmp2$Score],
+                        performance = as.numeric(levels(df.tmp2$Weighted.Safety.Domain.Score))[df.tmp2$Weighted.Safety.Domain.Score])
+hospitals <- hospitals[!is.na(hospitals$mortality) & 
+                       !is.na(hospitals$performance),]
+```
+
+*** =sample_code
+```{r}
+# 1) You will explore the relationship between hospital performance and mortality. Calculate the correlation coefficient between these variables.
+
+#---- Question 1-------------------------------------#
+      Solution1<-cor()
+#----------------------------------------------------#
+
+# 2) Let's further analyze the relationship between mortality and performance. Plot the two variables on the same graph, and fit a line as well.
+
+#---- Question 2-------------------------------------#
+      Solution2<-ggplot(data= , aes(x= , y= )) +
+                        geom_point() +
+                        geom_smooth(method= )
+#----------------------------------------------------#
+
+# 3) What do our findings imply? 
+# (A) As performance gets better, mortality stays the same. 
+# (B) As performance gets better, mortality decreases; therefore the performance measure accurately assesses hospitals.
+# (C) As performance gets better, mortality increases; therefore the performance measure is useless.
+# (D) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
+
+#---- Question 3-------------------------------------#
+      Solution3<-""
+#----------------------------------------------------#
+
+
+***=solution
+Solution1<-cor(hospitals$mortality, hospitals$performance)
+Solution2<-ggplot(data=hospitals, aes(x=performance, y=mortality)) +
+                  geom_point() +
+                  geom_smooth(method=lm)
+Solution3<-"D"
+```
+
+*** =sct
+```{r}
+test_object("Solution1")
+test_object("Solution2")
+test_object("Solution3")
+success_msg("Nice job! You are not easily tricked by visual data patterns. Both of the mortality and safety performance measures are accurate and meaningful... when used correctly! Even though mortality is seemingly worse in safer hospitals, we did not take a ton of other factors into account. For example, the best hospitals likely treat the riskiest patients, and save many lives that worse hospitals could not have saved.")
+```
+
+
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:d50636b4ac
