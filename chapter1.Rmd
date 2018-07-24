@@ -119,6 +119,7 @@ Based on this formula, what is a valid predicted price for a WePhone that is exa
 - 468.58
 - 472.57 
 - 475.56
+
 *** =sct
 ```{r}
 msg1 = "Try again"
@@ -151,6 +152,7 @@ As you can see, when controlling for seller score, age has an even larger negati
 - 26.83 
 - 27.00
 - 30.28
+
 *** =sct
 ```{r}
 msg1 = "Try again"
@@ -164,6 +166,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3b325c1914
 ## Coefficients of Zero
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
+
 *** =instructions
 - Yes, it shows the variables cancel each other out.
 - No, it just shows there's no relationship between these variables in the data.
@@ -194,6 +197,7 @@ Does a regression coefficient of 0 with a small confidence interval / small stan
 - Yes, it shows the variables cancel each other out.
 - No, it just shows there's no relationship between these variables in the data.
 - It shows "misspecification" and we can't learn anything
+
 *** =sct
 ```{r}
 msg1 = "Actually, OLS regression models can't show simultaneous causality. More advanced methods are needed for this. Try again."
@@ -211,6 +215,7 @@ Why do we use the words "left hand side" variable and "right hand side" variable
 - It refers to how you graph them on X and Y axis.
 - It comes from historical, more qualitative writings.
 - It refers to the left and right hand side of an equation.
+
 *** =sct
 ```{r}
 msg1 = "Good try, but remember that on a graph, the Y axis is usually marked on the left side of the page, and the X axis is usually marked on the *bottom* of the page. Try again."
