@@ -22,6 +22,7 @@ eGulf runs an OLS regression to determine the relationship between WePhone age a
 - There is a negative relationship
 - There is no relationship
 - There is a positive relationship
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -35,6 +36,7 @@ WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Fee
 model<-lm(`Price Sold`~Age,data=WePhone)
 ggplot(data=WePhone,aes(Age, `Price Sold`))+geom_point()+geom_abline(intercept = model$coefficients[1],slope=model$coefficients[2])+ ggtitle("Scatter Plot and OLS Regression of WePhone Age on Price Sold")
 ```
+
 *** =sct
 ```{r}
 msg1 = "Correct! As the age of WePhones increased, the price at which they were sold decreased."
@@ -53,6 +55,7 @@ Causal interpretation of regression models can be tricky. Using the same data in
 - Older phones tend to sell for less
 - Old age causes phones to sell for less
 - High sales prices causes phones to become younger
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -66,6 +69,7 @@ WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Fee
 model<-lm(Age~`Price Sold`,data=WePhone)
 ggplot(data=WePhone,aes(`Price Sold`,Age))+geom_point()+geom_abline(intercept = model$coefficients[1],slope=model$coefficients[2])+ ggtitle("Scatter Plot and OLS Regression of WePhone Age on Price Sold")
 ```
+
 *** =sct
 ```{r}
 msg1 = "This phrasing does not address a causal interpretation of the relationship, but rather is a description of an association between WePhone age and sales price"
@@ -80,9 +84,11 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:d50636b4ac
 ## Regression Models and Policy Implementation
 Suppose you see a Facebook post with a regression plot of the Number of Walmarts per Capita on Income per Capita, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
+
 *** =instructions
 - Yes, the regression shows that Walmarts come to richer places
 - No, you can't learn the cause of Walmart locations from the regression
+
 *** =sct
 ```{r}
 msg1 = "Whoops. Try again."
@@ -193,6 +199,7 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:fd77ad9990
 ## Regressions with small coefficients and small confidence intervals
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
+
 *** =instructions
 - Yes, it shows the variables cancel each other out.
 - No, it just shows there's no relationship between these variables in the data.
@@ -241,6 +248,7 @@ Papers often report several regression models next to each other. This table sho
 - Because omitting these variables caused the effect of property rights protection on GDP to be downwardly biased. 
 - Because the inclusion of more variables strengthens the statistical power of an independent variable
 - Because omitting these variables caused the effect of property rights protection on GDP to be upwardly biased. 
+
 *** =sct
 ```{r}
 msg1 = "Although this is often true, this is not indicated in this figure. If you look at the standard errors, the statistical significance of property rights protections on GDP is relatively small and consistent across models. Try again."
@@ -257,6 +265,7 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with the number of hours worked. But before we get into confounders, let's start with a simpler model that helps Dr. Funn look for signs of any relationship between income and happiness.
 
 Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness by examining the data and running a simplified generalized linear regression model. 
+
 *** =instructions
 - 1) Examine the dataframe `GSS`.
 - 2) Look at summary statistics of three key variables.
@@ -303,6 +312,7 @@ set.seed(1)
     cor(GSS$WorkHours,GSS$Income)
     
 ```
+
 *** =sample_code
 ```{r}
 # 1) Before running a regression model, let's examine the data in the dataframe `GSS` with the str() function:
@@ -334,6 +344,7 @@ set.seed(1)
       Solution4<-
 #----------------------------------------------------#
 ```
+
 *** =solution
 ```{r}
     Solution1<-str(GSS)
@@ -342,6 +353,7 @@ set.seed(1)
     Solution3<-cor(GSS$Income,GSS$Happiness)
     Solution4<-glm(Happiness~Income,data=GSS)
 ```
+
 *** =sct
 ```{r}
 test_object("Solution1")
@@ -406,6 +418,7 @@ set.seed(1)
 #Importing Answer from Previous Question
     FirstModel<-glm(Happiness~Income,data=GSS)
 ```
+
 *** =sample_code
 ```{r}
 # 1) The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. So let's use the summary function on our first model to see its effects more clearly. The dataframe containing our first model's results is called `FirstModel`. 
@@ -444,6 +457,7 @@ set.seed(1)
 #----------------------------------------------------#
   
 ```
+
 *** =solution
 ```{r}
     Solution1<-summary(FirstModel)
@@ -453,6 +467,7 @@ set.seed(1)
     cor(GSS$WorkHours,GSS$Income)
     Solution4<-glm(Happiness~Income+WorkHours,data=GSS)
 ```
+
 *** =sct
 ```{r}
 test_object("Solution1")
@@ -468,11 +483,13 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
 ## Steps prior to analysis with regression models 
 Which of the following is the most important step you should take before running a regression model on your data?
+
 *** =instructions
 - Identify how many variables you can include in your model while still attaining statistical significance
 - Identify your outcome of interest (i.e. depend variable)
 - Identify which type of regression model to perform
 - Identify whether any of your variables will need to be transformed
+
 *** =sct
 ```{r}
 msg1 = "This is actually one of the later steps to take when building a regression model. It is usually best to build simple models before adding numerous control variables. Try again."
