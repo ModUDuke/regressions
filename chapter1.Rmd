@@ -393,50 +393,40 @@ set.seed(1)
 *** =sample_code
 ```{r}
 # 1) Before running a regression model, let's examine the data in the dataframe `GSS` with the str() function:
-#---- Question 1-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#    
+
+
 
 # 2) As you can see, the dataset contains three variables: income (measured in thousands of dollars), number of hours worked, and happiness (measured on five point scale where 1=very unhappy, 2=unhappy, 3=neither happy or unhappy, 4=happy, 5=very happy). In 2 separate statements, run the summary function on both of the variables Income and Happiness to see what the data look like. 
   
 # Note: The syntax to run summary() on a single variable is: summary(dataframe$variable), where `dataframe` is the name of the dataframe and `variable` is the name of the variable.
 
-#---- Question 2-------------------------------------#
-      Solution2<-
-#----------------------------------------------------#    
+  
 
 # 3) Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness? Let's use the cor() function to see a quantitative measurement of the correlation between the variables Income and Happiness.
   
 # Note: The syntax to use the cor() function between two variables is: cor(dataframe$variable1, dataframe$variable2), where `dataframe` is the name of the dataframe and `variable1` and `variable2` are the names of the variables.
       
-#---- Question 3-------------------------------------#
-      Solution3<-
-#----------------------------------------------------#
+
   
 # 4) Finally, let's run our first generalized linear regression model of the effect of income on happiness with the glm() function. 
   
 # Note: the syntax for glm is "glm(Y~X,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, and dataframe is the name of the dataframe.
 
-#---- Question 1-------------------------------------#
-      Solution4<-
-#----------------------------------------------------#
+
 ```
 
 *** =solution
 ```{r}
-    Solution1<-str(GSS)
-    Solution2<-summary(GSS$Income)
+str(GSS)
+summary(GSS$Income)
     summary(GSS$Happiness)
-    Solution3<-cor(GSS$Income,GSS$Happiness)
-    Solution4<-glm(Happiness~Income,data=GSS)
+cor(GSS$Income,GSS$Happiness)
+glm(Happiness~Income,data=GSS)
 ```
 
 *** =sct
 ```{r}
-test_object("Solution1")
-test_object("Solution2")
-test_object("Solution3")
-test_object("Solution4")
+test_error()
 success_msg("Good work!")
 ```
 
@@ -499,9 +489,7 @@ set.seed(1)
 *** =sample_code
 ```{r}
 # 1) The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. So let's use the summary function on our first model to see its effects more clearly. The dataframe containing our first model's results is called `FirstModel`. 
-#---- Question 1-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
+
     
 # The table beneath "Coefficients" is what is usually reported in scientific journals. "Estimate" refers to the coefficients for each parameter, "Pr(>|t|)" refers to the p.value of the estimates, and the stars following p.value refer to the result's statistical significance. 
     
@@ -511,17 +499,13 @@ set.seed(1)
   
 # Note: the syntax for the plot() command will be plot(dataframe$Y ~ dataframe$X), where Y is the name of the independent variable, X is the name of the dependent variable, and dataframe is the name of the dataframe. 
 
-#---- Question 2-------------------------------------#
-      Solution2<-
-#----------------------------------------------------#    
-    
+ 
+ 
 # The points on the plot represent each observation, and the diagonal line represents the regression results. Note that the slope of the line is equal to the coefficient for income.
     
 # 3) Now let's look more closely at the correlations of work hours on happiness and income. In 2 separate statements, use the cor() command to find the correlation between the variables WorkHours and Happiness, and between the variables WorkHours and Income.
     
-#---- Question 3-------------------------------------#
-      Solution3<-
-#----------------------------------------------------#
+
 
 # These results show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might be confounding the relationship between income and happiness.    
     
@@ -529,28 +513,23 @@ set.seed(1)
     
 # Note: the syntax for glm with controls is "glm(Y~X+Z,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and dataframe is the name of the dataframe.
 
-#---- Question 2-------------------------------------#
-      Solution2<-glm()
-#----------------------------------------------------#
+
   
 ```
 
 *** =solution
 ```{r}
-    Solution1<-summary(FirstModel)
-    Solution2<-plot(GSS$Happiness ~ GSS$Income)
+summary(FirstModel)
+plot(GSS$Happiness ~ GSS$Income)
     abline(Solution1)
-    Solution3<- cor(GSS$WorkHours,GSS$Happiness)
+cor(GSS$WorkHours,GSS$Happiness)
     cor(GSS$WorkHours,GSS$Income)
-    Solution4<-glm(Happiness~Income+WorkHours,data=GSS)
+glm(Happiness~Income+WorkHours,data=GSS)
 ```
 
 *** =sct
 ```{r}
-test_object("Solution1")
-test_object("Solution2")
-test_object("Solution3")
-test_object("Solution4")
+test_error()
 success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with both the independent and dependent variables. This syntax can be used to control for as many variables as desired in a regression model.")
 ```
 
