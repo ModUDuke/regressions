@@ -1,5 +1,0 @@
---- 
-title       : "Trailer for the course Causal Inference - Regression"
-description : "Want to learn more about this course? This trailer will help you find out about what we cover and what you will do"
- 
- 
