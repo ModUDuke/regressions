@@ -342,7 +342,6 @@ success_msg("Good work! Even though our model in Solution 1 appeared to have wor
 
 
 
-
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
 ## Common Statistical Terms and Transformations in Regression Models
 *** =video_link
@@ -358,6 +357,7 @@ In which of the following plots is the relationship betweeen X and Y non-linear?
 - C and D
 - B and C
 - B
+
 *** =pre_exercise_code
 ```{r}
 seed=1
@@ -375,6 +375,7 @@ plot(df$x,df$y4)+title(main="Plot C")
 plot(df$x,df$y2)+title(main="Plot D")
 
 ```
+
 *** =sct
 ```{r}
 msg1 = "Plot A is linear. Try again."
@@ -402,6 +403,9 @@ However, slicing data this way can substantially reduce one's statistical power,
 - 2) Look at summary statistics for each variable
 - 3) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a mediation effect for `Female`
 
+*** =hint
+- The syntax for glm is "glm(Y~X+Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the mediating variable, and df is the name of the dataframe.
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -425,46 +429,43 @@ n=682
       
       
 ```
+
 *** =sample_code
 ```{r}
-# Before running a regression model, let's examine the structure of the dataframe `UnterHR` with the str() command:
+# 1) Before running a regression model, let's examine the structure of the dataframe `UnterHR` with the str() command:
 
-#---- Question 1-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
-   
 
-# The dataset contains four variables: Treatment, Female, LeaveJob, and race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables. In 4 separate statements, look at the summary statistics about each variable:
-#---- Question 2-------------------------------------#
-      Solution2<-
-#----------------------------------------------------#
 
-# Remember that Unter found that that downsizing their HR department had a bigger CATE for women than for men, so let's construct a regression model that measures the effect of Treatment on LeaveJob, with a "mediation effect"" for Female. This is the same as "controlling" for Female, as we did for other independent variables in our previous examples. 
+# 2) The dataset contains four variables: Treatment, Female, LeaveJob, and race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables. In 4 separate statements, look at the summary statistics about each variable:
+
+
+
+
+
+
+# 3) Remember that Unter found that that downsizing their HR department had a bigger CATE for women than for men, so let's construct a regression model that measures the effect of Treatment on LeaveJob, with a "mediation effect"" for Female. This is the same as "controlling" for Female, as we did for other independent variables in our previous examples. Then run the summary() command to further understand the results.
   
-#Note: The syntax for glm is "glm(Y~X+Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the mediating variable, and df is the name of the dataframe.
+    Solution3<-
 
-#---- Question 3-------------------------------------#
-      Solution3<-
-#----------------------------------------------------#
-    
-# If you entered Solution3 correctly and summarize the results via summary(Solution1), the effect for Treatment should be about .046 (but not statistically significant), and the effect for Female should be about .16. The direct interpretation of this model is that Treatment increases the odds that a person will leave their job by .046 (4.6%), and being Female increases the odds that a person will leave their job by .16, regardless of Treatment. 
+
 ```
+
 *** =solution
 ```{r}
-  Solution1<- str(UnterHR)
-  Solution2<-summary(UnterHR$Treatment)
+str(UnterHR)
+summary(UnterHR$Treatment)
     summary(UnterHR$Female)
     summary(UnterHR$LeaveJob)
     summary(UnterHR$Race)
-  Solution3<-glm(LeaveJob ~ Treatment + Female,data=UnterHR)
-
+Solution3<-glm(LeaveJob ~ Treatment + Female,data=UnterHR)
+    summary(Solution3)
 ```
+
 *** =sct
 ```{r}
-#test_object("Solution1")
-#test_object("Solution2")
-#test_object("Solution3")
-success_msg("Good work! It appears that the treatment only affected individuals who were Female, Black, or Latino.")
+test_object("Solution3")
+test_error()
+success_msg("Good work! If you entered Solution3 correctly and summarize the results via summary(), the effect for Treatment should be about .046 (but not statistically significant), and the effect for Female should be about .16. The direct interpretation of this model is that Treatment increases the odds that a person will leave their job by .046 (4.6%), and being Female increases the odds that a person will leave their job by .16, regardless of Treatment.")
 ```
 
 
@@ -478,8 +479,9 @@ A CATE is basically an example of **statistical moderation** (also known as an i
 In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
 
 *** =instructions
-- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
-- Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+- 1) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
+- 2) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -503,39 +505,36 @@ n=682
       
       
 ```
+
 *** =sample_code
 ```{r}
 
-# The model you created for the previous question does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment affects women differently, we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`.
+# 1) The model you created for the previous question does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment affects women differently, we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`.
 
 #Note: For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe. The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. 
 
-#---- Question 1-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
+
 
 # By default, R includes independent variables for Treatment and Female when we add a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. The large coefficient for this interaction effect suggests that Treatment has a large effect on women's odds of leaving their job.
       
-# Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. 
+# 2) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. 
 
 # Note: The syntax for glm with two interaction effects is "glm(Y~X*Z1+X*Z2,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z1 is the name of the first mediation variable, Z2 is the name of the first mediation variable and df is the name of the dataframe.
       
-#---- Question 2-------------------------------------#
-      Solution2<-
-#----------------------------------------------------#
-      
+
       
       
 ```
+
 *** =solution
 ```{r}
-      Solution1<-glm(LeaveJob ~ Treatment * Female,data=UnterHR)
-      Solution2<-glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
+glm(LeaveJob ~ Treatment * Female,data=UnterHR)
+glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
 ```
+
 *** =sct
 ```{r}
-#test_object("Solution1")
-#test_object("Solution2")
+test_error()
 success_msg("Good work! It appears that the treatment only affected individuals who were Female, Black, or Latino.")
 ```
 
@@ -548,11 +547,13 @@ success_msg("Good work! It appears that the treatment only affected individuals 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3e6268810e
 ## When to Use a Logistic Regression Model
 For which of the following causal relationships might we prefer to model with logistic regression rather than OLS regression? 
+
 *** =instructions
 - The effect of eating ice cream on a person's likelihood of being attacked by a seagull.
 - The effect of divorce on people's margarine consumption.
 - The effect of snowfall on ski resort profits
 - The effect of global temperatures on the number of pirate attacks across the world
+
 *** =sct
 ```{r}
 msg1 = "Correct! The dependent variable in this question is binary; a person either has or hasn't ever been attacked by a seagull. This is when logistic regression models are most useful."
@@ -577,6 +578,7 @@ A scientist develops a new drug to help reduce addiction to pain killers. He adm
 - Because those who were treated with the drug were more likely to gain benefit from using it.
 - Because painkiller abusers are an unreliable sample. 
 - Because the sample who tried the scientist's drug was small.
+
 *** =sct
 ```{r}
 msg1 = "Correct! The only people who were administered the drug were painkiller addicts, but this is a relatively small portion of the population. The drug was designed to reduce addiction to painkillers, so cannot help the majority of individuals in the population who are not addicted to pain killers"
@@ -606,8 +608,6 @@ The American film studio, Delimited Pictures, is interested in how many tickets 
 - 3) Estimate the proportion of the US adult population that plans to watch Cambrian Park (variable `WillWatch`) while using the provided survey weights.
 
 
-*** =hint
-- This is a useful hint
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -622,15 +622,15 @@ n=1775
   Survey$Weight<-1.35*Survey$Black+1*Survey$White+1.3*Survey$Latino+1.07*Survey$Other+Survey$Age*.005+.3*(1-Survey$Female)-.3699
   Survey$WillWatch<-rbinom(n,1,.01+.03*(1-Survey$Female)+.01*Survey$Black+.00003*Survey$Age^2)
 ```
+
 *** =sample_code
 ```{r}
 # 1) To get used to what survey weights like look like, let's summarize the `Weight` variable in our dataset `Survey` with the Summary() command:
 
-#---- Question 1-------------------------------------#
-    Solution1<-
-#----------------------------------------------------#
+
     
 # The mean weight ranges from around 0.5 to 2.0 in this dataset, but other survey datasets may include weights with much larger numbers. In general, individuals with higher weights were undersampled. Having a large weights gives an observation more influence in your statistical models. 
+
     
 # 2) As a teaser to what we are doing when we "weight" the data, let's look at the variable for gender, 'Female`. The first line below shows the proportion of females in this survey. This number is much too uneven to be representative of the actual US population. The second line indicates the proportion of females in these survey when they are weighted. We have generated the code for you, so highlight the following lines and hit the "Run Code" button:
 
@@ -639,23 +639,24 @@ n=1775
 
 # These numbers appear much more realistic.   
 
+
 # 3) But before we weigh the surveys, let's see what the unweighted data says is the proportion of the U.S. population that is planning to watch Cambrian Park. This is simple: just find the mean value of the variable `WillWatch`:
 
-#---- Question 3-------------------------------------#
     Solution3<-
-#----------------------------------------------------#
-    
+
 
 ```
+
 *** =solution
 ```{r}
-Solution1<-summary(Survey$Weight)
+summary(Survey$Weight)
 Solution3<-mean(Survey$WillWatch)
 ```
+
 *** =sct
 ```{r}
-test_object("Solution1")
 test_object("Solution3")
+test_error()
 success_msg("Good work, but our sample was a bit skewed, so we can't trust this number. On top of that, DeLimited Pictures expected that at least 7% of the population would watch their film, so we're under pressure. Let's try using the data to weigh the survey responses for a more realistic answer.")
 ```
 
@@ -671,8 +672,7 @@ The American film studio, Delimited Pictures, is interested in how many tickets 
 - 1) Estimate the proportion of the US adult population that plans to watch Cambrian Park (variable `WillWatch`) while using the provided survey weights.
 - 2) Construct a survey-weighted OLS regression model to estimate the effect of `Age` on `WillWatch` controlling for `Female`.
 
-*** =hint
-- This is a useful hint
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -687,31 +687,31 @@ n=1775
   Survey$Weight<-1.35*Survey$Black+1*Survey$White+1.3*Survey$Latino+1.07*Survey$Other+Survey$Age*.005+.3*(1-Survey$Female)-.3699
   Survey$WillWatch<-rbinom(n,1,.01+.03*(1-Survey$Female)+.01*Survey$Black+.00003*Survey$Age^2)
 ```
+
 *** =sample_code
 ```{r}
-# What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the waited mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
+# 1) What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the waited mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
 
-#---- Question 1-------------------------------------#
-    Solution1<-
-#----------------------------------------------------#
+
     
-# It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. 
+# It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! 
+
+# 2) Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. 
   
 # Note: The syntax is `glm(Y ~ X + Z, weight = [Weight], data = [dataframe])`, where Y = the name of the dependent variable, X = the name of the independent variable, Z = the name of the control variable Weight = the weight variable, and dataframe = the dataframe that contains these variables.
 
-#---- Question 2-------------------------------------#
-    Solution2<-
-#----------------------------------------------------#
+
 ```
+
 *** =solution
 ```{r}
-Solution1<-weighted.mean(Survey$WillWatch,Survey$Weight)
-Solution2<-glm(WillWatch ~ Female+Age, weight=Weight, data=Survey)
+weighted.mean(Survey$WillWatch,Survey$Weight)
+glm(WillWatch ~ Female+Age, weight=Weight, data=Survey)
 ```
+
 *** =sct
 ```{r}
-test_object("Solution1")
-test_object("Solution2")
+test_error()
 success_msg("Good work! Although survey weights do not often change one's results substantially, it is still good practice to use them if they are provided to you, especially if you are trying to study trends about an entire population. If you are doing extensive analysis with weighted data, you may want to consider using the 'survey' package instead of the weight options in R's built in functions.")
 ```
 
@@ -723,6 +723,7 @@ One week after Cambrian Park was released, Delimited Pictures gathered a survey 
 *** =instructions
 - Yes
 - No
+
 *** =sct
 ```{r}
 msg1 = "Try again"
