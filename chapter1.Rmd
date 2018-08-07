@@ -98,7 +98,7 @@ library(ggplot2)
 # Mortality: Death rate for pneumonia patients in 30 days after entering the hospital
 # https://www.medicare.gov/hospitalcompare/Data/Death-rates.html
 
-# I HAVE DOWNLOADED THESE DATASETS, HAVEN'T ADDED THEM TO DATACAMP SERVERS THOUGH. ONE NEEDS TRIMMING DOWN TO 10MB
+# I HAVE DOWNLOADED THESE DATASETS, HAVEN'T ADDED THEM TO DATACAMP SERVERS THOUGH. NEED MERGING AND TRIMMING TO SMALL FILE SIZE.
 
 root <- # SET ROOT DIR HERE
 path <- paste0(root,"Complications and Deaths - Hospital.csv")
@@ -118,17 +118,15 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
 ```{r}
 # 1) You will explore the relationship between hospital performance and mortality. Calculate the correlation coefficient between these variables.
 
-#---- Question 1-------------------------------------#
-      Solution1<-cor()
-#----------------------------------------------------#
+cor()
+
 
 # 2) Let's further analyze the relationship between mortality and performance. Plot the two variables on the same graph, and fit a line as well.
 
-#---- Question 2-------------------------------------#
       Solution2<-ggplot(data= , aes(x= , y= )) +
                         geom_point() +
                         geom_smooth(method= )
-#----------------------------------------------------#
+
 
 # 3) What do our findings imply? 
 # (A) As performance gets better, mortality stays the same. 
@@ -136,14 +134,13 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
 # (C) As performance gets better, mortality increases; therefore the performance measure is useless.
 # (D) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
 
-#---- Question 3-------------------------------------#
       Solution3<-""
-#----------------------------------------------------#
 
+```
 
 ***=solution
-Solution1<-cor(hospitals$mortality, hospitals$performance)
-Solution2<-ggplot(data=hospitals, aes(x=performance, y=mortality)) +
+cor(hospitals$mortality, hospitals$performance)
+ggplot(data=hospitals, aes(x=performance, y=mortality)) +
                   geom_point() +
                   geom_smooth(method=lm)
 Solution3<-"D"
@@ -151,10 +148,10 @@ Solution3<-"D"
 
 *** =sct
 ```{r}
-test_object("Solution1")
 test_object("Solution2")
 test_object("Solution3")
-success_msg("Nice job! You are not easily tricked by visual data patterns. Both of the mortality and safety performance measures are accurate and meaningful... when used correctly! Even though mortality is seemingly worse in safer hospitals, we did not take a ton of other factors into account. For example, the best hospitals likely treat the riskiest patients, and save many lives that worse hospitals could not have saved.")
+test_error()
+success_msg("Nice job! You are not easily tricked by visual data patterns. Both of the mortality and safety performance measures are accurate and meaningful...when used correctly! Even though mortality is seemingly worse in safer hospitals, we did not take a ton of other factors into account. For example, the best hospitals likely treat the riskiest patients, and save many lives that worse hospitals could not have saved.")
 ```
 
 
@@ -162,7 +159,7 @@ success_msg("Nice job! You are not easily tricked by visual data patterns. Both 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:d50636b4ac
 ## Regression Models and Policy Implementation
-Suppose you see a Facebook post with a regression plot of the Number of Walmarts per Capita on Income per Capita, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
+Suppose you see a Facebook post with a regression plot of the `Number of Walmarts per Capita` on `Income per Capita`, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
 
 *** =instructions
 - Yes, the regression shows that Walmarts come to richer places
@@ -264,6 +261,7 @@ msg2 = "Correct! Regressions by themselves are about describing relationships. S
 msg3 = "Not necessarily. We may see a zero coefficient because the model is misspecified, but should not be our immediate conclusion. Moreover, there's almost always something that we can learn from a statistical model; at the very leasy, a statitical model can teach us that we picked the wrong statistical model for our assessing our data."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
 ```
+
 
 
 
