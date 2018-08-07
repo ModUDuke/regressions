@@ -15,9 +15,11 @@ description : "This chapter will introduce you to using regression analysis to f
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:36681d6cec
 ## Regressing Soda pop and K-pop
 You are studying the effect of pop songs on teenage product consumption using a dataset from South Korea. Via a regression model, you find that for every four songs downloaded, soft drink sales tend to increase by about one can. Does this imply that South Korean Soda Companies should start sponsoring pop stars?
+
 *** =instructions
 - No
 - Yes
+
 *** =sct
 ```{r}
 msg1 = "Correct. The regression model does not necessarily recover a true causal effect of song downloads on soft drink sales."
@@ -30,11 +32,13 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:5c60df0d16
 ## Knowing it all
 If you could observe every single variable that mattered for determining outcomes, would you be able to learn all the causal effects you want?
+
 *** =instructions
 - No, regressions only give you correlation, not causation.
 - Yes, you'd have every combination of variables possibly needed for determining causality.
 - Yes, but just for that dataset.
 - No, it would give you conflicting information.
+
 *** =sct
 ```{r}
 msg1 = "Although it may seem like that is what this course is implying, there are times when regressions can demonstrate a causal relationship. Try again."
@@ -54,6 +58,7 @@ Although regression models are great for summarizing the association between var
 - If something happens more frequently than expected during a given period, we can expect that it will happen less frequently in the future
 - There is little or no multicollinearity in the data
 - The residuals of a regression model are normally distributed.
+
 *** =sct
 ```{r}
 msg1 = "Correct. Put even more simply, any causal interpretation of a regression model assumes that the relationships observed in the data are unconfounded. In most cases, this is impossible to verify empirically. However, it is a pretty large assumption. Most variations of regression models that we will describe in later chapters try to reduce the strength of this assumption."
@@ -76,8 +81,15 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 Although the math behind determining an OLS regression model is complicated, understanding what it's trying to do is surprisingly straightforward. Understanding how regression models work can yield important insight into understanding how they can be biased. In this question, we will examine how outliers can effect regression slopes. Using data provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, follow the sample code to answer the following question about outliers:
 
 *** =instructions
-- When does an outlier in a regression model's dependent variable, "Y", tend to cause the least bias in its relationship to an independent variable, "X" (i.e. its the regression line's slope)? 
-- Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X.
+- 1) Refresh our memories on what the eGulf data looks like.
+- 2) Run a glm model on how a phone's age affects its sales price on eGulf.
+- 3) Examine a graph of this relationship.
+- 4) Examine the impact of outliers at different phone ages through graphs.
+- 5) Decide when outliers will have the least impact in this regression.
+
+*** =hint
+- The syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, and df is the name of the dataframe.
+
 *** =pre_exercise_code
 ```{r}
 set.seed(1)
@@ -95,32 +107,28 @@ names(WePhone)[2]<-"PriceSold"
 
 *** =sample_code
 ```{r}
-# As a quick refresher, let's glimpse at the first few lines of data. In the dataframe `WePhone`, Age refers to the number of years old the WePhone was, and Price Sold refers to the dollars it sold for. Use the head() function to look at these initial lines:
+# 1) As a quick refresher, let's glimpse at the first few lines of data. In the dataframe `WePhone`, Age refers to the number of years old the WePhone was, and Price Sold refers to the dollars it sold for. Use the head() function to look at these initial lines:
 
-#---- Question 1-------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
+
 
 # It looks like these phones ranged between 1-5.5 years old, and they sold for about $180-$620. You might guess that the newest phones should sell for more money, so let's look at that correlated the Age and PriceSold variables are.
 
-# We will use a regression model to show us the correlation between a WePhone's Age and Price Sold across all the rest of the dataset. Run a glm model named `model` of Age on PriceSold using the dataframe `WePhone`, and then run the summary() command on that model to look at the results.
-  
-#Note: The syntax for glm is "glm(Y~X,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, and df is the name of the dataframe.
 
-#---- Question 2-------------------------------------#
+# 2) We will use a regression model to show us the correlation between a WePhone's Age and Price Sold across all the rest of the dataset. Run a glm model named `model` of Age on PriceSold using the dataframe `WePhone`, and then run the summary() command on that model to look at the results.
+  
       model<-
-#----------------------------------------------------#     
 
 # These results show that the correlation we saw in the first few results from the head() command stay true through the rest of the data. These things are often easier to understand through a graph, so let's look at that next.
     
-# Below visualizes the regression model as a line, and the data points as dots. The line that it (and any regression model) produces minimizes the vertical distance (squared) between each data point and the regression line.  We've already generated the code for this graph, so select both of the following lines and hit the "Run Code" button to see the graph:
+# 3) Below visualizes the regression model as a line, and the data points as dots. The line that it (and any regression model) produces minimizes the vertical distance (squared) between each data point and the regression line.  We've already generated the code for this graph, so select both of the following lines and hit the "Run Code" button to see the graph:
 
     plot(WePhone$PriceSold ~ WePhone$Age)
     abline(model)
     
 # It looks like there's a pretty consistent negative correlation between age and the price sold, which makes sense. As phones get older, they are worth less money.
 
-# But what happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($1000) given its age at three points of the graph, when Age = 1, 3, and 5.
+
+# 4) But what happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($1000) given its age at three points of the graph, when Age = 1, 3, and 5. Select each and hit "Run Code", paying attention to the small differences in the outputs as we change the options.
   # No outlier
     plot(WePhone$PriceSold[1:25] ~ WePhone$Age[1:25], ylim=c(0, 1100))
     abline(glm(PriceSold~Age,data=WePhone[1:25,]))
@@ -137,11 +145,14 @@ names(WePhone)[2]<-"PriceSold"
     plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
     abline(glm(PriceSold~Age,data=WePhone))
 
-# These graphs reveal the answer to the question about when an outlier in a regression model's dependent variable, "Y", causes the least amount of bias (or change in slope) in its relationship to an independent variable, "X". Answer the solution with "A", "B", or "C". Answer options: A) When the outlier in Y occurs at low values of X, B) When the outlier in Y occurs at middle values of X, C) When the outlier in Y occurs at high values of X."
 
-#---- Question 3-------------------------------------#
+# 5) Now that you have seen the graphs change as we introduced outliers, answer the following question. When does an outlier in a regression model's dependent variable, "Y", causes the LEAST amount of bias (or change in slope) in its relationship to an independent variable, "X"? Answer the solution with "A", "B", or "C".
+
+# (A) When the outlier in Y occurs at low values of X
+# (B) When the outlier in Y occurs at middle values of X
+# (C) When the outlier in Y occurs at high values of X
+
       Solution3<-""
-#----------------------------------------------------#
 
 ```
 *** =solution
@@ -153,7 +164,8 @@ names(WePhone)[2]<-"PriceSold"
 *** =sct
 ```{r}
 test_object("Solution1")
-
+test_object("Solution3")
+test_error()
 success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusally high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
 ```
 
@@ -162,7 +174,10 @@ success_msg("Good work! Outliers typically effect the slope of a bivariate regre
 Since OLS models are so easy to visualize, they provide a nice tool for understanding why models that use more observations tend to have more statistical power. In the following question, we have two datasets provided by the popular online auctioneer eGulf about the relationship between WePhone age and sales price, one with 25 observations. For each of these datasets, we add 25 randomly generated observations that have no relationship between WePhone age and sales price, to represent "statistical noise" - unexplained variation in our sample. Follow the sample code to create regression models with these two datasets, and answer the following question:
 
 *** =instructions
-- Which regression model most accurately represents the true relationship between WePhone `Age` and `SalesPrice`?
+- 1) Take a look at the summary statistics for 2 datasets on WePhone sales prices.
+- 2) Build glm models for the effect of phone ages on their sales prices in both datasets.
+- 3) Which regression model most accurately represents the true relationship between WePhone `Age` and `SalesPrice`?
+
 *** =pre_exercise_code
 ```{r}
 #Original dataset
@@ -203,44 +218,44 @@ rm(list = c("noise","WePhone"))
 
 *** =sample_code
 ```{r}
-# We have two datasets, WePhone1 and WePhone2. The first contains 25 real observations and 25 random observations; the second contains 100 real observations and 25 random observations. As a reminder, each dataset contains two variables, "Age"" and "PriceSold." Run the summary command on both `WePhone1` and `WePhone2` to see what we have:
+# 1) We have two datasets, WePhone1 and WePhone2. The first contains 25 real observations and 25 random observations; the second contains 100 real observations and 25 random observations. As a reminder, each dataset contains two variables, "Age"" and "PriceSold." Run the summary command on both `WePhone1` and `WePhone2` to see what we have:
 
-#---- Question 1 ------------------------------------#
-      Solution1<-
-#----------------------------------------------------#
 
-# Build regression models using the glm function, that shows the effect of Age on PriceSold for WePhones in each dataset.
 
-#---- Question 2 - glm in dataset WePhone1-----------#
-      Solution2<-glm()
-#----------------------------------------------------#
+# 2) Build regression models using the glm function, that shows the effect of Age on PriceSold for WePhones in each dataset.
 
-#---- Question 3 - glm in dataset WePhone2-----------#
-      Solution3<-glm()
-#----------------------------------------------------#
+# glm in dataset WePhone1
+    
+        Solution2<-glm()
 
-# Which of these models better represents the relationship between Age and PriceSold? Solution2 or Solution3?
+# glm in dataset WePhone2
+    
+        Solution3<-glm()
+
+
+#3)  Which of these Solutions is a better model of the relationship between Age and PriceSold?
       
-#---- Question 4 - -----------#
       Solution4<-""
-#----------------------------------------------------#
+
 
 ```
+
 *** =solution
 ```{r}
-    Solution1<-summary(WePhone1)
+summary(WePhone1)
     summary(WePhone2)
-    Solution2<-glm(PriceSold ~ Age, data=WePhone1)
-    Solution3<-glm(PriceSold ~ Age, data=WePhone2)
-    Solution4<-"Solution3"
+Solution2<-glm(PriceSold ~ Age, data=WePhone1)
+Solution3<-glm(PriceSold ~ Age, data=WePhone2)
+Solution4<-"Solution3"
 ```
+
 *** =sct
 ```{r}
 test_object("Solution1")
 test_object("Solution2")
 test_object("Solution3")
 test_object("Solution4")
-
+test_error()
 success_msg("Good work! Larger datasets tend to be more robust to 'statistical noise' - unexplained variation in the sample. In this example, statistical noise decreased the relationship between Age and PriceSold (i.e. the coefficient of Age in the model). However, it is possible for statistical noise to induce spurious relationships as well.")
 ```
 
@@ -250,8 +265,10 @@ success_msg("Good work! Larger datasets tend to be more robust to 'statistical n
 NixSplash, a water conservationist group in Utah, wants to make a targeted ad campaign to encourage high water consumers to reduce their water usage. To determine who to target with their ad campaign, NixSplash conducts a survey across a random sample of the population. However, the intern who put together NixSplash's survey asked a bunch of odd questions. Use NixSplash's survey dataset, `Survey`, to generate the best model for predicting a household's water usage.
 
   *** =instructions
-- Build a regression model that includes all statistically significant predictors of a household's water usage (`Water`).
-- Build a regression model that includes all intuitive predictors of a household's water usage (`Water`).
+- 1) Examine the data from the survey
+- 2) Build a regression model that includes all statistically significant predictors of a household's water usage (`Water`).
+- 3) Build a regression model that includes all intuitive predictors of a household's water usage (`Water`).
+- 4) Decide which way of modeling is better.
 
 *** =pre_exercise_code
 ```{r}
@@ -276,45 +293,41 @@ mround <- function(x,base){
   Survey$Water<-(Survey$YardSize*10+Survey$Rainfall+Survey$NSprinkler*5+rnorm(n,10,4))*15
 
 ```
+
 *** =sample_code
 ```{r}
-# As usual, let's first examine the dataset. Water refers to the number of gallons (in hundreds) that the respondent has used in the past year, YardSize refers to the number of acres that the respondent owns, Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year, NSprinkler refers to whether the respondent's neighbor runs a sprinkler system on a daily basis, Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts, Massage refers to whether the respondent has ever gotten a massage, and Coffee refers to whether the respondent drinks coffee on a daily basis. Start by running the summary() command on the dataframe `Survey`:
+# 1) As usual, let's first examine the dataset. Water refers to the number of gallons (in hundreds) that the respondent has used in the past year, YardSize refers to the number of acres that the respondent owns, Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year, NSprinkler refers to whether the respondent's neighbor runs a sprinkler system on a daily basis, Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts, Massage refers to whether the respondent has ever gotten a massage, and Coffee refers to whether the respondent drinks coffee on a daily basis. Start by running the summary() command on the dataframe `Survey`:
 
-#-------------------- Question 1 --------------------#
-      Solution1<-
-#----------------------------------------------------#
+
     
-# Some of the survey questions may seem irrelevant to how much a water a household uses but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. 
+# 2) Some of the survey questions may seem irrelevant to how much a water a household uses but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. 
   
-#Note: We can find the summary statistics from a generalized linear regression model by inserting the glm() code as the parameter for the summary() command, like the following: summary(glm(Water ~ YardSize, data=Survey)). Now do that for yourself, but include all of the variables in the dataframe:
+# Note: We can find the summary statistics from a generalized linear regression model by inserting the glm() code as the parameter for the summary() command, like the following: summary(glm(Water ~ YardSize, data=Survey)). Now do that for yourself, but include all of the variables in the dataframe:
 
-#-------------------- Question 2 --------------------#
-      Solution2<-
-#----------------------------------------------------#
-  
-It looks like we find a statistically significant effect from all variables except Dunkin and Massage.
 
-# Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted as Solution3:
 
-#-------------------- Question 3 --------------------#
+# If you did this correctly, it should look like we find a statistically significant effect from all variables except Dunkin and Massage.
+
+
+# 3) Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted as Solution3:
+
       Solution3<-glm()
-#----------------------------------------------------#
 
 # So which model is better? A model that predicts water usage with all of our available variables, or a model that predicts water usage without Dunking or Coffee? It turns out that statisticians have developed a variety of tools to measure how well a model specification fits the data (i.e. a model's "goodness of fit"). 
 
 # The GLM function includes one such parameter, its "AIC" (Akaike information criterion). The math behind AICs is complicated, but in practice, a model's AIC can be used to compare the goodness of fit between two models. A model with a lower AIC than another is considered to fit the data better. 
 
-# In the above example, the AIC of Solution 3 is higher than in our first example. This suggests that Solution2 fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
 
-#-------------------- Question 4 --------------------#
+# 4) In the above example, the AIC of Solution 3 is higher than in our first example. This suggests that Solution2 fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
+
       Solution4<-""
-#----------------------------------------------------#
+
 ```
       
 *** =solution
 ```{r}
-  Solution1<-summary(Survey)
-  Solution2<-summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Dunkin+Massage+Coffee,data=Survey))
+summary(Survey)
+summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Dunkin+Massage+Coffee,data=Survey))
   Solution3<-glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Coffee,data=Survey)
   Solution4<-"No"
 ```
@@ -322,10 +335,9 @@ It looks like we find a statistically significant effect from all variables exce
 *** =sct
 ```{r}
 test_object("Solution2")
-
+test_error()
 success_msg("Good work! Even though our model in Solution 1 appeared to have worse fit than our model with all of the variables included, that does not mean that we should include all of these variables into our final model, or use them to inform NixSplash's ad-campaign. Statistical models should always be guided by theory. If there is no clear reason why a variable should effect an outcome of interest, we should not include it in our model, even if it improves model fit. As a reminder, statistical models do not provide definitive proof of causality; they are simply a tool that we can use to test our assumptions about the world.")
 ```
-
 
 
 
