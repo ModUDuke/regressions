@@ -213,7 +213,7 @@ msg1 = "Try again"
 msg2 = "Well done! Notice any advantages of regression models versus t.tests? In a t.test, we can only predict the outcome from a binary treatment variable (that is, the outcome for respondents in the treatment versus control group), In a regression model, we can predict the outcome from a continuous treatment variable (e.g. age)."
 msg3 = "Try again"
 msg4 = "Try again"
-test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
