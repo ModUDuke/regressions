@@ -482,11 +482,12 @@ success_msg("Good work! If you entered Solution3 correctly and summarize the res
 
 A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a  causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
 
-In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is effected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is affected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on someone's intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
 
 *** =instructions
-- 1) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
-- 2) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+- 1) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`
+- 2) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
+- 3) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
 
 *** =pre_exercise_code
 ```{r}
@@ -514,8 +515,11 @@ n=682
 
 *** =sample_code
 ```{r}
+# 1) First, let's construct a naive regression model that just uses the effect of `Treatment` on `LeaveJob` in the dataframe `UnterHR`.
 
-# 1) The model you created for the previous question does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment affects women differently, we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`.
+
+
+# 2) The model you created for the previous question does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment affects women differently, we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`.
 
 #Note: For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe. The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. 
 
@@ -523,7 +527,7 @@ n=682
 
 # By default, R includes independent variables for Treatment and Female when we add a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. The large coefficient for this interaction effect suggests that Treatment has a large effect on women's odds of leaving their job.
       
-# 2) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. 
+# 3) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. 
 
 # Note: The syntax for glm with two interaction effects is "glm(Y~X*Z1+X*Z2,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z1 is the name of the first mediation variable, Z2 is the name of the first mediation variable and df is the name of the dataframe.
       
@@ -534,6 +538,7 @@ n=682
 
 *** =solution
 ```{r}
+glm(LeaveJob ~ Treatment,data=UnterHR)
 glm(LeaveJob ~ Treatment * Female,data=UnterHR)
 glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
 ```
