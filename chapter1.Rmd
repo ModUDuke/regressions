@@ -547,7 +547,7 @@ Which of the following is the most important step you should take before running
 
 *** =instructions
 - Identify how many variables you can include in your model while still attaining statistical significance
-- Identify your outcome of interest (i.e. depend variable)
+- Identify your outcome of interest (i.e. dependent variable)
 - Identify which type of regression model to perform
 - Identify whether any of your variables will need to be transformed
 
