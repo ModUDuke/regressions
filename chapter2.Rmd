@@ -640,12 +640,15 @@ n=1775
 
 
     
-# The mean weight ranges from around 0.5 to 2.0 in this dataset, but other survey datasets may include weights with much larger numbers. In general, individuals with higher weights were undersampled. Having a large weights gives an observation more influence in your statistical models. 
+# The weights range between 0.7 and 1.6 in this dataset, but you may encounter survey datasets with much larger weights. In general, because the mean weight of 1 is closer to 0.7 than it is to 1.6, we can tell that individuals with higher weights were undersampled. As you might guess, observations with higher weights have more influence in your statistical models. 
 
     
-# 2) As a teaser to what we are doing when we "weight" the data, let's look at the variable for gender, 'Female`. The first line below shows the proportion of females in this survey. This number is much too uneven to be representative of the actual US population. The second line indicates the proportion of females in these survey when they are weighted. We have generated the code for you, so highlight the following lines and hit the "Run Code" button:
+# 2) As a teaser to what we are doing when we "weight" the data, let's look at the variable for gender, 'Female`. The first line below shows the proportion of females in this survey. Select the following code and hit the "Run Code" button to see the results.
 
     prop.table(table(Survey$Female))
+
+This number is much too uneven to be representative of the actual US population. The following line indicates the proportion of females in these survey when they are weighted. We have generated the code for you again, so select it and hit the "Run Code" button to see the results.
+
     prop.table(xtabs(Weight~Female, data=Survey))
 
 # These numbers appear much more realistic.   
@@ -701,7 +704,7 @@ n=1775
 
 *** =sample_code
 ```{r}
-# 1) What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the waited mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
+# 1) What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the weighted mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
 
 
     
