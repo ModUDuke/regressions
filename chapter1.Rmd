@@ -82,10 +82,11 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:66388309ec
 Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given real data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses "a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
 
-***=instructions
-- 1) Calculate the correlation coefficient between hospital performance and mortality in the Medicare data.
-- 2) Plot the coefficient with a best-fit line.
-- 3) Decide on the best casual interpretation to explain your findings.
+*** =instructions
+- 1) Get an initial sense of what kind of data is in the dataset.
+- 2) Calculate the correlation coefficient between hospital performance and mortality in the Medicare data.
+- 3) Plot the coefficient with a best-fit line.
+- 4) Decide on the best casual interpretation to explain your findings.
 
 
 *** =pre_exercise_code
@@ -116,7 +117,10 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
 
 *** =sample_code
 ```{r}
-# 1) You will explore the relationship between hospital performance and mortality. Calculate the correlation coefficient between these variables.
+# 1) You will explore the relationship between hospital performance and mortality. First, use the head() command to take a look at the variable names, types, and some some initial values.
+
+
+#2) Calculate the correlation coefficient between these variables.
 
 cor()
 
@@ -138,7 +142,8 @@ cor()
 
 ```
 
-***=solution
+*** =solution
+```{r}
 cor(hospitals$mortality, hospitals$performance)
 ggplot(data=hospitals, aes(x=performance, y=mortality)) +
                   geom_point() +
