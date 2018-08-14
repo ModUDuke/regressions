@@ -415,7 +415,7 @@ set.seed(1)
   
 # 4) Finally, let's run our first generalized linear regression model of the effect of income on happiness with the glm() function. 
   
-# Note: the syntax for glm is "glm(Y~X,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, and dataframe is the name of the dataframe.
+# Note: the syntax for glm is "glm(Y~X,data=dataframe)" where Y is the name of the dependent variable, X is the name of the independent variable, and dataframe is the name of the dataframe.
 
 
 ```
