@@ -542,7 +542,7 @@ success_msg("Good work! You may have noticed that the coefficient for income inc
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
-## Steps prior to analysis with regression models 
+## Steps Prior to Analysis with Regression Models 
 Which of the following is the most important step you should take before running a regression model on your data?
 
 *** =instructions
