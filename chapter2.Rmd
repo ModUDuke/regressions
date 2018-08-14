@@ -296,7 +296,15 @@ mround <- function(x,base){
 
 *** =sample_code
 ```{r}
-# 1) As usual, let's first examine the dataset. Water refers to the number of gallons (in hundreds) that the respondent has used in the past year, YardSize refers to the number of acres that the respondent owns, Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year, NSprinkler refers to whether the respondent's neighbor runs a sprinkler system on a daily basis, Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts, Massage refers to whether the respondent has ever gotten a massage, and Coffee refers to whether the respondent drinks coffee on a daily basis. Start by running the summary() command on the dataframe `Survey`:
+# 1) As usual, let's first examine the dataset. Here is a data dictionary about the variables:
+#    Water refers to the number of gallons (in hundreds) that the respondent has used in the past year
+#    YardSize refers to the number of acres that the respondent owns
+#    Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year
+#    NSprinkler refers to whether the respondent's neighbor runs a sprinkler system on a daily basis
+#    Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts
+#    Massage refers to whether the respondent has ever gotten a massage
+#    Coffee refers to whether the respondent drinks coffee on a daily basis. 
+# Start by running the summary() command on the dataframe `Survey`:
 
 
     
@@ -309,16 +317,14 @@ mround <- function(x,base){
 # If you did this correctly, it should look like we find a statistically significant effect from all variables except Dunkin and Massage.
 
 
-# 3) Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted as Solution3:
-
-      Solution3<-glm()
-
-# So which model is better? A model that predicts water usage with all of our available variables, or a model that predicts water usage without Dunking or Coffee? It turns out that statisticians have developed a variety of tools to measure how well a model specification fits the data (i.e. a model's "goodness of fit"). 
-
-# The GLM function includes one such parameter, its "AIC" (Akaike information criterion). The math behind AICs is complicated, but in practice, a model's AIC can be used to compare the goodness of fit between two models. A model with a lower AIC than another is considered to fit the data better. 
+# 3) Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted:
 
 
-# 4) In the above example, the AIC of Solution 3 is higher than in our first example. This suggests that Solution2 fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
+
+# So which model is better? A model that predicts water usage with all of our available variables, or a model that predicts water usage without Dunking or Coffee? It turns out that statisticians have developed a variety of tools to measure how well a model specification fits the data (i.e. a model's "goodness of fit"). The GLM function includes one such parameter, its "AIC" (Akaike information criterion). The math behind AICs is complicated, but in practice, a model's AIC can be used to compare the goodness of fit between two models. A model with a lower AIC than another is considered to fit the data better. 
+
+
+# 4) In the above example, the AIC of our second model is higher than in our first example. This suggests that the second model fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
 
       Solution4<-""
 
@@ -328,7 +334,7 @@ mround <- function(x,base){
 ```{r}
 summary(Survey)
 summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Dunkin+Massage+Coffee,data=Survey))
-  Solution3<-glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Coffee,data=Survey)
+summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Coffee,data=Survey))
   Solution4<-"No"
 ```
 
@@ -350,7 +356,7 @@ success_msg("Good work! Even though our model in Solution 1 appeared to have wor
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4b9a40fa01
 ## Idenfifying Non-Linear Relationships
-In which of the following plots is the relationship betweeen X and Y non-linear?
+We have generated 4 different plots, which you can scroll through in the Plots display. In which of those plots shows a non-linear relationship betweeen X and Y?
 
 *** =instructions
 - A and B
@@ -412,7 +418,7 @@ set.seed(1)
 n=682
 #Create Dataframe
   UnterHR<-data.frame(Treatment=rbinom(n,1,.4),Female=rbinom(n,1,.1),LeaveJob=0,Race=sample(4,n,prob=c(.6,.1,.1,.2),replace=T))
-#Rename race
+#Rename Race
   UnterHR$Race<-as.factor(ifelse(UnterHR$Race==1,"White",ifelse(UnterHR$Race==2,"Black",ifelse(UnterHR$Race==3,"Latino","Asian"))))
 #LeaveJob
   #treatment makes men less likely to leave
@@ -436,7 +442,7 @@ n=682
 
 
 
-# 2) The dataset contains four variables: Treatment, Female, LeaveJob, and race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables. In 4 separate statements, look at the summary statistics about each variable:
+# 2) The dataset contains four variables: Treatment, Female, LeaveJob, and Race. Notice that the structure command refers to race as a "Factor" variable. This is a typical way that R identifies nominal (non-numeric) variables. In 4 separate statements, look at the summary statistics about each variable:
 
 
 
