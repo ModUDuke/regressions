@@ -112,7 +112,7 @@ names(WePhone)[2]<-"PriceSold"
 
 
 
-# It looks like these phones ranged between 1-5.5 years old, and they sold for about $180-$620. You might guess that the newest phones should sell for more money, so let's look at that correlated the Age and PriceSold variables are.
+# It looks like these phones ranged between 1-6 years old, and they sold for about $180-$620. You might guess that the newest phones should sell for more money, so let's look at that correlated the Age and PriceSold variables are.
 
 
 # 2) We will use a regression model to show us the correlation between a WePhone's Age and Price Sold across all the rest of the dataset. Run a glm model named `model` of Age on PriceSold using the dataframe `WePhone`, and then run the summary() command on that model to look at the results.
@@ -158,7 +158,7 @@ names(WePhone)[2]<-"PriceSold"
 ```
 *** =solution
 ```{r}
-    Solution1<-head(WePhone)
+    head(WePhone)
     Solution3<-"B"
 
 ```
