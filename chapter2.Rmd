@@ -14,7 +14,7 @@ description : "This chapter will introduce you to using regression analysis to f
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:36681d6cec
 ## Regressing Soda pop and K-pop
-You are studying the effect of pop songs on teenage product consumption using a dataset from South Korea. Via a regression model, you find that for every four songs downloaded, soft drink sales tend to increase by about one can. Does this imply that South Korean Soda Companies should start sponsoring pop stars?
+You are studying the effect of pop songs on teenage product consumption using a dataset from South Korea. Via a regression model, you find that for every four songs downloaded, soft drink sales tend to increase by about one can. Does this mean that South Korean soda companies will increase their sales if they start sponsoring pop stars?
 
 *** =instructions
 - No
