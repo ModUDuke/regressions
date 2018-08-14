@@ -74,7 +74,7 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:9b0c9370cf
 ## How to Compute Regressions: Ordinary Least Squares (OLS)
 *** =video_link
-//player.vimeo.com/video/217554577
+//player.vimeo.com/video/217557161
 
 
 --- type:NormalExercise lang:r xp:50 skills:1 key:1ff9f6d33f
