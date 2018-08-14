@@ -45,6 +45,7 @@ msg1 = "Although it may seem like that is what this course is implying, there ar
 msg2 = "According to our definition of causality, if you truly observed every relevant variable, you would indeed be able to learn all the causal effects you want. There are a few caveats though. First, you would still need to ensure that there was at least some variation in each variable you cared about. Even if you observed every variable that mattered, if you never see those variables change across units, you will not be able to learn their causal effects. Second, no real world dataset in social science will truly have all variables you want, which is why the unconfoundedness assumption is often made-to assume that the variables we do not observe are not related to the treatment."
 msg3 = "This answer is tricky. Remember, the dataset contains every relevent variable in the universe for determining outcomes. That should make findings from it generalizable beyond the dataset. Try again."
 msg4 = "It's true that you might have a hard time finding statistically significant results if your sample was small, as there theoretically could be an infinite number of relevant variables for any outcome in the universe, many of which are correlated. However, many events do have a variety of causes, and many regression models do incorporate a lot of 'conflicting' variables. Try again."
+test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
