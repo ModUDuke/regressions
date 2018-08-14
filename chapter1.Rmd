@@ -197,7 +197,7 @@ To determine the predicted sales price of a WePhone with a given age, we can sta
 
 `Sales Price = 592.56 + Age * -61.99`
 
-Based on this formula, what is a valid predicted price for a WePhone that is exactly two years old?
+Based on this formula, what is a valid predicted price for a WePhone that is exactly two years old? You can use the R console as a scratch space to do your calculations.
 
 
 
@@ -231,7 +231,7 @@ We could consider overcoming this by throwing out respondents with high feedback
 | Intercept  | -707.23 (234.38) |
 
 
-As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using this table, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90.
+As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using the information in this table and the R console as a workspace, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90.
 
 
 *** =instructions
