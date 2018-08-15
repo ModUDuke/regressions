@@ -74,7 +74,7 @@ Suppose you replicate the Angrist analysis using more recent data from 1992-2015
 
 *** =sct
 ```{r}
-msg1 = "Try again"
+msg1 = "Think about this: Are you assuming that the underlying dynamics are pretty constant across several decades, our could they be changing since the time period that Angrist studied? Think about that and try again"
 msg2 = "Correct! This is a relatively difficult question. It is possible that unit level causal effects change over time, so using a different data set with more recent data may simply tell us that the causal effect has been decreasing over time. If this is the case, your replication does not necessarily invalidate his analysis. On the other hand, if you have a strong reason to believe that the causal effects do not change over time, then this would perhaps call into question the validity of the earlier findings."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
