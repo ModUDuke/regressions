@@ -176,7 +176,7 @@ n=8008
       Solution2<-glm()
 
 
-# 3) Is the effect of "Treatment" in Solution1 positive and statistically significant? Use the summary command on Solution2 to check, and then enter "Yes" or "No" for Solution3.
+# 3) Is the effect of "Treatment" in Solution2 positive and statistically significant? Use the summary command on Solution2 to check, and then enter "Yes" or "No" for Solution3.
     
       Solution3<-""
 
@@ -230,7 +230,6 @@ In R, the best tool for doing matching is the "MatchIt" package. Let's use the M
 
 library (dplyr)
 library (data.table)
-library (purr)
 library(MatchIt)
 
 set.seed(7)
@@ -266,11 +265,15 @@ n=8008
 *** =sample_code
 ```{r}
 # 1) The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD`: matchit(Treatment ~ control1+control2+control3+control4+control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
+    
     match.it <-
 
+
 # 2) Now let's subset the NERD dataset to observations that have a high predicted probability for being in the treatment group. We have generated that code for you, so select the following code and hit the "Run Code" button:
-    matched.NERD <- match.data(match.it)[1:ncol(NERD)]
-    
+
+matched.NERD <- match.data(match.it)[1:ncol(NERD)]
+
+
 # 3) To compare the matched dataset to the original dataset from the previous exercise (FirstModel), let's use summary commands on the object that was produced by the "matchit" formula. 
 
 
@@ -288,6 +291,7 @@ n=8008
 
 
 ```
+
 *** =solution
 ```{r}
   match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks, data = NERD)
@@ -296,6 +300,7 @@ n=8008
   Solution4<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=matched.NERD)
   Solution5<-"No"
 ```
+
 *** =sct
 ```{r}
 test_object("Solution4")
@@ -315,14 +320,15 @@ success_msg("Good work! There originally appeared to be a positive and statistic
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4736a6a428
 ## Assumptions and Causality
-Since all regression models rely on the unconfoundedness assumption, can they ever support claims about causality?
+In this course, we've talked about using the Unconfoundedness Assumption with regression models to find causal effects in our data. But many analytical models make no mention of the Unconfoundedness Assumption.  Can those ever support claims about causality?
 
 *** =instructions
 - Yes
 - No
+
 *** =sct
 ```{r}
-msg1 = "Correct! All scientific theories and models are based on our assumptions about the world. Few, if any, statistical models can prove whether two variables are causally related. However, if our models rest on reasonable assumptions, they can support our claims about causality. This is also why we have so many models to test causal relationships. There are many statistical models where the unconfoundedness assumption is more plausible than in OLS regression"
+msg1 = "Correct! All scientific theories and models are based on our assumptions about the world, and the Unconfoundedness Assumption is the most one when we use regression to find causality. But it is not the only way to find causal effects, and some people find some methods more believable than others. However, if we can successfully argue that our models rest on reasonable assumptions for data we have and the technical methods we use, then those models can support our claims about causal effects. These other methods include experiments, instrumental variables, differences-in-differences, and regression discontinuity, and each requires its own assumptions. So keep exploring for different methods of causal inference!"
 msg2 = "Try again"
 test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
 ```
