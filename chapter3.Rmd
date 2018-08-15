@@ -37,7 +37,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:c4bcafcab9
-## Why we Need Matching Methods
+## Why We Need Matching Methods
 Why couldn't Angrist just compare the lifetime earnings of veterans and nonveterans with standard regression methods?
 
 *** =instructions
@@ -48,11 +48,11 @@ Why couldn't Angrist just compare the lifetime earnings of veterans and nonveter
 
 *** =sct
 ```{r}
-msg1 = "Correct!"
-msg2 = "Try again"
-msg3 = "Well done"
+msg1 = "This is an awfully strong assumption to make that broadly sweeps complex social dynamics in a single step, and it's not what Angrist was thinking. Try Again"
+msg2 = "This isn't true. Try again"
+msg3 = "Correct. He assumed that it was very possible that people who chose to go in the the military were different from a control group across several key variables that help determine career trajectories, so he wanted to find a way to compensate for that."
 msg4 = "Try again"
-test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3,msg4))
+test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
@@ -130,7 +130,6 @@ A recent study examined how playing the multiplayer online battle arena video ga
 
 library (dplyr)
 library (data.table)
-library (purr)
 library(MatchIt)
 
 set.seed(7)
