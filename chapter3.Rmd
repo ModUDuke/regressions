@@ -280,7 +280,7 @@ matched.NERD <- match.data(match.it)[1:ncol(NERD)]
     
 # The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values between the treatment and control groups are much more similar in the matched dataset than in the original dataset. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
     
-# 4) Let's now estimate a generalized linear regression model for communication skills using our matched dataset (matched.NERD). 
+# 4) Let's now estimate a generalized linear regression model for communication skills that uses all of our control variables using our matched dataset (matched.NERD). 
 
       Solution4<-glm()
 
