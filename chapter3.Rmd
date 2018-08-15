@@ -10,7 +10,7 @@ description : "This chapter will introduce you to using matching methods to find
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:8e6374141d
 ## Reasons to Use Matching Methods. 
-Megan the exercise freak (health coach) believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She asks thousands of people whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. She finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
+Megan the exercise freak and health coach believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She creates an online poll for whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. After several thousand responses, she finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
 
 *** =instructions
 - Because you didn't ask whether people why they chose to exercise on Sunday.
@@ -22,9 +22,9 @@ Megan the exercise freak (health coach) believes that eating out at restaurants 
 ```{r}
 msg1 = "Try again"
 msg2 = "Try again"
-msg3 = "Well done"
+msg3 = "Well done! If Sunday is already the most popular day to work out, then that would confound her results. Matching similar people into treatment and control groups would greatly help to avoid that problem."
 msg4 = "Try again"
-test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
+test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
