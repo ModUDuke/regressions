@@ -123,11 +123,6 @@ A recent study examined how playing the multiplayer online battle arena video ga
 #Original dataset
 
 
-
-## I'M NOT SURE THAT MATCHIT ACTUALLY LOADS--DOESN'T WORK FOR ME IN REGULAR R
-
-
-
 library (dplyr)
 library (data.table)
 library(MatchIt)
@@ -221,11 +216,6 @@ In R, the best tool for doing matching is the "MatchIt" package. Let's use the M
 *** =pre_exercise_code
 ```{r}
 
-
-## I'M NOT SURE THAT MATCHIT ACTUALLY LOADS--DOESN'T WORK FOR ME IN REGULAR R
-
-
-
 #Original dataset
 
 library (dplyr)
@@ -264,7 +254,9 @@ n=8008
 
 *** =sample_code
 ```{r}
-# 1) The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD`: matchit(Treatment ~ control1+control2+control3+control4+control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
+# 1) Let's use the tools in the MatchIt package for R to help us try a Propensity Score approach to matching units in our treatment and control groups. First, you may need to refresh your memory of the variables in `NERD` with the str(), head(), or summary() commands).
+
+# The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD` with the matchit() command: matchit(Treatment ~ control1+control2+control3+control4+control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
     
     match.it <-
 
@@ -274,13 +266,13 @@ n=8008
 matched.NERD <- match.data(match.it)[1:ncol(NERD)]
 
 
-# 3) To compare the matched dataset to the original dataset from the previous exercise (FirstModel), let's use summary commands on the object that was produced by the "matchit" formula. 
+# 3) To compare the matched dataset to the original dataset from the previous exercise (FirstModel), let's use summary() command on both `FirstModel` and our new datafame `matched.NERD`: 
 
 
     
 # The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values between the treatment and control groups are much more similar in the matched dataset than in the original dataset. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
     
-# 4) Let's now estimate a generalized linear regression model for communication skills that uses all of our control variables using our matched dataset (matched.NERD). 
+# 4) Let's now estimate a generalized linear regression model for communication skills that uses all of our control variables and our matched dataset (matched.NERD). 
 
       Solution4<-glm()
 
