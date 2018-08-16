@@ -351,7 +351,7 @@ success_msg("Good work! Even though our model in Solution 1 appeared to have wor
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:93014adc4b
 ## Common Statistical Terms and Transformations in Regression Models
 *** =video_link
-//player.vimeo.com/video/217554577
+//player.vimeo.com/video/233015981
 
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4b9a40fa01
@@ -395,7 +395,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:7bdd9c55dc
 ## Statistical Interactions in Regression Models
 *** =video_link
-//player.vimeo.com/video/217554577
+//player.vimeo.com/video/233015807
 
 
 --- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:99c76a856a
@@ -553,7 +553,7 @@ success_msg("Good work! It appears that the treatment only affected individuals 
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:7fb39b7cb6
 ## Logistic Regression Models
 *** =video_link
-//player.vimeo.com/video/217554577
+//player.vimeo.com/video/233015652
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3e6268810e
 ## When to Use a Logistic Regression Model
