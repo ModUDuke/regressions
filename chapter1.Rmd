@@ -250,26 +250,6 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:3b325c1914
-## Coefficients of Zero
-Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
-
-*** =instructions
-- Yes, it shows the variables cancel each other out.
-- No, it just shows there's no relationship between these variables in the data.
-- It shows "misspecification" and we can't learn anything.
-
-*** =sct
-```{r}
-msg1 = "It is possible to have simultaneous causality and yet find a regression coefficient of zero, but this is not commonly the reason we see regressions of zero, nor something we could reasonably infer from a coefficient of 0"
-msg2 = "Correct! Regressions by themselves are about describing relationships. So a zero regression coefficient shows that there is no relationship in the data between these variables. It does *not* say anything about the causal effect of one variable on the other, unless we make additional assumption, like unconfoundedness."
-msg3 = "Not necessarily. We may see a zero coefficient because the model is misspecified, but should not be our immediate conclusion. Moreover, there's almost always something that we can learn from a statistical model; at the very leasy, a statitical model can teach us that we picked the wrong statistical model for our assessing our data."
-test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
-```
-
-
-
-
 --- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:ffa5133d86
 ## The Relationship between Economic Development and Property Rights
 *** =video_link
@@ -290,7 +270,7 @@ Does a regression coefficient of 0 with a small confidence interval / small stan
 *** =sct
 ```{r}
 msg1 = "Actually, OLS regression models can't show simultaneous causality. More advanced methods are needed for this. Try again."
-msg2 = "Regressions by themselves are about describing relationships. So a zero regression coefficient shows that there is no relationship in the data between these variables. It does *not* say anything about the causal effect of one variable on the other, unless we make additional assumption, like unconfoundedness. Without extra assumptions, it is possible to have simultaneous causality and yet find a regression coefficient of zero."
+msg2 = "Correct! Regressions by themselves are about describing relationships. So a zero regression coefficient shows that there is no relationship in the data between these variables. It does *not* say anything about the causal effect of one variable on the other, unless we make additional assumption, like unconfoundedness. Without these extra assumptions, it could be possible to have simultaneous causality while also having a regression coefficient of zero."
 msg3 = "Although misspecification might cause a regression model to have no coefficients for variables that should be associated with the outcome of interest, this is not necessarily the case. Moreover, every regression model can teach you something; at the very least, a misspecified regression models can teach us how *not* to specify a regression model for our outcomes of interest."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
 ```
@@ -357,9 +337,8 @@ Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happi
 *** =pre_exercise_code
 ```{r}
 
-library (dplyr)
-library (data.table)
-library (purr)
+library(dplyr)
+library(data.table)
 
 n=1000
 set.seed(1)
@@ -451,9 +430,8 @@ So now using the dataset `GSS`, help Dr. Max Funn measure the effect of income o
 *** =pre_exercise_code
 ```{r}
 
-library (dplyr)
-library (data.table)
-library (purr)
+library(dplyr)
+library(data.table)
 
 n=1000
 set.seed(1)
