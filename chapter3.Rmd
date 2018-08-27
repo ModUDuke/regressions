@@ -218,8 +218,8 @@ In R, the best tool for doing matching is the "MatchIt" package. Let's use the M
 
 #Original dataset
 
-library (dplyr)
-library (data.table)
+library(dplyr)
+library(data.table)
 library(MatchIt)
 
 set.seed(7)
