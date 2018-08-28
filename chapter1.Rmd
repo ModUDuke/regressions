@@ -130,7 +130,7 @@ Let's say you're a consultant who is on a team analyzing the performance of hosp
 - 1) Get an initial sense of what kind of data is in the dataset.
 - 2) Calculate the correlation coefficient between hospital performance and mortality in the Medicare data.
 - 3) Plot the coefficient with a best-fit line.
-- 4) Decide on the best casual interpretation to explain your findings.
+- 4) Decide on the best causal interpretation to explain your findings.
 
 `@hint`
 
