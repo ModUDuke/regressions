@@ -1,29 +1,44 @@
---- 
-title       : "Regressions 1: Introduction to Regression As Causality"
-description : "This chapter will introduce you to using regression analysis to find causal effects"
- 
- 
-  
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5c9d6dd3fc
+---
+title: 'Regressions 1: Introduction to Regression As Causality'
+description: 'This chapter will introduce you to using regression analysis to find causal effects'
+---
+
 ## Introduction to Regression Analysis
-*** =video_link
-//player.vimeo.com/video/217553687
 
+```yaml
+type: VideoExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 5c9d6dd3fc 
+video_link: //player.vimeo.com/video/217553687  
+```
 
+---
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:1a2137dd19
 ## Interpreting Regressions
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 1a2137dd19   
+```
+
+
 The popular online auctioneer, eGulf, wants to create an algorithm that will automatically provide recommended sales prices to eGulf sellers. In the case of wePhones, eGulf plans to base its algorithm on the age and sales price of previously sold WePhones. For the sake of convenience, eGulf bases their algorithm on a small stratified sample of 25 WePhones sold in the past week. 
 
 eGulf runs an OLS regression to determine the relationship between WePhone age and sales price, and plots their results (illustrated in the R workspace). Each point on the plot indicates the age and selling price for a particular WePhone, and the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales price?
 
 
-*** =instructions
+`@instructions`
 - There is a negative relationship
 - There is no relationship
 - There is a positive relationship
 
-*** =pre_exercise_code
+`@pre_exercise_code`
+
 ```{r}
 set.seed(1)
 library(ggplot2)
@@ -37,7 +52,9 @@ model<-lm(`Price Sold`~Age,data=WePhone)
 ggplot(data=WePhone,aes(Age, `Price Sold`))+geom_point()+geom_abline(intercept = model$coefficients[1],slope=model$coefficients[2])+ ggtitle("Scatter Plot and OLS Regression of WePhone Age on Price Sold")
 ```
 
-*** =sct
+
+`@sct`
+
 ```{r}
 msg1 = "Correct! As the age of WePhones increased, the price at which they were sold decreased."
 msg2 = "Although the plot does not indicate if their results were statistically significant, they do indicate a relationship. Try again"
@@ -46,17 +63,29 @@ test_mc(correct = 1, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
+---
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:4b9a40fa01
 ## Reversing Causal Direction
-Causal interpretation of regression models can be tricky. Using the same data in the last example, an eGulf analyst decided to toy with a regression model where age is a function of price sold (i.e. price is the independent variable, and age is the dependent variable). The results of this model are visualized in the R workspace. If this model shows a causal relationship between age and price sold, with age as the dependent variable, what **exactly** should the analyst say to describe the results to his boss? 
 
-*** =instructions
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 4b9a40fa01   
+```
+
+
+Causal interpretation of regression models can be tricky. Using the same data in the last example, an eGulf analyst decided to toy with a regression model where age is a function of price sold (i.e. price is the independent variable, and age is the dependent variable). The results of this model are visualized in the R workspace. If this model shows a causal relationship between age and price sold, with age as the dependent variable, what **exactly** should the analyst say to describe the results to his boss?
+
+
+`@instructions`
 - Older phones tend to sell for less
 - Old age causes phones to sell for less
 - High sales prices causes phones to become younger
 
-*** =pre_exercise_code
+`@pre_exercise_code`
+
 ```{r}
 set.seed(1)
 library(ggplot2)
@@ -70,7 +99,9 @@ model<-lm(Age~`Price Sold`,data=WePhone)
 ggplot(data=WePhone,aes(`Price Sold`,Age))+geom_point()+geom_abline(intercept = model$coefficients[1],slope=model$coefficients[2])+ ggtitle("Scatter Plot and OLS Regression of WePhone Age on Price Sold")
 ```
 
-*** =sct
+
+`@sct`
+
 ```{r}
 msg1 = "This phrasing does not address a causal interpretation of the relationship, but rather is a description of an association between WePhone age and sales price"
 msg2 = "This is the most intuitive explanation for the relationship between WePhone sale price and age, but not for this particular regression model, which was designed to use age as the dependent variable. Try again"
@@ -79,17 +110,30 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:66388309ec
+---
+
+
+
+```yaml
+type: NormalExercise 
+lang: r
+xp: 100 
+skills: 1
+key: 66388309ec   
+```
+
+
 Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given real data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses "a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
 
-*** =instructions
+
+`@instructions`
 - 1) Get an initial sense of what kind of data is in the dataset.
 - 2) Calculate the correlation coefficient between hospital performance and mortality in the Medicare data.
 - 3) Plot the coefficient with a best-fit line.
 - 4) Decide on the best casual interpretation to explain your findings.
 
+`@pre_exercise_code`
 
-*** =pre_exercise_code
 ```{r}
 library(ggplot2)
 # Setting up the data
@@ -115,7 +159,9 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
                        !is.na(hospitals$performance),]
 ```
 
-*** =sample_code
+
+`@sample_code`
+
 ```{r}
 # 1) You will explore the relationship between hospital performance and mortality in the dataframe `Hospitals`. First, use the head() command to take a look at the variable names, types, and some some initial values.
 
@@ -140,10 +186,11 @@ cor()
 # (D) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
 
       Solution3<-""
-
 ```
 
-*** =solution
+
+`@solution`
+
 ```{r}
 cor(hospitals$mortality, hospitals$performance)
 ggplot(data=hospitals, aes(x=performance, y=mortality)) +
@@ -152,7 +199,9 @@ ggplot(data=hospitals, aes(x=performance, y=mortality)) +
 Solution3<-"D"
 ```
 
-*** =sct
+
+`@sct`
+
 ```{r}
 test_object("Solution2")
 test_object("Solution3")
@@ -161,17 +210,28 @@ success_msg("Nice job! You are not easily tricked by visual data patterns. Both 
 ```
 
 
+---
 
-
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:d50636b4ac
 ## Regression Models and Policy Implementation
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: d50636b4ac   
+```
+
+
 Suppose you see a Facebook post with a regression plot of the `Number of Walmarts per Capita` on `Income per Capita`, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
 
-*** =instructions
+
+`@instructions`
 - Yes, the regression shows that Walmarts come to richer places
 - No, you can't learn the cause of Walmart locations from the regression
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Whoops. Try again."
 msg2 = "No, you can't learn the direct causal effect from this regression as described, because there are so many other social and economic factors to consider in this relationship that Unconfoundness Assumption is unlikely to be true. In this case, we can just learn the amount of correlation between the variables."
@@ -179,14 +239,32 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:8bb34ee718
+---
+
 ## Basic Elements of a Regression Table
-*** =video_link
-//player.vimeo.com/video/217554002
 
+```yaml
+type: VideoExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 8bb34ee718 
+video_link: //player.vimeo.com/video/217554002  
+```
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:470a340b81
+---
+
 ## Reading a Bivariate Regression Table
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 470a340b81   
+```
+
+
 The following table shows the regression results from the previous questions about eGulf's pricing algorithm for used wePhones. The coefficient for age reflects the slope in the previous line graph, and it suggests that for each additional year (or unit of age), the expected sales price of WePhones decreases by $61.99. The coefficient for the intercept matches the Y-axis intercept in the previous line graph. It indicates the predicted price sold for a WePhone at 0 years old (or more generally, it shows the value of an outcome when all other independent variables are at their reference point). 
 
 | Variable   | Coefficient (SE) |
@@ -201,14 +279,14 @@ To determine the predicted sales price of a WePhone with a given age, we can sta
 Based on this formula, what is a valid predicted price for a WePhone that is exactly two years old? You can use the R console as a scratch space to do your calculations.
 
 
-
-*** =instructions
+`@instructions`
 - 460.49
 - 468.58
 - 472.57 
 - 475.56
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Try again"
 msg2 = "Well done! Notice any advantages of regression models versus t.tests? In a t.test, we can only predict the outcome from a binary treatment variable (that is, the outcome for respondents in the treatment versus control group), In a regression model, we can predict the outcome from a continuous treatment variable (e.g. age)."
@@ -218,9 +296,19 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
+---
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9917eaebf2
 ## Reading a Multivariate (Multiple) Regression Table
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 9917eaebf2   
+```
+
+
 In our previous eGulf example, we assumed that age is the only determinant of a WePhone's sales price. However, sellers on eGulf also have "feedback scores," ranging from 0-100, that indicate the quality of their previous transactions with customers. It seems likely that a seller's feedback score could positively impact a WePhone's sales price; that is, customers might be willing to pay more for WePhones sold by reputable sellers. However, if reputable sellers tended to sell newer WePhones, this would confound the relationship between sales price and age. 
 
 We could consider overcoming this by throwing out respondents with high feedback scores that sold new WePhones, so that WePhone age and WePhone feedback score were no longer correlated. That might let us look at the effect of the feedback score in a natural experiment analysis, but throwing out those high scores might imbalance our sample and make that analysis invalid. However, with OLS regression, we can simply add seller feedback scores as another determinant of our independent variable, thereby controlling for its confounding effect on our outcome variable. This is what is shown in the table below.
@@ -235,13 +323,14 @@ We could consider overcoming this by throwing out respondents with high feedback
 As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using the information in this table and the R console as a workspace, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90.
 
 
-*** =instructions
+`@instructions`
 - 22.85
 - 26.83 
 - 27.00
 - 30.28
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Try again"
 msg2 = "Try again"
@@ -251,24 +340,42 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
---- type:VideoExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:ffa5133d86
+---
+
 ## The Relationship between Economic Development and Property Rights
-*** =video_link
-//player.vimeo.com/video/217554163
 
+```yaml
+type: VideoExercise 
+lang: r
+xp: 50 
+skills: 1
+key: ffa5133d86 
+video_link: //player.vimeo.com/video/217554163  
+```
 
+---
 
-
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:fd77ad9990
 ## Regressions with small coefficients and small confidence intervals
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: fd77ad9990   
+```
+
+
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
 
-*** =instructions
+
+`@instructions`
 - Yes, it shows the variables cancel each other out.
 - No, it just shows there's no relationship between these variables in the data.
 - It shows "misspecification" and we can't learn anything
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Actually, OLS regression models can't show simultaneous causality. More advanced methods are needed for this. Try again."
 msg2 = "Correct! Regressions by themselves are about describing relationships. So a zero regression coefficient shows that there is no relationship in the data between these variables. It does *not* say anything about the causal effect of one variable on the other, unless we make additional assumption, like unconfoundedness. Without these extra assumptions, it could be possible to have simultaneous causality while also having a regression coefficient of zero."
@@ -277,16 +384,29 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:f47fad8c5f
+---
+
 ## Recalling terminology
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: f47fad8c5f   
+```
+
+
 Why do we use the words "left hand side" variable and "right hand side" variable in casual inference?
 
-*** =instructions
+
+`@instructions`
 - It refers to how you graph them on X and Y axis.
 - It comes from historical, more qualitative writings.
 - It refers to the left and right hand side of an equation.
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Good try, but remember that on a graph, the Y axis is usually marked on the left side of the page, and the X axis is usually marked on the *bottom* of the page. Try again."
 msg2 = "Statistics is a relatively young and quantitative (almost by definition) field. Try again."
@@ -295,8 +415,19 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:408e61980c
+---
+
 ## Multiple Regression Models
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 408e61980c   
+```
+
+
 Papers often report several regression models next to each other. This table shows a few truncated models from the example in the video, about the relationship between a country's property rights protections and its GDP. Model 1 shows the coefficient and standard error for the effect of property rights protection on GDP without any control variables. Model 2 shows the effect of property rights protection on GDP while controlling for the country's latitude, and Model 3 shows the same, while also controlling for whether the country is in Asia. Why might the effect of property rights protections on GDP decrease as we add more variables to our model?   
 
 | Variable   | Model 1 | Model 2 | Model 3 |
@@ -306,13 +437,14 @@ Papers often report several regression models next to each other. This table sho
 | Asia Dummy |         |         |-.62(.19)|
 
 
-*** =instructions
+`@instructions`
 - Because the inclusion of more variables weakens the statistical power of an independent variable
 - Because omitting these variables caused the effect of property rights protection on GDP to be downwardly biased. 
 - Because the inclusion of more variables strengthens the statistical power of an independent variable
-- Because omitting these variables caused the effect of property rights protection on GDP to be upwardly biased. 
+- Because omitting these variables caused the effect of property rights protection on GDP to be upwardly biased.
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "Although this is often true, this is not indicated in this figure. If you look at the standard errors, the statistical significance of property rights protections on GDP is relatively small and consistent across models. Try again."
 msg2 = "This would mean that the omitted variables confound the relationship between property rights protections and GDP by decreasing the it. Try again"
@@ -322,22 +454,33 @@ test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
 
+---
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:5f52195dc6
 ## Running a Regression Model: A Simple Beginning
+
+```yaml
+type: NormalExercise 
+lang: r
+xp: 100 
+skills: 1
+key: 5f52195dc6   
+```
+
+
 Dr. Max Funn is interested in understanding the effect of income on happiness. He has a small sample of the General Social Survey (GSS), which asked respondents about their income and happiness independently. Although Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with the number of hours worked. But before we get into confounders, let's start with a simpler model that helps Dr. Funn look for signs of any relationship between income and happiness.
 
-Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness by examining the data and running a simplified generalized linear regression model. 
+Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness by examining the data and running a simplified generalized linear regression model.
 
-*** =instructions
+
+`@instructions`
 - 1) Examine the dataframe `GSS`.
 - 2) Look at summary statistics of three key variables.
 - 3) Look at a simple correlation statistic between income and happiness.
 - 4) Construct a regression model that measures the effect of income on happiness.
 
-*** =pre_exercise_code
-```{r}
+`@pre_exercise_code`
 
+```{r}
 library(dplyr)
 library(data.table)
 
@@ -372,10 +515,11 @@ set.seed(1)
   summary(GSS$Income)
   summary(GSS$Happiness)
     cor(GSS$WorkHours,GSS$Income)
-    
 ```
 
-*** =sample_code
+
+`@sample_code`
+
 ```{r}
 # 1) Before running a regression model, let's examine the data in the dataframe `GSS` with the str() function:
 
@@ -396,11 +540,11 @@ set.seed(1)
 # 4) Finally, let's run our first generalized linear regression model of the effect of income on happiness with the glm() function. 
   
 # Note: the syntax for glm is "glm(Y~X,data=dataframe)" where Y is the name of the dependent variable, X is the name of the independent variable, and dataframe is the name of the dataframe.
-
-
 ```
 
-*** =solution
+
+`@solution`
+
 ```{r}
 str(GSS)
 summary(GSS$Income)
@@ -409,28 +553,42 @@ cor(GSS$Income,GSS$Happiness)
 glm(Happiness~Income,data=GSS)
 ```
 
-*** =sct
+
+`@sct`
+
 ```{r}
 test_error()
 success_msg("Good work!")
 ```
 
 
---- type:NormalExercise lang:r aspect_ratio:62.5 xp:50 skills:1 key:6650875c79
+---
+
 ## Running a Regression Model: Improving Our Model
+
+```yaml
+type: NormalExercise 
+lang: r
+xp: 100 
+skills: 1
+key: 6650875c79   
+```
+
+
 As we mentioned in the previous question, Dr. Funn predicts that income is positively associated with happiness, he is worried that the relationship between income and happiness might be confounded by their joint relationship with work hours. Specifically, Dr. Funn believes that people who work more hours make more money (which indirectly increases a person's happiness), but that people who work more hours at the same income tend to be less happy (i.e. work hours has a direct negative effect on happiness). This would mean that we can't trust our first model to give us accurate results.
 
-So now using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness, **controlling** for work hours. 
+So now using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happiness, **controlling** for work hours.
 
-*** =instructions
+
+`@instructions`
 - 1) Examine the results of our simple first model from the previous question.
 - 2) Plot the relationship between happiness and income, including a regression line.
 - 3) Look at correlation statistics for confounders between work hours, income, and happiness.
 - 4) Construct a second regression model that measures the effect of income on happiness that controls for work hours.
 
-*** =pre_exercise_code
-```{r}
+`@pre_exercise_code`
 
+```{r}
 library(dplyr)
 library(data.table)
 
@@ -470,7 +628,9 @@ set.seed(1)
 FirstModel<-glm(Happiness~Income,data=GSS)
 ```
 
-*** =sample_code
+
+`@sample_code`
+
 ```{r}
 # 1) The glm function in R usually provides less information about the model than desired, and usually in a less than ideal format. So let's use the summary function on our first model to see its effects more clearly. The dataframe containing our first model's results is called `FirstModel`: 
 
@@ -495,12 +655,11 @@ abline()
 # These results show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might be confounding the relationship between income and happiness.    
     
 # 4) So let's solve that by controlling for the effect of work hours on happiness. You can do this for yourself easily in R by adding the control variable directly to the glm function to regress the effect of income on happiness. The syntax for glm with controls is "glm(Y~X+Z,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and dataframe is the name of the dataframe.
-
-
-
 ```
 
-*** =solution
+
+`@solution`
+
 ```{r}
 summary(FirstModel)
 plot(GSS$Happiness ~ GSS$Income)
@@ -510,26 +669,39 @@ cor(GSS$WorkHours,GSS$Happiness)
 glm(Happiness~Income+WorkHours,data=GSS)
 ```
 
-*** =sct
+
+`@sct`
+
 ```{r}
 test_error()dd
 success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with both the independent and dependent variables. This syntax can be used to control for as many variables as desired in a regression model.")
 ```
 
 
+---
+
+## Steps Prior to Analysis with Regression Models
+
+```yaml
+type: MultipleChoiceExercise 
+lang: r
+xp: 50 
+skills: 1
+key: 9e19547f67   
+```
 
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9e19547f67
-## Steps Prior to Analysis with Regression Models 
 Which of the following is the most important step you should take before running a regression model on your data?
 
-*** =instructions
+
+`@instructions`
 - Identify how many variables you can include in your model while still attaining statistical significance
 - Identify your outcome of interest (i.e. dependent variable)
 - Identify which type of regression model to perform
 - Identify whether any of your variables will need to be transformed
 
-*** =sct
+`@sct`
+
 ```{r}
 msg1 = "This is actually one of the later steps to take when building a regression model. It is usually best to build simple models before adding numerous control variables. Try again."
 msg2 = "Correct! This answer may seem obvious, but its importance cannot be understated.  Identifying one's outcome of interest is often the most frequently skipped step among newcomers to statistical analysis. All statistical analysis should be guided by theory about the causal relationship between an outcome of interest and its antecedents. Having a clear plan about what relationship you plan to test is extremely helpful in determining how to specific your statistical model. Conversely, mining through data without any clear theory guiding your research rarely leads to fruitful or interesting findings. "
@@ -537,3 +709,5 @@ msg3 = "This is an important step, but it is not the most important of your opti
 msg4 = "Depending on the variables in you plan to use in your model, this is not always an important, much less necessary, step when building your model. Try again."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
+
+
