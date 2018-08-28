@@ -117,15 +117,16 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
 
 *** =sample_code
 ```{r}
-# 1) You will explore the relationship between hospital performance and mortality. First, use the head() command to take a look at the variable names, types, and some some initial values.
+# 1) You will explore the relationship between hospital performance and mortality in the dataframe `Hospitals`. First, use the head() command to take a look at the variable names, types, and some some initial values.
 
 
-#2) Calculate the correlation coefficient between these variables.
+
+#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in teh variable `Total.Performance.Score`, and the 30 Day mortality rate for pneumonia patients in the variable `score`.
 
 cor()
 
 
-# 2) Let's further analyze the relationship between mortality and performance. Plot the two variables on the same graph, and fit a line as well.
+# 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performanc score. Plot the two variables on the same graph, and fit a line as well.
 
       Solution2<-ggplot(data= , aes(x= , y= )) +
                         geom_point() +
