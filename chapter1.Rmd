@@ -151,7 +151,7 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 
 
 
-#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30-day mortality rate for pneumonia patients in the variable `Mortality.Rate`.
+# 2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30-day mortality rate for pneumonia patients in the variable `Mortality.Rate`.
 
 cor()
 
