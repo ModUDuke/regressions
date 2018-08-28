@@ -132,31 +132,16 @@ Let's say you're a consultant who is on a team analyzing the performance of hosp
 - 3) Plot the coefficient with a best-fit line.
 - 4) Decide on the best casual interpretation to explain your findings.
 
+`@hint`
+
+
 `@pre_exercise_code`
 
 ```{r}
 library(ggplot2)
-# Setting up the data
 
-# Safety domain: assessment of "a broad set of healthcare activities that affect patients’ well-being."
-# https://www.medicare.gov/HospitalCompare/Data/safety-domain.html
-# Mortality: Death rate for pneumonia patients in 30 days after entering the hospital
-# https://www.medicare.gov/hospitalcompare/Data/Death-rates.html
+Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/datasets/22db49352a16ed4c5a4671eb00c0d7624348406c/Hospitals.csv")
 
-# I HAVE DOWNLOADED THESE DATASETS, HAVEN'T ADDED THEM TO DATACAMP SERVERS THOUGH. NEED MERGING AND TRIMMING TO SMALL FILE SIZE.
-
-root <- # SET ROOT DIR HERE
-path <- paste0(root,"Complications and Deaths - Hospital.csv")
-df.tmp1 <- read.csv(path)
-df.mortality <- df.tmp1[df.tmp1$Measure.ID=="MORT_30_HF",]
-df.ranking <- read.csv("hvbp_tps_11_07_2017.csv")
-df.tmp2 <- merge(df.mortality, df.ranking, by.x = "Provider.ID", by.y = "Provider.Number")
-hospitals <- data.frame(id = df.tmp2$Provider.ID, name = df.tmp2$Hospital.Name.x,
-                        city = df.tmp2$City.x, State = df.tmp2$State.x,
-                        mortality = as.numeric(levels(df.tmp2$Score))[df.tmp2$Score],
-                        performance = as.numeric(levels(df.tmp2$Weighted.Safety.Domain.Score))[df.tmp2$Weighted.Safety.Domain.Score])
-hospitals <- hospitals[!is.na(hospitals$mortality) & 
-                       !is.na(hospitals$performance),]
 ```
 
 
@@ -167,23 +152,23 @@ hospitals <- hospitals[!is.na(hospitals$mortality) &
 
 
 
-#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in teh variable `Total.Performance.Score`, and the 30 Day mortality rate for pneumonia patients in the variable `score`.
+#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30 Day mortality rate for pneumonia patients in the variable `score`.
 
 cor()
 
 
 # 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performanc score. Plot the two variables on the same graph, and fit a line as well.
 
-      Solution2<-ggplot(data= , aes(x= , y= )) +
-                        geom_point() +
-                        geom_smooth(method= )
+	ggplot(data= , aes(x= , y= )) +
+ 		geom_point() +
+        geom_smooth(method= )
 
 
 # 3) What do our findings imply? 
-# (A) As performance gets better, mortality stays the same. 
-# (B) As performance gets better, mortality decreases; therefore the performance measure accurately assesses hospitals.
-# (C) As performance gets better, mortality increases; therefore the performance measure is useless.
-# (D) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
+# (a) As performance gets better, mortality stays the same. 
+# (b) As performance gets better, mortality decreases; therefore the performance measure accurately assesses hospitals.
+# (c) As performance gets better, mortality increases; therefore the performance measure is useless.
+# (d) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
 
       Solution3<-""
 ```
@@ -192,18 +177,17 @@ cor()
 `@solution`
 
 ```{r}
-cor(hospitals$mortality, hospitals$performance)
-ggplot(data=hospitals, aes(x=performance, y=mortality)) +
+cor(Hospitals$score, Hospitals$Total.Performance.Score)
+ggplot(data=Hospitals, aes(x=Total.Performance.Score, y=score)) +
                   geom_point() +
                   geom_smooth(method=lm)
-Solution3<-"D"
+Solution3<-"d"
 ```
 
 
 `@sct`
 
 ```{r}
-test_object("Solution2")
 test_object("Solution3")
 test_error()
 success_msg("Nice job! You are not easily tricked by visual data patterns. Both of the mortality and safety performance measures are accurate and meaningful...when used correctly! Even though mortality is seemingly worse in safer hospitals, we did not take a ton of other factors into account. For example, the best hospitals likely treat the riskiest patients, and save many lives that worse hospitals could not have saved.")
