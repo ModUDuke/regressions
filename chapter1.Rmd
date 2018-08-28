@@ -123,7 +123,7 @@ key: 66388309ec
 ```
 
 
-Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses 'a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
+Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given data on hospitals' mortality rates and their safety performance. Specifically, these data include hospitals around the United States in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and the hospital's overall safety performance rating (on a scale from 0 to 100).
 
 
 `@instructions`
@@ -155,16 +155,17 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 
 cor()
 
+# Curious! Hospitals with a higher "Total Performance Score" are better hospitals, so you would think that the correlation between hospital quality and pneumonia mortality rate in this data would be a negative correlation.
 
-# 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performanc score. Insert the Plot the two variables on the same graph, and fit a line as well, by inserting the dataframe name and variable names into the following line of code.
+# 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performance score by looking at a graph with a trend line that reflects this correlation. Plot these two variables on the same graph, and fit a line as well, by inserting the dataframe name and variable names into the following line of code.
 
 	ggplot(data= , aes(x= , y= )) + geom_point() + geom_smooth(method=lm )
 
-# 3) What do our findings imply? 
-# (a) As performance gets better, mortality stays the same. 
-# (b) As performance gets better, mortality decreases; therefore the performance measure accurately assesses hospitals.
-# (c) As performance gets better, mortality increases; therefore the performance measure is useless.
-# (d) As performance gets better, mortality increases; we need further analyses to find the true causal relationship between these measures.
+# 3) Good. Now it's time to interpret these findings.  What do our findings imply? 
+# (a) As hospital performance gets better, pneumonia patient mortality stays the same. 
+# (b) As hospital performance gets better, pneumonia patient mortality decreases; therefore the performance measure accurately assesses hospitals.
+# (c) As hospital performance gets better, pneumonia patient mortality increases; therefore the performance measure is useless.
+# (d) As hospital performance gets better, pneumonia patient mortality increases; we need further analyses to find the true causal relationship between these measures.
 
       Solution3<-""
 ```
