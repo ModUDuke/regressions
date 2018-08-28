@@ -136,6 +136,7 @@ Let's say you're a consultant who is on a team analyzing the performance of hosp
 
 
 `@pre_exercise_code`
+
 ```{r}
 library(ggplot2)
 
