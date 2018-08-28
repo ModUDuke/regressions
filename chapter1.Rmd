@@ -112,7 +112,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 
 ---
 
-
+## Comparing Hospital Quality to Mortality Rates
 
 ```yaml
 type: NormalExercise 
@@ -123,7 +123,7 @@ key: 66388309ec
 ```
 
 
-Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given real data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses "a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
+Let's say you're a consultant who is on a team analyzing the performance of hospitals. You are given data on hospitals' mortality rates and their safety performance. Specifically, these data include all hospitals that provided services through Medicare in 2017; mortality corresponds to patients' death rates of heart failure within 30 days after entering the hospital, and performance is based on the safety domain of the hospital, an index that assesses 'a broad set of healthcare activities that affect patients' well-being" (from the Medicare website).
 
 
 `@instructions`
@@ -136,12 +136,10 @@ Let's say you're a consultant who is on a team analyzing the performance of hosp
 
 
 `@pre_exercise_code`
-
 ```{r}
 library(ggplot2)
 
 Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/datasets/22db49352a16ed4c5a4671eb00c0d7624348406c/Hospitals.csv")
-
 ```
 
 
@@ -152,7 +150,7 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 
 
 
-#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30 Day mortality rate for pneumonia patients in the variable `score`.
+#2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30-day mortality rate for pneumonia patients in the variable `Mortality.Rate`.
 
 cor()
 
@@ -177,8 +175,8 @@ cor()
 `@solution`
 
 ```{r}
-cor(Hospitals$score, Hospitals$Total.Performance.Score)
-ggplot(data=Hospitals, aes(x=Total.Performance.Score, y=score)) +
+cor(Hospitals$Mortality.Rate, Hospitals$Total.Performance.Score)
+ggplot(data=Hospitals, aes(x=Total.Performance.Score, y=Mortality.Rate)) +
                   geom_point() +
                   geom_smooth(method=lm)
 Solution3<-"d"
