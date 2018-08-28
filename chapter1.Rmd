@@ -156,12 +156,9 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 cor()
 
 
-# 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performanc score. Plot the two variables on the same graph, and fit a line as well.
+# 2) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performanc score. Insert the Plot the two variables on the same graph, and fit a line as well, by inserting the dataframe name and variable names into the following line of code.
 
-	ggplot(data= , aes(x= , y= )) +
- 		geom_point() +
-        geom_smooth(method= )
-
+	ggplot(data= , aes(x= , y= )) + geom_point() + geom_smooth(method=lm )
 
 # 3) What do our findings imply? 
 # (a) As performance gets better, mortality stays the same. 
