@@ -178,6 +178,7 @@ names(WePhone)[2]<-"PriceSold"
 # 2) We will use a regression model to show us the correlation between a WePhone's Age and Price Sold across all the rest of the dataset. Run a glm model named `model` of Age on PriceSold using the dataframe `WePhone`, and then run the summary() command on that model to look at the results.
   
       model<-
+      summary(model)
 
 # These results show that the correlation we saw in the first few results from the head() command stay true through the rest of the data. These things are often easier to understand through a graph, so let's look at that next.
     
@@ -213,14 +214,16 @@ names(WePhone)[2]<-"PriceSold"
 # (B) When the outlier in Y occurs at middle values of X
 # (C) When the outlier in Y occurs at high values of X
 
-      Solution3<-""
+      Solution5<-""
 ```
 
 
 `@solution`
 
 ```{r}
-head(WePhone)
+    head(WePhone)
+    model<-glm(PriceSold~Age,data=WePhone)
+    summary(model)
     Solution3<-"B"
 ```
 
@@ -228,8 +231,7 @@ head(WePhone)
 `@sct`
 
 ```{r}
-test_object("Solution1")
-test_object("Solution3")
+test_object("Solution5")
 test_error()
 success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusally high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
 ```
