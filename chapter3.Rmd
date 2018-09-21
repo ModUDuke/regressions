@@ -197,8 +197,8 @@ A recent study examined how playing the multiplayer online battle arena video ga
 #Original dataset
 
 
-library (dplyr)
-library (data.table)
+library(dplyr)
+library(data.table)
 library(MatchIt)
 
 set.seed(7)
@@ -233,7 +233,7 @@ n=8008
 # 1) As usual, let's first look at the variables in the dataset, which was collected by the researchers on a sample that included NERD gamers along with other people. Use the summary command on the dataframe `NERD`, and take a few minutes to understand what's in the data.
 
 
-
+# Notes:
 # The dependent variable in our model, Communication, was measured via a series of questions and put on a 1:10 scale, with 1=very poor communication skills and 10=very good communication skills. 
 # The variable Treatment measures whether the respondent plays NERD. 
 # The other variables in the dataset are factors that could possibly affect a person's communication ability. Most are measured as binary or "dummy" variables; for example, the Siblings variable gets a value of 1 if respondents have any brothers or sisters, but it does not count the number of siblings they have.
@@ -249,10 +249,9 @@ n=8008
       Solution3<-""
 
 
-# 4) Matching methods are most useful when the treatment group is likely to be different from the general population. Do we need to use them in this case? 
-      
-# To determine if the treatment group differs from the population on any variable, let's run a t-test between the treatment and control groups on the first variable in the dataframe, ParentEducation.
+# 4) Matching methods are most useful when the treatment group is likely to be different from the control group in ways that are unrelated to our outcome. Do we need to use them in this case? To determine if the treatment group differs from the population on any variable, let's run a t-test between the treatment and control groups on the first variable in the dataframe, ParentEducation. As a reminder, the syntax for a simple t-test is t.test(variable1, variable2)
 
+t.test()
 
 # If you are curious, feel free to run t-tests on the other variables in the dataframe to see which are balanced and which are imbalanced.
 ```
