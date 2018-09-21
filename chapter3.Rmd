@@ -290,9 +290,13 @@ In R, the best tool for doing matching is the "MatchIt" package. Let's use the M
 `@instructions`
 - 1) Build a model for `Treatment` based on all of the control variables.
 - 2) Subset our data to just the units who are likely to be in the treatment group.
-- 4) Use matching techniques to balance the dataset.
+- 3) Use matching techniques to balance the dataset.
 - 4) Estimate standard OLS regression model for communication skills (`Communication`) based on all other variables in the matched dataset (`match.NERD`).
 - 5) Check the statistical significance of the regression on the matched data.
+- 6)
+
+`@hint`
+
 
 `@pre_exercise_code`
 ```{r}
@@ -334,32 +338,34 @@ n=8008
 
 `@sample_code`
 ```{r}
-# 1) Let's use the tools in the MatchIt package for R to help us try a Propensity Score approach to matching units in our treatment and control groups. First, you may need to refresh your memory of the variables in `NERD` with the str(), head(), or summary() commands).
+# Note: You may want to refresh your memory of the variables in `NERD` with the str(), head(), or summary() commands).
 
-# The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD` with the matchit() command: matchit(Treatment ~ control1+control2+control3+control4+control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
+# 1) Let's use the tools in the MatchIt package for R to help us try a Propensity Score approach to matching units in our treatment and control groups. The following syntax builds a model for estimating "Treatment" by all other control variables in our dataset `NERD` with the matchit() command: matchit(Treatment ~ control1 + control2 + control3 + control4 + control5, data = NERD). Use that syntax to populate the dataframe `match.it`:
     
     match.it <-
 
 
 # 2) Now let's subset the NERD dataset to observations that have a high predicted probability for being in the treatment group. We have generated that code for you, so select the following code and hit the "Run Code" button:
 
-matched.NERD <- match.data(match.it)[1:ncol(NERD)]
+	matched.NERD <- match.data(match.it)[1:ncol(NERD)]
 
+# 3) Let's use the summary() command on our new datafame `matched.NERD`: 
 
-# 3) To compare the matched dataset to the original dataset from the previous exercise (FirstModel), let's use summary() command on both `FirstModel` and our new datafame `matched.NERD`: 
-
-
+	summary()
     
-# The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values between the treatment and control groups are much more similar in the matched dataset than in the original dataset. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
+# The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values for most variables between the treatment and control groups are now pretty similar. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
     
 # 4) Let's now estimate a generalized linear regression model for communication skills that uses all of our control variables and our matched dataset (matched.NERD). 
 
       Solution4<-glm()
 
-
 # 5) Use the summary command on Solution4 to check its statistical significant. Is the effect of "Treatment" in Solution4 positive and statistically significant?  Answer with "Yes" or "No"
     
-      Solution5<-""
+	summary(Solution4)
+    Solution5<-""
+
+#Note: For the sake of comparison, the syntax below shows us our regression results when our data were unmatched. Notice that the treatment effect was positive.
+	summary(FirstModel)
 ```
 
 `@solution`
@@ -368,6 +374,7 @@ match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+B
   matched.NERD <- match.data(match.it)[1:ncol(NERD)]
   summary(match.it)
   Solution4<-glm(Communication~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+Bilingual+LikesBooks+Treatment,data=matched.NERD)
+  summary(Solution4)
   Solution5<-"No"
 ```
 
@@ -376,7 +383,7 @@ match.it <- matchit(Treatment ~ ParentEducation+BooksOwned+ReadsBlogs+Siblings+B
 test_object("Solution4")
 test_object("Solution5")
 test_error()
-success_msg("Good work! There originally appeared to be a positive and statistically significant effect for playing NERD on respondent's communication skills, but when we balanced the data, this effect disappeared. This suggests that playing NERD does not improve people's communication skills; rather, NERD players probably have good communication skills for a variety of other reasons.")
+success_msg("Good work! In our unmatched model, the treatment effect (playing NERD) appeared to have a positive and statistically significant effect on respondent's communication skills. However, when we balanced the data, this effect disappeared. It turns out that the original treatment effect was spurious; it resulted from our biased sample of people who play NERD. When we compared people who played NERD to relatively similar people who don't play nerd, this treatment effect disappeared. That means that playing NERD does not improve people's communication skills; rather, NERD players have good communication skills because the people who are attracted to NERD tend to have good communication skills. Or in other words, this association results from a selection bias - not from a treatment effect.")
 ```
 
 ---
