@@ -140,7 +140,7 @@ Let's say you're a consultant who is on a team analyzing the performance of hosp
 ```{r}
 library(ggplot2)
 
-Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/datasets/22db49352a16ed4c5a4671eb00c0d7624348406c/Hospitals.csv")
+Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/datasets/d376bb205b670147f5f072c5a162c1e8288d0b50/Hospitals2.csv")
 ```
 
 
