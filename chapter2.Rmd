@@ -446,16 +446,16 @@ mround <- function(x,base){
 summary(Survey)
 summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Dunkin+Massage+Coffee,data=Survey))
 summary(glm(Water~YardSize+Rainfall+NSprinkler+Rainfall+Coffee,data=Survey))
-  Solution4<-"No"
+Solution4<-"No"
 ```
 
 
 `@sct`
 
 ```{r}
-test_object("Solution2")
+test_object("Solution4")
 test_error()
-success_msg("Good work! Even though our model in Solution 1 appeared to have worse fit than our model with all of the variables included, that does not mean that we should include all of these variables into our final model, or use them to inform NixSplash's ad-campaign. Statistical models should always be guided by theory. If there is no clear reason why a variable should effect an outcome of interest, we should not include it in our model, even if it improves model fit. As a reminder, statistical models do not provide definitive proof of causality; they are simply a tool that we can use to test our assumptions about the world.")
+success_msg("Good work! Even though our model in Solution 1 appears similar to our model in Solution2,  we should **not** include all of these variables into our final model, or use them to inform NixSplash's ad-campaign. Statistical models should always be guided by theory. If there is no clear reason why a variable should effect an outcome of interest, we should not include it in our model, even if it improves model fit. As a reminder, statistical models do not provide definitive proof of causality; they are simply a tool that we can use to test our assumptions about the world.")
 ```
 
 
