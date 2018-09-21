@@ -224,7 +224,7 @@ names(WePhone)[2]<-"PriceSold"
     head(WePhone)
     model<-glm(PriceSold~Age,data=WePhone)
     summary(model)
-    Solution3<-"B"
+    Solution5<-"B"
 ```
 
 
