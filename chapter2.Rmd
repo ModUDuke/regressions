@@ -153,10 +153,10 @@ Although the math behind determining an OLS regression model is complicated, und
 ```{r}
 set.seed(1)
 library(ggplot2)
-WePhone<-data.frame(age=rep(c(1,2,3,4,5),5))
-WePhone$Feedback<-round(rnorm(n=25,mean=90,sd=3))
-WePhone$Age<-WePhone$age+rnorm(n=25,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
-WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=25,mean=0,sd=30))
+WePhone<-data.frame(age=rep(c(1,2,3,4,5),4))
+WePhone$Feedback<-round(rnorm(n=20,mean=90,sd=3))
+WePhone$Age<-WePhone$age+rnorm(n=20,mean=0,sd=.3)-WePhone$Feedback/10+mean(WePhone$Feedback/10)
+WePhone$Value<-500-(9*WePhone$age^2)+ round(rnorm(n=20,mean=0,sd=30))
 names(WePhone)[4]<-"Price Sold"
 WePhone$`Price Sold`<-WePhone$`Price Sold`+20*(WePhone$Feedback-mean(WePhone$Feedback))
 WePhone$age<-NULL
@@ -189,21 +189,21 @@ names(WePhone)[2]<-"PriceSold"
 # It looks like there's a pretty consistent negative correlation between age and the price sold, which makes sense. As phones get older, they are worth less money.
 
 
-# 4) But what happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($1000) given its age at three points of the graph, when Age = 1, 3, and 5. Select each and hit "Run Code", paying attention to the small differences in the outputs as we change the options.
+# 4) But what happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($1500) given its age at three points of the graph, when Age = 1, 3, and 5. Select each and hit "Run Code", paying attention to the small differences in the outputs as we change the options.
   # No outlier
-    plot(WePhone$PriceSold[1:25] ~ WePhone$Age[1:25], ylim=c(0, 1100))
-    abline(glm(PriceSold~Age,data=WePhone[1:25,]))
+    plot(WePhone$PriceSold[1:20] ~ WePhone$Age[1:20], ylim=c(0, 1600))
+    abline(glm(PriceSold~Age,data=WePhone[1:20,]))
   # Outlier at Age = 1
-    WePhone[26,]<-c(1,1000)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    WePhone[21,]<-c(1,1500)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
     abline(glm(PriceSold~Age,data=WePhone))
   # Outlier at Age = 3
-    WePhone[26,]<-c(3,1000)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    WePhone[21,]<-c(3,1500)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
     abline(glm(PriceSold~Age,data=WePhone))
   # Outlier at Age = 5
-    WePhone[26,]<-c(5,1000)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1100))
+    WePhone[21,]<-c(5,1500)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
     abline(glm(PriceSold~Age,data=WePhone))
 
 
@@ -252,8 +252,8 @@ Since OLS models are so easy to visualize, they provide a nice tool for understa
 
 
 `@instructions`
-- 1) Take a look at the summary statistics for 2 datasets on WePhone sales prices.
-- 2) Build glm models for the effect of phone ages on their sales prices in both datasets.
+- 1) Take a look at summary statistics of the two WePhone datasets.
+- 2) Build glm models that estimate the effect of phone ages on sales prices in both datasets.
 - 3) Which regression model most accurately represents the true relationship between WePhone `Age` and `SalesPrice`?
 
 `@pre_exercise_code`
@@ -303,7 +303,7 @@ rm(list = c("noise","WePhone"))
 
 
 
-# 2) Build regression models using the glm function, that shows the effect of Age on PriceSold for WePhones in each dataset.
+# 2) On the surface, these datasets look quite similar. But how do their different sample sizes affect estimates from regression models? Build regression models using the glm function that shows the effect of Age on PriceSold for WePhones in each dataset.
 
 # glm in dataset WePhone1
     
@@ -313,10 +313,21 @@ rm(list = c("noise","WePhone"))
     
         Solution3<-glm()
 
-
-#3)  Which of these Solutions is a better model of the relationship between Age and PriceSold?
+#Note: We should view the output of these models with the summary function to answer the next question.
+        summary(Solution2)
+        summary(Solution3)
+        
+# 3) Although the estimates in Solution2 and Solution3 are similar and are both statistically significant, these models arrive at very different standard errors (a core measurement of the accuracy of our estimates). Larger standard errors indicate that we are less certain of our estimates. Which of the two models' estimates are we more certain in, "Solution2" or "Solution3"?
       
-      Solution4<-""
+        Solution4<-""
+      
+# Note: For fun, we can plot these models on a graph with error bars using the smooth function in ggplot. In this case, the error bars represent the range of values that we are 95% sure the true population estimate lies between. Again greater error bars indicate that we have less certainty about the true relationship of our variables.
+      
+ggplot(NULL, aes(x=Age,y=PriceSold))+
+    theme_bw()+
+    geom_smooth(data=Solution2, color="red",fill="red",method='lm')+
+    geom_smooth(data=Solution3, color="blue",fill="blue",method='lm')
+      
 ```
 
 
@@ -324,7 +335,7 @@ rm(list = c("noise","WePhone"))
 
 ```{r}
 summary(WePhone1)
-    summary(WePhone2)
+summary(WePhone2)
 Solution2<-glm(PriceSold ~ Age, data=WePhone1)
 Solution3<-glm(PriceSold ~ Age, data=WePhone2)
 Solution4<-"Solution3"
@@ -392,7 +403,7 @@ mround <- function(x,base){
 `@sample_code`
 
 ```{r}
-# 1) As usual, let's first examine the dataset. Here is a data dictionary about the variables:
+# Note: Here is a data dictionary about the variables:
 #    Water refers to the number of gallons (in hundreds) that the respondent has used in the past year
 #    YardSize refers to the number of acres that the respondent owns
 #    Rainfall refers to the number of annual inches in rain that fell on the respondent's property in the past year
@@ -400,27 +411,28 @@ mround <- function(x,base){
 #    Dunkin refers to whether the respondent lives within walking distance of a Dunkin' Donuts
 #    Massage refers to whether the respondent has ever gotten a massage
 #    Coffee refers to whether the respondent drinks coffee on a daily basis. 
-# Start by running the summary() command on the dataframe `Survey`:
 
+# 1) As usual, let's first examine the dataset. Start by running the summary() command on the dataframe `Survey`:
 
-    
-# 2) Some of the survey questions may seem irrelevant to how much a water a household uses but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. 
+    summary()
+
+# 2) Some of the survey questions may seem irrelevant to how much water a household uses, but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. 
   
 # Note: We can find the summary statistics from a generalized linear regression model by inserting the glm() code as the parameter for the summary() command, like the following: summary(glm(Water ~ YardSize, data=Survey)). Now do that for yourself, but include all of the variables in the dataframe:
 
 
 
-# If you did this correctly, it should look like we find a statistically significant effect from all variables except Dunkin and Massage.
+# If you did this correctly, you should see a statistically significant effect from all variables except Dunkin and Massage.
 
 
-# 3) Since the variables Dunkin, Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted:
+# 3) Since the variables Dunkin and Massage have no significant effect on Water, let's try removing them from our model and see what changes. Enter the summary(glm()) code with these variables omitted:
 
 
 
 # So which model is better? A model that predicts water usage with all of our available variables, or a model that predicts water usage without Dunking or Coffee? It turns out that statisticians have developed a variety of tools to measure how well a model specification fits the data (i.e. a model's "goodness of fit"). The GLM function includes one such parameter, its "AIC" (Akaike information criterion). The math behind AICs is complicated, but in practice, a model's AIC can be used to compare the goodness of fit between two models. A model with a lower AIC than another is considered to fit the data better. 
 
 
-# 4) In the above example, the AIC of our second model is higher than in our first example. This suggests that the second model fits the data more poorly than our model with all variables included. Does this mean that NixSplash should incorporate some of our unintuitive variables into their model and ad-campaign. In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
+# 4) In the above example, the AIC of our second model is lower than in our first example, but only very slightly ( a rule of thumb is that a difference of 5 is considered substantial). This suggests that the models fit the data more or less equally well. So which should we choose? Should NixSplash incorporate some of our unintuitive variables into their model and ad-campaign? In other words, should we include all variables in our model even if it is unclear why proximity to Dunkin' Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
 
       Solution4<-""
 ```
@@ -628,15 +640,15 @@ key: 3f490a5c1c
 ```
 
 
-A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a  causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
+A CATE is basically an example of **statistical moderation** (also known as an interaction effect), where the effect of an independent variable is moderated by the effect of a second independent variable. A good example of moderation on a causal effect could be seen in your sink faucets. When your water valves are shut, water does not come out, but when you open your valves, water comes out. The valves are not the direct cause of water come out of your pipes - pressure is - but the valves **moderate** the relationship between the pressure in your pipes and your sink. 
 
-In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is affected by a second independent variable. In this example, we would say that gender moderates the effect of the treatment (downsizing HR) on someone's intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
+In other words, statistical moderation occurs when the size of one independent variable's effect on an outcome is affected by a second independent variable. In this example, we will find that gender moderates the effect of the treatment (downsizing HR) on someone's intention to leave Unter Technology. With the dataframe, `UnterHR`, construct three regression models: One that naively estimates the average treatment effect of reducing the size of Unter's HR department on employee turnover, a second that includes a statistical interaction (to allow for moderation) between treatment and gender (`Female`), and a third that includes interactions between treatment and gender (`Female`) and treatment and race (`Race`).
 
 
 `@instructions`
-- 1) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`
-- 2) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`
-- 3) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with separate interactions with `Female` and `Race`
+- 1) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, mediated by `Female`
+- 2) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, mediated by `Female` and with an interaction effect between `Treatment` and `Female`
+- 3) Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, mediated by `Female` and Race, with interaction effects between `Treatment` and `Female` and between `Treatment` and `Race`.
 
 `@pre_exercise_code`
 
@@ -665,30 +677,29 @@ n=682
 `@sample_code`
 
 ```{r}
-# 1) First, let's construct a naive regression model that just uses the effect of `Treatment` on `LeaveJob` in the dataframe `UnterHR`.
+# 1) First, let's construct a naive regression model that just uses the effect of `Treatment` and `Female` on `LeaveJob` in the dataframe `UnterHR`. We recommend using the summary function around a glm function of this relationship.
+
+    summary(glm( ))
+
+# Note: The model you just created does not assume that the treatment effects women differently, but that women have a different baseline chance of leaving their job, regardless of the treatment effect. From the output above, it seems that being a woman increases one's likelihood of leaving Unter, but the treatment does not. 
+
+# 2) In order to find out if being a women moderates the the treatment effect (i.e. the treatment influences men and women differently), we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`. For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)". The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. 
+ 
 
 
-
-# 2) The model you created for the previous question does not assume that Treatment effects women differently, but that women have a higher baseline chance of leaving their job, regardless of the treatment effect. In order to find out if the treatment affects women differently, we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`.
-
-#Note: For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the mediation variable, and df is the name of the dataframe. The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. 
-
-
-
-# By default, R includes independent variables for Treatment and Female when we add a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. The large coefficient for this interaction effect suggests that Treatment has a large effect on women's odds of leaving their job.
+# Note: By default, R includes independent variables for Treatment and Female when we include a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. Now the coefficients for Treatment and Female are no longer statistically significant. There is a large coefficient for the interaction term, suggests that the Treatment has a large effect on women's odds of leaving their job.
       
-# 3) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. 
+# 3) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. The syntax is much like above, but now we add a second pair of variables that are interacting (e.g. "glm(Y~X*Z+W*Z,data=df)").
 
-# Note: The syntax for glm with two interaction effects is "glm(Y~X*Z1+X*Z2,data=df)" where Y is the name of the independent variable, X is the name of the dependent variable, Z1 is the name of the first mediation variable, Z2 is the name of the first mediation variable and df is the name of the dataframe.
 ```
 
 
 `@solution`
 
 ```{r}
-glm(LeaveJob ~ Treatment,data=UnterHR)
-glm(LeaveJob ~ Treatment * Female,data=UnterHR)
-glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
+summary(glm(LeaveJob ~ Treatment + Female,data=UnterHR))
+summary(glm(LeaveJob ~ Treatment * Female,data=UnterHR))
+summary(glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR))
 ```
 
 
@@ -696,7 +707,7 @@ glm(LeaveJob ~ Treatment * Female + Treatment * Race,data=UnterHR)
 
 ```{r}
 test_error()
-success_msg("Good work! It appears that the treatment only affected individuals who were Female, Black, or Latino.")
+success_msg("Good work! It appears that the treatment only affected individuals who were Female, Black, or Latino. The estimates for the non-significant effects are unimportant")
 ```
 
 
@@ -822,8 +833,8 @@ The American film studio, Delimited Pictures, is interested in how many tickets 
 
 
 `@instructions`
-- 1) Get a sense of survey weights by examining the dataframe `Survey`.
-- 2) Look at an example of how survey weights can compensate for unrepresentative sampling.
+- 1) Get a sense of survey weights by summarizing the dataframe `Survey`.
+- 2) Look through the following example of how survey weights can compensate for unrepresentative sampling.
 - 3) Estimate the proportion of the US adult population that plans to watch Cambrian Park (variable `WillWatch`) while using the provided survey weights.
 
 `@pre_exercise_code`
@@ -846,27 +857,27 @@ n=1775
 `@sample_code`
 
 ```{r}
-# 1) To get used to what survey weights like look like, let's summarize the `Weight` variable in our dataset `Survey` with the Summary() command:
+# 1) To get used to what survey weights like look like, let's summarize the `Weight` variable in our dataset `Survey` with the summary() command:
 
 
     
-# The weights range between 0.7 and 1.6 in this dataset, but you may encounter survey datasets with much larger weights. In general, because the mean weight of 1 is closer to 0.7 than it is to 1.6, we can tell that individuals with higher weights were undersampled. As you might guess, observations with higher weights have more influence in your statistical models. 
+# Note: The weights range between 0.7 and 1.6 in this dataset, but you may encounter survey datasets with much larger weights. In general, because the mean weight of 1 is closer to 0.7 than it is to 1.6, we can tell that individuals with higher weights were undersampled. As you might guess, observations with higher weights have more influence in your statistical models. 
 
     
 # 2) As a teaser to what we are doing when we "weight" the data, let's look at the variable for gender, 'Female`. The first line below shows the proportion of females in this survey. Select the following code and hit the "Run Code" button to see the results.
 
     prop.table(table(Survey$Female))
 
-This number is much too uneven to be representative of the actual US population. The following line indicates the proportion of females in these survey when they are weighted. We have generated the code for you again, so select it and hit the "Run Code" button to see the results.
+# Note: This number is much too uneven to be representative of the actual US population. The following line indicates the proportion of females in these survey when they are weighted. We have generated the code for you again, so select it and hit the "Run Code" button to see the results.
 
     prop.table(xtabs(Weight~Female, data=Survey))
 
-# These numbers appear much more realistic.   
+# Note: These numbers appear much more realistic. There are about an equal number of men and women in the population.   
 
 
 # 3) But before we weigh the surveys, let's see what the unweighted data says is the proportion of the U.S. population that is planning to watch Cambrian Park. This is simple: just find the mean value of the variable `WillWatch`:
 
-    Solution3<-
+    mean()
 ```
 
 
@@ -874,14 +885,13 @@ This number is much too uneven to be representative of the actual US population.
 
 ```{r}
 summary(Survey$Weight)
-Solution3<-mean(Survey$WillWatch)
+mean(Survey$WillWatch)
 ```
 
 
 `@sct`
 
 ```{r}
-test_object("Solution3")
 test_error()
 success_msg("Good work, but our sample was a bit skewed, so we can't trust this number. On top of that, DeLimited Pictures expected that at least 7% of the population would watch their film, so we're under pressure. Let's try using the data to weigh the survey responses for a more realistic answer.")
 ```
@@ -930,14 +940,14 @@ n=1775
 
 ```{r}
 # 1) What about if we use the survey weights to get a more representative estimation of the proportion of people who will watch the film? Try to compute the weighted mean for WillWatch. The syntax for determining the weighted mean of a variable is the following: weighted.mean([VariableOfInterest],[WeightVariable]). 
-
-
     
-# It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! 
+    weighted.mean()
+    
+# Note: It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! 
 
-# 2) Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. 
-  
-# Note: The syntax is `glm(Y ~ X + Z, weight = [Weight], data = [dataframe])`, where Y = the name of the dependent variable, X = the name of the independent variable, Z = the name of the control variable Weight = the weight variable, and dataframe = the dataframe that contains these variables.
+# 2) Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. The syntax is `glm(Y ~ X + Z, weight = [Weight], data = [dataframe])`, where Y = the name of the dependent variable, X = the name of the independent variable, Z = the name of the control variable Weight = the weight variable, and dataframe = the dataframe that contains these variables.
+
+    summary(glm())
 ```
 
 
@@ -945,7 +955,7 @@ n=1775
 
 ```{r}
 weighted.mean(Survey$WillWatch,Survey$Weight)
-glm(WillWatch ~ Female+Age, weight=Weight, data=Survey)
+summary(glm(WillWatch ~ Female+Age, weight=Weight, data=Survey))
 ```
 
 
@@ -953,7 +963,7 @@ glm(WillWatch ~ Female+Age, weight=Weight, data=Survey)
 
 ```{r}
 test_error()
-success_msg("Good work! Although survey weights do not often change one's results substantially, it is still good practice to use them if they are provided to you, especially if you are trying to study trends about an entire population. If you are doing extensive analysis with weighted data, you may want to consider using the 'survey' package instead of the weight options in R's built in functions.")
+success_msg("Good work! It seems that women are 5% less likely to go to see Cambrian park than men, and older  (AKA dinosaurs), are more likely to see Cambrian Park. Although survey weights do not often change one's results substantially, it is still good practice to use them if they are provided to you, especially if you are trying to study trends about an entire population. If you are doing extensive analysis with weighted data, you may want to consider using the 'survey' package instead of the weight options in R's built in functions.")
 ```
 
 
