@@ -653,7 +653,7 @@ glm(Happiness~Income+WorkHours,data=GSS)
 `@sct`
 
 ```{r}
-test_error()dd
+test_error()
 success_msg("Good work! You may have noticed that the coefficient for income increased when we controlled for WorkHours. This is typical when a control variable is positively correlated with both the independent and dependent variables. This syntax can be used to control for as many variables as desired in a regression model.")
 ```
 
