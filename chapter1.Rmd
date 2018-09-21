@@ -148,23 +148,24 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 
 ```{r}
 # 1) You will explore the relationship between hospital performance and mortality in the dataframe `Hospitals`. First, use the head() command to take a look at the variable names, types, and some some initial values.
-    head()
+
 
 # 2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30-day mortality rate for pneumonia patients in the variable `Mortality.Rate`.
-    cor()
+
 
 # Note: Curious! Hospitals with a higher "Total Performance Score" are better hospitals, so you would think that the correlation between hospital quality and pneumonia mortality rate in this data would be a negative correlation.
 
 # 3) Let's further analyze the relationship between the mortality score on pneumonia and a hospital's total performance score by looking at a graph with a trend line that reflects this correlation. Plot these two variables on the same graph, and fit a line as well, by inserting the dataframe name and variable names into the following line of code.
-	ggplot(data= , aes(x= , y= )) + geom_point() + geom_smooth(method=lm)
+
+    ggplot(data= , aes(x= , y= )) + geom_point() + geom_smooth(method=lm)
 
 # 4) Good. Now it's time to interpret these findings.  What do our findings imply? 
 # (a) As hospital performance gets better, pneumonia patient mortality stays the same. 
 # (b) As hospital performance gets better, pneumonia patient mortality decreases; therefore the performance measure accurately assesses hospitals.
 # (c) As hospital performance gets better, pneumonia patient mortality increases; therefore the performance measure is useless.
 # (d) As hospital performance gets better, pneumonia patient mortality increases; we need further analyses to find the true causal relationship between these measures.
-    Solution4<-""
-      
+    
+    Solution3<-""
 ```
 
 
