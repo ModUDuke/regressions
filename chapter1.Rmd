@@ -99,6 +99,8 @@ msg3 = "Correct! Well, at least according to this model. This is an example of r
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
+
+---
 ## Let’s Code: Comparing Hospital Quality to Mortality Rates
 
 ```yaml
@@ -402,6 +404,8 @@ msg4 = "Correct! Without controlling for these variables, the relationship betwe
 test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
+
+---
 ## Let’s Code: Running a Regression Model
 
 ```yaml
