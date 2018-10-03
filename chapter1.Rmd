@@ -99,6 +99,17 @@ msg3 = "Correct! Well, at least according to this model. This is an example of r
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
+## Let’s Code: Comparing Hospital Quality to Mortality Rates
+
+```yaml
+type: VideoExercise
+key: 5c9d6dd3fc
+lang: r
+xp: 50
+skills: 1
+video_link: //player.vimeo.com/video/293196239
+```
+
 ---
 
 ## Comparing Hospital Quality to Mortality Rates
@@ -390,6 +401,18 @@ msg3 = "This is usually not true, nor shown in this figure. Try again."
 msg4 = "Correct! Without controlling for these variables, the relationship between property rights protections and GDP seemed larger than it truly was."
 test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
+
+## Let’s Code: Running a Regression Model
+
+```yaml
+type: VideoExercise
+key: 5c9d6dd3fc
+lang: r
+xp: 50
+skills: 1
+video_link: //player.vimeo.com/video/293196243
+```
+
 
 ---
 
