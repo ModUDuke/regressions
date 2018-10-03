@@ -111,6 +111,8 @@ skills: 1
 video_link: //player.vimeo.com/video/217557161
 ```
 
+
+---
 ## Let’s Code: Toying with OLS - Outliers & Statistical Power
 
 ```yaml
@@ -336,7 +338,7 @@ test_error()
 success_msg("Good work! Larger datasets tend to be more robust to 'statistical noise' - unexplained variation in the sample. In this example, statistical noise decreased the relationship between Age and PriceSold (i.e. the coefficient of Age in the model). However, it is possible for statistical noise to induce spurious relationships as well.")
 ```
 
-
+---
 ## Let’s Code: Toying with OLS III - Model Selection
 
 ```yaml
@@ -515,6 +517,7 @@ skills: 1
 video_link: //player.vimeo.com/video/233015807
 ```
 
+---
 ## Let’s Code: Creating a Regression Model with Interaction Effects
 
 ```yaml
@@ -780,7 +783,7 @@ skills: 1
 video_link: //player.vimeo.com/video/217554781
 ```
 
-
+---
 ## Let’s Code: Practice with Survey Weights
 
 ```yaml
