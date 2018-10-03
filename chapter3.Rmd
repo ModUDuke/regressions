@@ -304,7 +304,6 @@ In R, the best tool for doing matching is the "MatchIt" package. Let's use the M
 - 3) Use matching techniques to balance the dataset.
 - 4) Estimate standard OLS regression model for communication skills (`Communication`) based on all other variables in the matched dataset (`match.NERD`).
 - 5) Check the statistical significance of the regression on the matched data.
-- 6)
 
 `@hint`
 
