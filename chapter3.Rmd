@@ -168,6 +168,7 @@ skills: 1
 video_link: //player.vimeo.com/video/217555588
 ```
 
+---
 ## Let’s Code: Communication Skills in Video Games
 
 ```yaml
