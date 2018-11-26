@@ -188,25 +188,29 @@ names(WePhone)[2]<-"PriceSold"
 # It looks like there's a pretty consistent negative correlation between age and the price sold, which makes sense. As phones get older, they are worth less money.
 
 
-# 4) But what happens when we introduce outliers in the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($1500) given its age at three points of the graph, when Age = 1, 3, and 5. Select each and hit "Run Code", paying attention to the small differences in the outputs as we change the options.
+# 4) But what happens when we introduce outliers to the data? The following examples show what happen to the regression line when we insert an observation with an unusually high price sold ($2499) given its age at three points of the graph, when Age = 1, 3, and 5. For each of the following conditions, select the code and hit "Run Code", paying attention to any differences in the slope as we change the Age for this outlier.
+
   # No outlier
-    plot(WePhone$PriceSold[1:20] ~ WePhone$Age[1:20], ylim=c(0, 1600))
+    plot(WePhone$PriceSold[1:20] ~ WePhone$Age[1:20], ylim=c(0, 1000))
     abline(glm(PriceSold~Age,data=WePhone[1:20,]))
-  # Outlier at Age = 1
-    WePhone[21,]<-c(1,1500)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
+    
+  # Adding a $2499 outlier at Age = 1
+    WePhone[21,]<-c(1,2499)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1000))
     abline(glm(PriceSold~Age,data=WePhone))
-  # Outlier at Age = 3
-    WePhone[21,]<-c(3,1500)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
+    
+  # Adding a $2499 outlier at Age = 3
+    WePhone[21,]<-c(3,2499)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1000))
     abline(glm(PriceSold~Age,data=WePhone))
-  # Outlier at Age = 5
-    WePhone[21,]<-c(5,1500)
-    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1600))
+    
+  # Adding a $2499 outlier at Age = 5
+    WePhone[21,]<-c(5,2499)
+    plot(WePhone$PriceSold ~ WePhone$Age, ylim=c(0, 1000))
     abline(glm(PriceSold~Age,data=WePhone))
 
 
-# 5) Now that you have seen the graphs change as we introduced outliers, answer the following question. When does an outlier in a regression model's dependent variable, "Y", causes the LEAST amount of bias (or change in slope) in its relationship to an independent variable, "X"? Answer the solution with "A", "B", or "C".
+# 5) Now that you have seen the graphs change as we introduced outliers, answer the following question. When does an outlier in a regression model's dependent variable, "Y", causes the **LEAST** amount of bias (or change in slope) in its relationship to an independent variable, "X"? Answer the solution with "A", "B", or "C".
 
 # (A) When the outlier in Y occurs at low values of X
 # (B) When the outlier in Y occurs at middle values of X
@@ -227,7 +231,7 @@ names(WePhone)[2]<-"PriceSold"
 ```{r}
 test_object("Solution5")
 test_error()
-success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusally high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
+success_msg("Good work! Outliers typically effect the slope of a bivariate regression line least when they occur at middle values of X. When an outlier significantly alters the slope of a regression line, we refer to it as an 'influence point.' These typically need to be dealt with or removed to produce reliable regression results (i.e. a single outlier could mask the entire relationship between two variables). As a caveat, it should be noted that outliers do not always bias bivariate relationships (e.g. when an unusually high value of Y occurs with an unusually high value of X), but such outliers tend to have great statistical 'leverage,' which can lead to substantial bias in multivariate relationships (such as when a regression model includes more than one key independent variable). ")
 ```
 
 ---
