@@ -17,7 +17,7 @@ video_link: //player.vimeo.com/video/217555077
 
 ---
 
-## Reasons to Use Matching Methods.
+## Should Megan Use Matching Methods With Her Survey?
 
 ```yaml
 type: MultipleChoiceExercise
@@ -27,22 +27,87 @@ xp: 50
 skills: 1
 ```
 
-Megan the exercise freak and health coach believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She creates an online poll for whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. After several thousand responses, she finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
+Megan the exercise freak and health coach believes that eating out at restaurants can be good for people because it motivates them to exercise more the following day. She creates an online survey for whether they ate out at a restaurant the previous Saturday, and whether they spent any time exercising the following Sunday. After several thousand responses, she finds a positive correlation between eating at a restaurant and exercising the following day. Why might why might she want to use matching methods to assess whether there is a causal effect?
 
 `@instructions`
-- Because you didn't ask whether people why they chose to exercise on Sunday.
-- Because most fitness clubs meet on Sundays.
-- Because Sunday is most people's favorite day to exercise.
+- She needs to match people to run a regression
+- She doesn't: if there is a correlation between the two variables, then she has found her effect
+- She needs to create treatment and control groups to find a causal effect.
 - Because people who eat out might have a higher propensity to exercise as well.
 
 `@sct`
 ```{r}
-msg1 = "Try again"
-msg2 = "Try again"
-msg3 = "Well done! If Sunday is already the most popular day to work out, then that would confound her results. Matching similar people into treatment and control groups would greatly help to avoid that problem."
-msg4 = "Try again"
+msg1 = "Matching methods are not requirements for running a regression. Try again."
+msg2 = "Remember, correlation does not mean causation, and Megan is looking for a causal effect. Try again."
+msg3 = "Well done! Megan can find pairs of respondents who seem identical except one ate a restaurant on Saturday and one did not."
+msg4 = "This might be a problem, but it's a general confounder to worry about and is not specific to matching methods. Try again."
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
+
+
+---
+
+## Can Your Survey Design Affect Your Matching Methods?
+
+```yaml
+type: MultipleChoiceExercise
+key: 8e6374141d
+lang: r
+xp: 50
+skills: 1
+```
+So Megan has run her social media survey over a Saturday and a Sunday, has collected several thousand responses, and you've convinced her that she should use matching methods to find out if her correlation is actually a causal effect. What might be survey design issues that could hurt her attempts at using matching methods to generate a convincing causal effect of going to a restaurant on exercise?
+
+`@instructions`
+- A) If she made some of her questions optional, she may have a lot of missing values in her data
+- B) Because it's on social media, some responses will be tainted by peer pressure
+- C) If she doesn't define what she means by exercise or eating, then people might cheat with their answers
+- D) A and C
+- All of the above
+
+`@sct`
+```{r}
+msg1 = "If she has too much missing data, she won't be able to get good matches, but there are other issues too. Try again."
+msg2 = "Yes, it may be nearly impossible for Megan to factor out all peer pressure from her social media survey results, but that's not the only valid issue listed here. Try again."
+msg3 = "This would mean her causal effect is fairly meaningless because we don't know what everyone meant by exercise or eating, but there is more to consider. Try again."
+msg4 = "There is something else beside A and C that might be a problem. Try again."
+msg5 = "Well done! There are lots of issues to consider when designing a survey, and even more if you are aiming to calculate a causal effect. While matching methods are useful for generating treatment and control groups from complex data like survey data, you'll need lots of properly written questions with clear measurements to help you find good matches in your matching method."
+test_mc(correct = 5, feedback_msgs = c(msg1,msg2,msg3,msg4,msg5))
+```
+
+
+---
+
+## Problems with Matching Methods When Comparing Individuals?
+
+```yaml
+type: MultipleChoiceExercise
+key: 8e6374141d
+lang: r
+xp: 50
+skills: 1
+```
+
+Let's say that you've convinced Megan to add a couple of questions to her survey, and she runs it again the following weekend in order to get better data that allows her to use matching methods. What might be a unit-level issue that could hurt her attempts at matching?
+
+`@instructions`
+- She didn't ask enough survey questions, so she doesn't have enough variables to make good matches between respondents. 
+- She used text fields for answers, and there might be too many differences between respondents to make good matches.
+- She asked similar questions in different ways, and it's hard to know which responses to trust most when matching.
+- All of the above.
+- None of the above.
+
+
+`@sct`
+```{r}
+msg1 = "This is definitely an issue, but it's not the only one listed. Try again."
+msg2 = "This is definitely an issue, and it's tricky to generate quantified matches based on qualitative data, but that's not the only problem. Try again."
+msg3 = "This can be an issue: if someone's response changes from 2 to 8 just with a reworded question, which number do we base our match on? But there are more issues than this, so try again. "
+msg4 = "Well done! You should make sure that you have enough clear variables with consistent measurements before you try creating matches that create comparable and well-defined treatment and control groups."
+msg5 = "There is at least one clear issue listed that might interfere with matching methods. Try again."
+test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4,msg5))
+```
+
 
 ---
 
