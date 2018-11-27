@@ -51,7 +51,7 @@ test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 
 ```yaml
 type: MultipleChoiceExercise
-key: 8e6374141d
+key: 7e40440502
 lang: r
 xp: 50
 skills: 1
@@ -82,7 +82,7 @@ test_mc(correct = 5, feedback_msgs = c(msg1,msg2,msg3,msg4,msg5))
 
 ```yaml
 type: MultipleChoiceExercise
-key: 8e6374141d
+key: d037323800
 lang: r
 xp: 50
 skills: 1
