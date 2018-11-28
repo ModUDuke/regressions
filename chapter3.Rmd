@@ -328,9 +328,10 @@ n=8008
 
 # 4) Matching methods are most useful when the treatment group is likely to be different from the control group in ways that are unrelated to our outcome. Do we need to use them in this case? To determine if the treatment group differs from the population on any variable, let's run a t-test between the treatment and control groups on the first variable in the dataframe, ParentEducation. As a reminder, the syntax for a simple t-test is t.test(variable1, variable2)
 
-t.test()
+	t.test()
 
 # If you are curious, feel free to run t-tests on the other variables in the dataframe to see which are balanced and which are imbalanced.
+
 ```
 
 `@solution`
@@ -425,23 +426,28 @@ n=8008
 
 	matched.NERD <- match.data(match.it)[1:ncol(NERD)]
 
+
 # 3) Let's use the summary() command on our new datafame `matched.NERD`: 
 
 	summary()
     
 # The "Summary of balance for all data" shows mean values of each variable across our original treatment and control groups, and the "Summary of balance for matched data" shows mean values of each variable across our matched dataset. You may notice that the mean values for most variables between the treatment and control groups are now pretty similar. The "Sample sizes" output shows that the algorithm matched one observation in the control group for each observation in the treatment group.
     
+    
 # 4) Let's now estimate a generalized linear regression model for communication skills that uses all of our control variables and our matched dataset (matched.NERD). 
 
       Solution4<-glm()
 
-# 5) Use the summary command on Solution4 to check its statistical significant. Is the effect of "Treatment" in Solution4 positive and statistically significant?  Answer with "Yes" or "No"
+
+# 5) Use the summary command on Solution4 to check its statistical significant. Is the effect of "Treatment" in Solution4 both positive and statistically significant?  Answer with "Yes" or "No".
     
-	summary(Solution4)
-    Solution5<-""
+      summary(Solution4)
+      Solution5<-""
 
 #Note: For the sake of comparison, the syntax below shows us our regression results when our data were unmatched. Notice that the treatment effect was positive.
-	summary(FirstModel)
+      summary(FirstModel)
+      
+     
 ```
 
 `@solution`
