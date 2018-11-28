@@ -518,11 +518,13 @@ set.seed(1)
     summary()
     summary()
 
+
 # 3) Using the correlation function, we can tell that income and happiness are positively correlated. But by how much? What is the effect of increasing one's income by $1000 on their happiness? Let's use the cor() function to see a quantitative measurement of the correlation between the variables Income and Happiness.
   
 # Note: The syntax to use the cor() function between two variables is: cor(dataframe$variable1, dataframe$variable2), where `dataframe` is the name of the dataframe and `variable1` and `variable2` are the names of the variables.
       
     cor()
+  
   
 # 4) Finally, let's run our first generalized linear regression model of the effect of income on happiness with the glm() function. 
   
