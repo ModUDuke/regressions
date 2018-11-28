@@ -1,22 +1,19 @@
 ---
 title: 'Regressions 1: Introduction to Regression As Causality'
 description: 'This chapter will introduce you to using regression analysis to find causal effects'
-
-
 ---
-
-
 
 ## Course Trailer for Causal Inference with R - Regression
 
 ```yaml
-type: VideoExercise 
+type: VideoExercise
+key: 4070242f87
 lang: r
-xp: 50 
+xp: 50
 skills: 1
-key: 4070242f87 
-video_link: //player.vimeo.com/video/303322440 
+video_link: //player.vimeo.com/video/303322440
 ```
+
 
 ---
 
@@ -48,10 +45,13 @@ The popular online auctioneer, eGulf, wants to create an algorithm that will aut
 
 eGulf runs an OLS regression to determine the relationship between WePhone age and sales price, and plots their results (illustrated in the R workspace). Each point on the plot indicates the age and selling price for a particular WePhone, and the line shows the results from an OLS regression on this data. What do these results suggest about the relationship of WePhone age and sales price?
 
-`@instructions`
+`@possible_answers`
 - There is a negative relationship
 - There is no relationship
 - There is a positive relationship
+
+`@hint`
+
 
 `@pre_exercise_code`
 ```{r}
@@ -89,10 +89,13 @@ skills: 1
 
 Causal interpretation of regression models can be tricky. Using the same data in the last example, an eGulf analyst decided to toy with a regression model where age is a function of price sold (i.e. price is the independent variable, and age is the dependent variable). The results of this model are visualized in the R workspace. If this model shows a causal relationship between age and price sold, with age as the dependent variable, what **exactly** should the analyst say to describe the results to his boss?
 
-`@instructions`
+`@possible_answers`
 - Older phones tend to sell for less
 - Old age causes phones to sell for less
 - High sales prices causes phones to become younger
+
+`@hint`
+
 
 `@pre_exercise_code`
 ```{r}
@@ -116,8 +119,8 @@ msg3 = "Correct! Well, at least according to this model. This is an example of r
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3))
 ```
 
-
 ---
+
 ## Let’s Code: Comparing Hospital Quality to Mortality Rates
 
 ```yaml
@@ -126,8 +129,9 @@ key: 149c652da7
 lang: r
 xp: 50
 skills: 1
-video_link: "//player.vimeo.com/video/293196239"
+video_link: //player.vimeo.com/video/293196239
 ```
+
 
 ---
 
@@ -222,9 +226,17 @@ skills: 1
 
 Suppose you see a Facebook post with a regression plot of the `Number of Walmarts per Capita` on `Income per Capita`, and the slope is positive. If you were asked to advise a town on a policy to attract a Walmart to town, would you say they should give tax refunds to their citizens to increase their income?
 
-`@instructions`
+`@possible_answers`
 - Yes, the regression shows that Walmarts come to richer places
 - No, you can't learn the cause of Walmart locations from the regression
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -272,11 +284,19 @@ To determine the predicted sales price of a WePhone with a given age, we can sta
 
 Based on this formula, what is a valid predicted price for a WePhone that is exactly two years old? You can use the R console as a scratch space to do your calculations.
 
-`@instructions`
+`@possible_answers`
 - 460.49
 - 468.58
 - 472.57 
 - 475.56
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -312,11 +332,19 @@ We could consider overcoming this by throwing out respondents with high feedback
 
 As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using the information in this table and the R console as a workspace, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90. You can use the R console as a scratch space to do your calculations.
 
-`@instructions`
+`@possible_answers`
 - 22.85
 - 26.83 
 - 27.00
 - 30.28
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -355,10 +383,18 @@ skills: 1
 
 Does a regression coefficient of 0 with a small confidence interval / small standard errors imply that the outcome and treatment variables simultaneously cause each other?
 
-`@instructions`
+`@possible_answers`
 - Yes, it shows the variables cancel each other out.
 - No, it just shows there's no relationship between these variables in the data.
 - It shows "misspecification" and we can't learn anything
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -382,10 +418,18 @@ skills: 1
 
 Why do we use the words "left hand side" variable and "right hand side" variable in casual inference?
 
-`@instructions`
+`@possible_answers`
 - It refers to how you graph them on X and Y axis.
 - It comes from historical, more qualitative writings.
 - It refers to the left and right hand side of an equation.
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -415,11 +459,19 @@ Papers often report several regression models next to each other. This table sho
 | Latitude   |         |.89(.49) |.37(.51) |
 | Asia Dummy |         |         |-.62(.19)|
 
-`@instructions`
+`@possible_answers`
 - Because the inclusion of more variables weakens the statistical power of an independent variable
 - Because omitting these variables caused the effect of property rights protection on GDP to be downwardly biased. 
 - Because the inclusion of more variables strengthens the statistical power of an independent variable
 - Because omitting these variables caused the effect of property rights protection on GDP to be upwardly biased.
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
@@ -430,8 +482,8 @@ msg4 = "Correct! Without controlling for these variables, the relationship betwe
 test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
-
 ---
+
 ## Let’s Code: Running a Regression Model
 
 ```yaml
@@ -440,7 +492,7 @@ key: c342f6c026
 lang: r
 xp: 50
 skills: 1
-video_link: "//player.vimeo.com/video/293196243"
+video_link: //player.vimeo.com/video/293196243
 ```
 
 
@@ -465,6 +517,9 @@ Using the dataset `GSS`, help Dr. Max Funn measure the effect of income on happi
 - 2) Look at summary statistics of three key variables.
 - 3) Look at a simple correlation statistic between income and happiness.
 - 4) Construct a regression model that measures the effect of income on happiness.
+
+`@hint`
+
 
 `@pre_exercise_code`
 ```{r}
@@ -571,6 +626,9 @@ So now using the dataset `GSS`, help Dr. Max Funn measure the effect of income o
 - 3) Look at correlation statistics for confounders between work hours, income, and happiness.
 - 4) Construct a second regression model that measures the effect of income on happiness that controls for work hours.
 
+`@hint`
+
+
 `@pre_exercise_code`
 ```{r}
 library(dplyr)
@@ -674,11 +732,19 @@ skills: 1
 
 Which of the following is the most important step you should take before running a regression model on your data?
 
-`@instructions`
+`@possible_answers`
 - Identify how many variables you can include in your model while still attaining statistical significance
 - Identify your outcome of interest (i.e. dependent variable)
 - Identify which type of regression model to perform
 - Identify whether any of your variables will need to be transformed
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
 
 `@sct`
 ```{r}
