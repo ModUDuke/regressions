@@ -163,9 +163,13 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 ```{r}
 # 1) You will explore the relationship between hospital performance and mortality in the dataframe `Hospitals`. First, use the head() command to take a look at the variable names, types, and some some initial values.
 
+    head()
 
 # 2) Calculate the correlation coefficient between our two variables of interest, the overall quality rating for each hospital in the variable `Total.Performance.Score`, and the 30-day mortality rate for pneumonia patients in the variable `Mortality.Rate`.
 
+# Note: The syntax to use the cor() function between two variables is: cor(dataframe$variable1, dataframe$variable2), where `dataframe` is the name of the dataframe and `variable1` and `variable2` are the names of the variables.
+
+    cor()
 
 # Note: Curious! Hospitals with a higher "Total Performance Score" are better hospitals, so you would think that the correlation between hospital quality and pneumonia mortality rate in this data would be a negative correlation.
 
@@ -173,11 +177,12 @@ Hospitals<-read.csv("https://assets.datacamp.com/production/repositories/1142/da
 
     ggplot(data= , aes(x= , y= )) + geom_point() + geom_smooth(method=lm)
 
-# 4) Good. Now it's time to interpret these findings.  What do our findings imply? 
-# (a) As hospital performance gets better, pneumonia patient mortality stays the same. 
-# (b) As hospital performance gets better, pneumonia patient mortality decreases; therefore the performance measure accurately assesses hospitals.
-# (c) As hospital performance gets better, pneumonia patient mortality increases; therefore the performance measure is useless.
-# (d) As hospital performance gets better, pneumonia patient mortality increases; we need further analyses to find the true causal relationship between these measures.
+# 4) Good. Now it's time to interpret these findings.  What do our findings imply? Enter "A", "B", "C", or "D" as Solution3.
+
+# (A) As hospital performance gets better, pneumonia patient mortality stays the same. 
+# (B) As hospital performance gets better, pneumonia patient mortality decreases; therefore the performance measure accurately assesses hospitals.
+# (C) As hospital performance gets better, pneumonia patient mortality increases; therefore the performance measure is useless.
+# (D) As hospital performance gets better, pneumonia patient mortality increases; we need further analyses to find the true causal relationship between these measures.
     
     Solution3<-""
 ```
@@ -189,7 +194,7 @@ cor(Hospitals$Mortality.Rate, Hospitals$Total.Performance.Score)
 ggplot(data=Hospitals, aes(x=Total.Performance.Score, y=Mortality.Rate)) +
                   geom_point() +
                   geom_smooth(method=lm)
-Solution3<-"d"
+Solution3<-"D"
 ```
 
 `@sct`
@@ -621,6 +626,9 @@ abline()
 # These results show that work hours are negatively correlated with happiness and positively correlated with income. This suggests that work hours might be confounding the relationship between income and happiness.    
     
 # 4) So let's solve that by controlling for the effect of work hours on happiness. You can do this for yourself easily in R by adding the control variable directly to the glm function to regress the effect of income on happiness. The syntax for glm with controls is "glm(Y~X+Z,data=dataframe)" where Y is the name of the independent variable, X is the name of the dependent variable, Z is the name of the control variable, and dataframe is the name of the dataframe.
+
+
+
 ```
 
 `@solution`
