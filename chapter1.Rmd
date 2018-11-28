@@ -202,7 +202,7 @@ Suppose you see a Facebook post with a regression plot of the `Number of Walmart
 
 `@sct`
 ```{r}
-msg1 = "Whoops. Try again."
+msg1 = "It does sound like giving tax breaks means people have more income, and having more income means you can expect more Walmarts in town, but do we really know that is a causal effect and not just a correlation caused by something else? Try again."
 msg2 = "No, you can't learn the direct causal effect from this regression as described, because there are so many other social and economic factors to consider in this relationship that Unconfoundness Assumption is unlikely to be true. In this case, we can just learn the amount of correlation between the variables."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
@@ -254,10 +254,10 @@ Based on this formula, what is a valid predicted price for a WePhone that is exa
 
 `@sct`
 ```{r}
-msg1 = "Try again"
-msg2 = "Well done! Notice any advantages of regression models versus t.tests? In a t.test, we can only predict the outcome from a binary treatment variable (that is, the outcome for respondents in the treatment versus control group), In a regression model, we can predict the outcome from a continuous treatment variable (e.g. age)."
-msg3 = "Try again"
-msg4 = "Try again"
+msg1 = "Not quite. Try again."
+msg2 = "Well done! Notice any advantages of regression models versus t-tests? In a t.test, we can only predict the outcome from a binary treatment variable (that is, the outcome for respondents in the treatment versus control group), In a regression model, we can predict the outcome from a continuous treatment variable (e.g. age)."
+msg3 = "Oops, that's too high. Try again."
+msg4 = "That's too low. Try again."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
@@ -284,7 +284,7 @@ We could consider overcoming this by throwing out respondents with high feedback
 | Intercept  | -707.23 (234.38) |
 
 
-As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using the information in this table and the R console as a workspace, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90.
+As you can see, when controlling for seller score, age has an even larger negative effect on sales. Using the information in this table and the R console as a workspace, calculate the difference (in absolute terms) in the expected sales price for phone that is 2 year old with a feedback score of 80, versus a phone that is 4 years old with a feedback score of 90. You can use the R console as a scratch space to do your calculations.
 
 `@instructions`
 - 22.85
@@ -294,9 +294,9 @@ As you can see, when controlling for seller score, age has an even larger negati
 
 `@sct`
 ```{r}
-msg1 = "Try again"
-msg2 = "Try again"
-msg3 = "Try again"
+msg1 = "That's too low. Try again."
+msg2 = "That's not it, so try running the numbers again."
+msg3 = "Not quite. Try again"
 msg4 = "Well done! The same method can applied with as many variables as we choose. This provides a great way of examining the trade offs between different factors that effect on outcome. However, notice that the intercept is -707.23. That would indicate that a used WePhone with an age of 0 and a feedback score of 0 would have a predicted sales price of -$707.23. Obviously that is unrealistic; no sales on eGulf result in sellers having to pay their customers. This hints at a modeling issue that we'll explore later in the chapter."
 test_mc(correct = 4, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
