@@ -179,6 +179,7 @@ names(WePhone)[2]<-"PriceSold"
       summary(model)
 
 # These results show that the correlation we saw in the first few results from the head() command stay true through the rest of the data. These things are often easier to understand through a graph, so let's look at that next.
+
     
 # 3) Below visualizes the regression model as a line, and the data points as dots. The line that it (and any regression model) produces minimizes the vertical distance (squared) between each data point and the regression line.  We've already generated the code for this graph, so select both of the following lines and hit the "Run Code" button to see the graph:
 
@@ -311,6 +312,7 @@ rm(list = c("noise","WePhone"))
         summary(Solution2)
         summary(Solution3)
         
+        
 # 3) Although the estimates in Solution2 and Solution3 are similar and are both statistically significant, these models arrive at very different standard errors (a core measurement of the accuracy of our estimates). Larger standard errors indicate that we are less certain of our estimates. Which of the two models' estimates are we more certain in, "Solution2" or "Solution3"?
       
         Solution4<-""
@@ -412,6 +414,7 @@ mround <- function(x,base){
 
     summary()
 
+
 # 2) Some of the survey questions may seem irrelevant to how much water a household uses, but let's find out for certain. Let's first run an OLS regression model for water usage while using all variables in the dataset. 
   
 # Note: We can find the summary statistics from a generalized linear regression model by inserting the glm() code as the parameter for the summary() command, like the following: summary(glm(Water ~ YardSize, data=Survey)). Now do that for yourself, but include all of the variables in the dataframe:
@@ -431,6 +434,7 @@ mround <- function(x,base){
 # 4) In the above example, the AIC of our second model is lower than in our first example, but only very slightly ( a rule of thumb is that a difference of 5 is considered substantial). This suggests that the models fit the data more or less equally well. So which should we choose? Should NixSplash incorporate some of our unintuitive variables into their model and ad-campaign? In other words, should we include all variables in our model even if it is unclear why proximity to Dunking Donuts, Massage frequency, and Coffee-drinking habits would effect water useage? Answer Solution 4 with "Yes" or "No".
 
       Solution4<-""
+      
 ```
 
 `@solution`
@@ -593,9 +597,12 @@ n=682
 
 
 
+
 # 3) Remember that Unter found that that downsizing their HR department had a bigger CATE for women than for men, so let's construct a regression model that measures the effect of Treatment on LeaveJob, with a "mediation effect"" for Female. This is the same as "controlling" for Female, as we did for other independent variables in our previous examples. Then run the summary() command to further understand the results.
   
     Solution3<-
+    summary()
+    
 ```
 
 `@solution`
@@ -667,13 +674,17 @@ n=682
 
 # Note: The model you just created does not assume that the treatment effects women differently, but that women have a different baseline chance of leaving their job, regardless of the treatment effect. From the output above, it seems that being a woman increases one's likelihood of leaving Unter, but the treatment does not. 
 
+
 # 2) In order to find out if being a women moderates the the treatment effect (i.e. the treatment influences men and women differently), we need to add an interaction between Female and Treatment. Construct a regression model that measures the effect of `Treatment` on `LeaveJob`, with a moderation effect for `Female`. For reference, the syntax for glm with an interaction effect is "glm(Y~X*Z,data=df)". The difference between the syntax for a mediation and moderation effect is that we multiply X and Z for moderation, rather than add them. 
  
 
 
 # Note: By default, R includes independent variables for Treatment and Female when we include a statistical interaction term. The coefficient for Treatment indicates the effect of Treatment for non-women (men); the coefficient for Female indicates the effect of being a female, independent of Treatment. The Treatment:Female coefficient indicates the effect of Treatment for Females. Now the coefficients for Treatment and Female are no longer statistically significant. There is a large coefficient for the interaction term, suggests that the Treatment has a large effect on women's odds of leaving their job.
       
+      
 # 3) Let's now answer the final question for this exercise. Create a glm model that includes an interaction effect between Treatment and Female, and an interaction effect between Treatment and Race. The syntax is much like above, but now we add a second pair of variables that are interacting (e.g. "glm(Y~X*Z+W*Z,data=df)").
+
+
 
 ```
 
@@ -859,6 +870,7 @@ n=1775
 # 3) But before we weigh the surveys, let's see what the unweighted data says is the proportion of the U.S. population that is planning to watch Cambrian Park. This is simple: just find the mean value of the variable `WillWatch`:
 
     mean()
+    
 ```
 
 `@solution`
@@ -916,9 +928,11 @@ n=1775
     
 # Note: It looks like the original sample underrepresented the proportion of people who might actually watch Cambrian Park. The weighted mean is above 7%! 
 
+
 # 2) Let's now construct a survey-weighted OLS regression model that estimates the effect of Age on WillWatch, controlling for Female. The syntax is almost identical to normal regression models. We simply need to add a statement to identify survey weights. The syntax is `glm(Y ~ X + Z, weight = [Weight], data = [dataframe])`, where Y = the name of the dependent variable, X = the name of the independent variable, Z = the name of the control variable Weight = the weight variable, and dataframe = the dataframe that contains these variables.
 
     summary(glm())
+    
 ```
 
 `@solution`
