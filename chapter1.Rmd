@@ -203,7 +203,7 @@ Suppose you see a Facebook post with a regression plot of the `Number of Walmart
 `@sct`
 ```{r}
 msg1 = "It does sound like giving tax breaks means people have more income, and having more income means you can expect more Walmarts in town, but do we really know that is a causal effect and not just a correlation caused by something else? Try again."
-msg2 = "No, you can't learn the direct causal effect from this regression as described, because there are so many other social and economic factors to consider in this relationship that Unconfoundness Assumption is unlikely to be true. In this case, we can just learn the amount of correlation between the variables."
+msg2 = "No, you can't learn the direct causal effect from this regression as described, because there are so many other social and economic factors to consider in this relationship that Unconfoundedness Assumption is unlikely to be true. In this case, we can just learn the amount of correlation between the variables."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
 
