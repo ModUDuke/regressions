@@ -36,7 +36,7 @@ You are studying the effect of pop songs on teenage product consumption using a 
 `@sct`
 ```{r}
 msg1 = "Correct. The regression model does not necessarily recover a true causal effect of song downloads on soft drink sales."
-msg2 = "Whoops. Try again."
+msg2 = "If soda sales and music sales are positively connected, we might be onto something. But in order to say this is a causal effect, we also need to argue that this correlation is unconfounded by any other factors. Try again."
 test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
 ```
 
@@ -953,7 +953,7 @@ One week after Cambrian Park was released, Delimited Pictures gathered a survey 
 
 `@sct`
 ```{r}
-msg1 = "Try again"
+msg1 = "The company is looking for results on a pretty specific population - female college students in Los Angeles - rather than the general American population. Think about whether they really need to extrapolate from their survey sample and try again."
 msg2 = "Correct! Survey weights are only useful when you are trying to generalize a finding to the general population. They are typically only used for analysis of national trends. Since Delimited Pictures is only interested in how a narrow demographic perceived their new film, it is unlikely that they would need to weight their data."
 test_mc(correct = 2, feedback_msgs = c(msg1,msg2))
 ```
