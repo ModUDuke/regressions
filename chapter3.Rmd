@@ -148,7 +148,7 @@ Why couldn't Angrist just compare the lifetime earnings of veterans and nonveter
 msg1 = "This is an awfully strong assumption to make that broadly sweeps complex social dynamics in a single step, and it's not what Angrist was thinking. Try Again"
 msg2 = "This isn't true. Try again"
 msg3 = "Correct. He assumed that it was very possible that people who chose to go in the the military were different from a control group across several key variables that help determine career trajectories, so he wanted to find a way to compensate for that."
-msg4 = "Try again"
+msg4 = "The draft during the Vietnam War was just for men, so gender is not a factor in this case. Try again"
 test_mc(correct = 3, feedback_msgs = c(msg1,msg2,msg3,msg4))
 ```
 
@@ -488,7 +488,7 @@ xp: 50
 skills: 1
 ```
 
-In this course, we've talked about using the Unconfoundedness Assumption with regression models to find causal effects in our data. But many analytical models make no mention of the Unconfoundedness Assumption.  Can those ever support claims about causality?
+In this course, we've talked about using the Unconfoundedness Assumption with regression models to find causal effects in our data. But many analytical methods make no mention of the Unconfoundedness Assumption.  Can those ever support claims about causality?
 
 `@instructions`
 - Yes
@@ -496,7 +496,7 @@ In this course, we've talked about using the Unconfoundedness Assumption with re
 
 `@sct`
 ```{r}
-msg1 = "Correct! All scientific theories and models are based on our assumptions about the world, and the Unconfoundedness Assumption is the most one when we use regression to find causality. But it is not the only way to find causal effects, and some people find some methods more believable than others. However, if we can successfully argue that our models rest on reasonable assumptions for data we have and the technical methods we use, then those models can support our claims about causal effects. These other methods include experiments, instrumental variables, differences-in-differences, and regression discontinuity, and each requires its own assumptions. So keep exploring for different methods of causal inference!"
-msg2 = "Try again"
+msg1 = "Correct! All scientific theories and models are based on our assumptions about the world, and the Unconfoundedness Assumption is the most one when we use regression to find causality. But it is not the only way to find causal effects, and some people find some methods more believable than others. However, if we can successfully argue that our models rest on reasonable assumptions for data we have and the technical methods we use, then those models can support our claims about causal effects. These other methods include experiments, instrumental variables, difference-in-differences, and regression discontinuity, and each requires its own assumptions. So keep exploring for different methods of causal inference!"
+msg2 = "Remember that there are many other analytical methods beside regression as causality, such as experiments, instrumental variables, difference-in-differences, and others. These each have their own assumptions, some of which are similar to the Unconfoundedness Assumption, but try again!"
 test_mc(correct = 1, feedback_msgs = c(msg1,msg2))
 ```
