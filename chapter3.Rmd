@@ -267,7 +267,7 @@ A recent study examined how playing the multiplayer online battle arena video ga
 - 4) Check for balance between treatment and control groups.
 
 `@hint`
-- The sytnax for a simple t-test is t.test(variable1, variable2)
+- The syntax for a simple t-test is t.test(variable1, variable2)
 
 `@pre_exercise_code`
 ```{r}
@@ -360,7 +360,7 @@ xp: 100
 skills: 1
 ```
 
-The researchers studying how playing NERD affects communication skills knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills. Regression models alone aren't always convincing for measuring causal effects in unbalanced data (even under unconfoundeness). A more robust way to test the effect of our treatment on communication skills is through matching methods. Matching methods balance the treatment group with the control group so that they are more identical.
+The researchers studying how playing NERD affects communication skills knew their sample was highly unbalanced, so they thought that matching techniques may be required. With the dataset, `NERD`, use matching techniques to better estimate the average treatment effect of playing NERD on communication skills. Regression models alone aren't always convincing for measuring causal effects in unbalanced data (even under unconfoundedness). A more robust way to test the effect of our treatment on communication skills is through matching methods. Matching methods balance the treatment group with the control group so that they are more identical.
 
 In R, the best tool for doing matching is the "MatchIt" package. Let's use the MatchIt package to subset our NERD dataset so that our control group contains observations that are most similar to those in our treatment group. There are many methods for matching data, but in this question, we use MatchIt's default methods.
 
